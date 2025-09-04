@@ -30,7 +30,17 @@ public class ParticulateGame extends Game  {
 
 	public void update() 
         {
-
+                for(int r=0;r<grid.length;r++)
+                {
+                        for(int c=0;c<grid[r].length;c++)
+                        {
+                                if(grid[r][c] != null)
+                                {
+                                        grid[r][c].move();
+                                        grid[r][c].action();
+                                }
+                        }
+                }
         }
 	
 	public void draw(Graphics pen)

@@ -4,10 +4,12 @@ import java.awt.Graphics;
 public abstract class Tile 
 {
 
-    private int x;
-    private int y;
+    public int x;
+    public int y;
     
     private int tileSize = ParticulateGame.tileSize;
+
+    public boolean updatedThisFrame = false;
 
     public Color color;
     public boolean isFlammable;
