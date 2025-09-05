@@ -23,8 +23,6 @@ public class ParticulateGame extends Game  {
                 
         public ParticulateGame() 
         {
-                grid = new Tile[playAreaHeight/tileSize][playAreaWidth/tileSize];
-
                 grid[1][1] = new Sand(1, 1);
                 setGridBoundsWalls();
         }
