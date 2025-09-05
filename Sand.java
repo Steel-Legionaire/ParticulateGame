@@ -2,7 +2,7 @@ import java.awt.Color;
 
 public class Sand extends Tile {
     
-    Sand(int x, int y) {
+    public Sand(int x, int y) {
         super(x, y, Color.YELLOW, false, true, 2);
     }
 

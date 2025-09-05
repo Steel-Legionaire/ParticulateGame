@@ -2,7 +2,7 @@ import java.awt.Color;
 
 public class Bedrock extends Tile {
     
-    Bedrock(int x, int y) {
+    public Bedrock(int x, int y) {
         super(x, y, Color.DARK_GRAY, false, false, 10);
     }
 

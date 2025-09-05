@@ -1,9 +1,9 @@
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 public class ParticulateGame extends Game  {
     
@@ -17,9 +17,11 @@ public class ParticulateGame extends Game  {
         public static int tileSize = 10;
 
         public static Tile[][] grid;
+
+        public Class<?> currentTile = Sand.class;
         
-		
-	public ParticulateGame() 
+                
+        public ParticulateGame() 
         {
                 grid = new Tile[playAreaHeight/tileSize][playAreaWidth/tileSize];
 
@@ -28,7 +30,7 @@ public class ParticulateGame extends Game  {
         }
         
 
-	public void update() 
+        public void update() 
         {
                 for(int r=0;r<grid.length;r++)
                 {
@@ -36,14 +38,15 @@ public class ParticulateGame extends Game  {
                         {
                                 if(grid[r][c] != null)
                                 {
-                                        grid[r][c].move();
                                         grid[r][c].action();
+                                        grid[r][c].move();
+                                        
                                 }
                         }
                 }
         }
-	
-	public void draw(Graphics pen)
+        
+        public void draw(Graphics pen)
         {    
                 for(int r=0;r<grid.length;r++)
                 {
@@ -71,6 +74,32 @@ public class ParticulateGame extends Game  {
                 }
         }
         
+        public void createTile(int x, int y, Class<?> clazz)
+        {
+                if(grid[y][x] == null)
+                {
+                        try {
+                                System.out.println("1");
+                                Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
+                                System.out.println("2");
+                                Tile t = (Tile) argConstructor.newInstance(x, y);
+                                System.out.println("3");
+                                //System.out.println(t);
+
+                                System.out.println(clazz.cast(t));
+                                System.out.println("4");
+                                grid[y][x] = t;
+                                System.out.println("5");
+
+                        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                                System.out.println(e);
+                        }
+                    //grid[y][x] = new Sand(x, y);
+                    
+
+                        //grid[y][x] = new Sand(x, y);
+                }
+        }
     @Override
     public void keyTyped(KeyEvent ke) {}
 
@@ -81,7 +110,13 @@ public class ParticulateGame extends Game  {
     public void keyReleased(KeyEvent ke) {}
 
     @Override
-    public void mouseClicked(MouseEvent ke) { }
+    public void mouseClicked(MouseEvent me) 
+    { 
+        int mx = me.getX() / tileSize;
+        int my = me.getY() / tileSize; 
+        
+        createTile(mx, my, currentTile);
+    }
 
     @Override
     public void mousePressed(MouseEvent me) {}

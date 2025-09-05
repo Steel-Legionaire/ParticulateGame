@@ -36,4 +36,5 @@ public abstract class Tile
         pen.fillRect(x*tileSize, y*tileSize, tileSize, tileSize);
         pen.setColor(Color.BLACK);
     }
+
 }

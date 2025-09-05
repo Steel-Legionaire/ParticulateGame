@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
@@ -26,6 +27,7 @@ public abstract class Game implements KeyListener, MouseListener
         frame.setVisible(true);
         frame.addKeyListener(this);
         frame.addMouseListener(this);
+        frame.setBackground(Color.BLACK);
         run();
     }
 
