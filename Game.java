@@ -3,10 +3,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public abstract class Game implements KeyListener, MouseListener
+public abstract class Game implements KeyListener, MouseListener, MouseMotionListener
 {
     private JFrame frame;
     private GamePanel gamePanel;
@@ -28,6 +29,7 @@ public abstract class Game implements KeyListener, MouseListener
         frame.addKeyListener(this);
         frame.addMouseListener(this);
         frame.setBackground(Color.BLACK);
+        frame.addMouseMotionListener(this);
         run();
     }
 
@@ -44,7 +46,7 @@ public abstract class Game implements KeyListener, MouseListener
         while (true)
         {
            game.update();
-            try { Thread.sleep(10); }
+            try { Thread.sleep(5); }
             catch (InterruptedException e) {}
             frame.repaint();
         }

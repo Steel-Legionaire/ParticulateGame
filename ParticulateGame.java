@@ -83,7 +83,7 @@ public class ParticulateGame extends Game  {
   
                                 Tile t = (Tile) argConstructor.newInstance(x, y);
 
-                                System.out.println(clazz.cast(t));
+                                //System.out.println(clazz.cast(t));
 
                                 grid[y][x] = t;
 
@@ -96,7 +96,17 @@ public class ParticulateGame extends Game  {
     public void keyTyped(KeyEvent ke) {}
 
     @Override
-    public void keyPressed(KeyEvent ke) {}
+    public void keyPressed(KeyEvent ke) 
+    {
+        if(ke.getKeyChar() == '1')
+        {
+                currentTile = Sand.class;
+        }
+        else if (ke.getKeyChar() == '2')
+        {
+                currentTile = Bedrock.class;
+        }
+    }
 
     @Override
     public void keyReleased(KeyEvent ke) {}
@@ -111,6 +121,24 @@ public class ParticulateGame extends Game  {
     }
 
     @Override
+    public void mouseDragged(MouseEvent me) 
+    {
+        int mx = me.getX() / tileSize;
+        int my = me.getY() / tileSize;
+
+        try {
+                if(grid[my][mx] == null)
+                {
+                        createTile(mx, my, currentTile);        
+                }
+        } catch (ArrayIndexOutOfBoundsException e) {
+
+        }
+
+
+    }
+
+    @Override
     public void mousePressed(MouseEvent me) {}
     @Override
     public void mouseReleased(MouseEvent me) {}
@@ -120,8 +148,15 @@ public class ParticulateGame extends Game  {
 
     @Override
     public void mouseExited(MouseEvent me) {}
-        
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
         
     //Launches the Game
     public static void main(String[] args) { new ParticulateGame().start(TITLE, SCREEN_WIDTH,SCREEN_HEIGHT); }
+
+
+
 }
