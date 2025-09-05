@@ -79,25 +79,17 @@ public class ParticulateGame extends Game  {
                 if(grid[y][x] == null)
                 {
                         try {
-                                System.out.println("1");
                                 Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
-                                System.out.println("2");
+  
                                 Tile t = (Tile) argConstructor.newInstance(x, y);
-                                System.out.println("3");
-                                //System.out.println(t);
 
                                 System.out.println(clazz.cast(t));
-                                System.out.println("4");
+
                                 grid[y][x] = t;
-                                System.out.println("5");
 
                         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                                 System.out.println(e);
                         }
-                    //grid[y][x] = new Sand(x, y);
-                    
-
-                        //grid[y][x] = new Sand(x, y);
                 }
         }
     @Override
