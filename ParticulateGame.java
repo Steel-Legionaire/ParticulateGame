@@ -23,7 +23,7 @@ public class ParticulateGame extends Game  {
                 
         public ParticulateGame() 
         {
-                grid[1][1] = new Sand(1, 1);
+                grid = new Tile[playAreaHeight / tileSize][playAreaWidth / tileSize];
                 setGridBoundsWalls();
         }
         
@@ -96,14 +96,16 @@ public class ParticulateGame extends Game  {
     @Override
     public void keyPressed(KeyEvent ke) 
     {
-        if(ke.getKeyChar() == '1')
-        {
-                currentTile = Sand.class;
-        }
-        else if (ke.getKeyChar() == '2')
-        {
-                currentTile = Bedrock.class;
-        }
+        if(ke.getKeyChar() == '1')      { currentTile = Sand.class; }
+        else if (ke.getKeyChar() == '2'){ currentTile = Water.class; }
+        else if (ke.getKeyChar() == '3'){ currentTile = Lava.class; }
+        else if (ke.getKeyChar() == '4'){ currentTile = Fire.class; }
+        else if (ke.getKeyChar() == '5'){ currentTile = Wall.class; }
+        else if (ke.getKeyChar() == '6'){ currentTile = Wood.class; }
+        else if (ke.getKeyChar() == '7'){ currentTile = TNT.class; }
+        else if (ke.getKeyChar() == '8'){ currentTile = SandSpawner.class; }
+        else if (ke.getKeyChar() == '9'){ currentTile = WaterSpawner.class; }
+        else if (ke.getKeyChar() == '0'){ currentTile = LavaSpawner.class; }
     }
 
     @Override
