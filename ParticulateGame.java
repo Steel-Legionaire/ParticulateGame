@@ -108,6 +108,13 @@ public class ParticulateGame extends Game  {
                         }
                 }
         }
+
+        public void resetGrid()
+        {
+                grid = new Tile[playAreaHeight / tileSize][playAreaWidth / tileSize];
+                setGridBoundsWalls(); 
+        }
+
     @Override
     public void keyTyped(KeyEvent ke) {}
 
@@ -124,6 +131,10 @@ public class ParticulateGame extends Game  {
         else if (ke.getKeyChar() == '8'){ currentTile = SandSpawner.class; }
         else if (ke.getKeyChar() == '9'){ currentTile = WaterSpawner.class; }
         else if (ke.getKeyChar() == '0'){ currentTile = LavaSpawner.class; }
+
+        else if(ke.getKeyChar() == 'r'){ 
+                resetGrid();
+        }
     }
 
     @Override
