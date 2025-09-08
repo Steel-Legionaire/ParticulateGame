@@ -19,7 +19,7 @@ public class ParticulateGame extends Game  {
 
         public static Tile[][] grid;
 
-        public Class<?> currentTile = Sand.class;
+        public Class<?> currentTile = Sand.class;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
         
                 
         public ParticulateGame() 

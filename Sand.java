@@ -25,23 +25,46 @@ public class Sand extends Tile {
             }
             else // sand is on top of another tile
             {
-                if(grid[y+1][x-1] == null)
+                if(grid[y+1][x].getClass().equals(Water.class))
                 {
-                    //go left
-                    grid[y][x] = null;
+                    grid[y][x] = new Water(x, y);
                     y++;
-                    x--;
                     grid[y][x] = this;
-                    
-                }
-                else if(grid[y+1][x+1] == null) 
+                }else
                 {
-                    grid[y][x] = null;
-                    y++;
-                    x++;
-                    grid[y][x] = this;
-                    // go right
-                }
+                    int randDir = (int)(Math.random() * 2);
+
+                    if(grid[y+1][x-1] == null && randDir == 0)
+                    {
+                        grid[y][x] = null;
+                        y++;
+                        x--;
+                        grid[y][x] = this;
+                    }
+                    else if(grid[y+1][x-1] != null && grid[y+1][x-1].getClass().equals(Water.class) && randDir == 0)
+                    {
+                            grid[y][x] = new Water(x, y);
+                            y++;
+                            x--;
+                            grid[y][x] = this;
+                    }
+                    else
+                    {
+                        if(grid[y+1][x+1] == null && randDir == 1)
+                        {
+                            grid[y][x] = null;
+                            y++;
+                            x++;
+                            grid[y][x] = this;
+                        }else if(grid[y+1][x+1] != null && grid[y+1][x+1].getClass().equals(Water.class))
+                        {
+                            grid[y][x] = new Water(x, y);
+                            y++;
+                            x++;
+                            grid[y][x] = this;
+                        }
+                    }
+                } 
             }
             framesSinceLastUpdate = 0;
 
