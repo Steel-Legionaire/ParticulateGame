@@ -3,7 +3,7 @@ import java.awt.Color;
 public class Sand extends Tile {
     
     public Sand(int x, int y) {
-        super(x, y, Color.YELLOW, false, true, 2);
+        super(x, y, Color.YELLOW, false, true, 2,1);
     }
 
     @Override
@@ -11,7 +11,7 @@ public class Sand extends Tile {
     { 
         Tile[][]grid = ParticulateGame.grid;
 
-        if(!updatedThisFrame)
+        if(framesSinceLastUpdate == speed)
         {
             if(y+1 > grid.length){return;}
 
@@ -25,14 +25,6 @@ public class Sand extends Tile {
             }
             else // sand is on top of another tile
             {
-                
-                //if(grid[y+1][x+1] == null && grid[y+1][x-1] == null)
-                //{
-                //    // choose a random one
-                //    grid[y][x] = null;
-                //}
-                //else 
-
                 if(grid[y+1][x-1] == null)
                 {
                     //go left
@@ -51,11 +43,11 @@ public class Sand extends Tile {
                     // go right
                 }
             }
-            this.updatedThisFrame = true;
+            framesSinceLastUpdate = 0;
+
         }
         else{
-            updatedThisFrame = false; 
-            // updatedThisFrame will become false after this object is checked for the second within the same frame 
+            framesSinceLastUpdate++;
         }
 
         ParticulateGame.grid = grid;

@@ -3,7 +3,7 @@ import java.awt.Color;
 public class WaterSpawner extends Tile{
 
     public WaterSpawner(int x, int y) {
-        super(x, y, Color.BLUE, false, true, 8);
+        super(x, y, Color.BLUE, false, true, 8, 1);
 
     }
 

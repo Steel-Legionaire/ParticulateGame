@@ -5,7 +5,7 @@ public class Water extends Tile
     int direction;
 
     public Water(int x, int y) {
-        super(x, y, Color.CYAN, false, false, 1);
+        super(x, y, Color.CYAN, false, false, 1, 1);
 
         direction = (int)(Math.random() *2); // spawn with a random direction
 
@@ -16,7 +16,7 @@ public class Water extends Tile
     {
         Tile[][] grid = ParticulateGame.grid;
 
-        if(!updatedThisFrame)
+        if(framesSinceLastUpdate == speed)
         {
 
             if(grid[y+1][x] == null)
@@ -57,11 +57,11 @@ public class Water extends Tile
 
             ParticulateGame.grid = grid;
 
-            updatedThisFrame = true;
+            framesSinceLastUpdate = 0;
         }
         else
         {
-            updatedThisFrame = false;
+            framesSinceLastUpdate++;
         }
 
     }
