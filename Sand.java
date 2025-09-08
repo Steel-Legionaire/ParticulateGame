@@ -11,70 +11,75 @@ public class Sand extends Tile {
     { 
         Tile[][]grid = ParticulateGame.grid;
 
-        if(framesSinceLastUpdate == speed)
+        if(y+1 >= grid.length)
         {
-            if(y+1 > grid.length){return;}
-
-            if(grid[y+1][x] == null)
+            grid[y][x] = null;
+        }
+        else
+        {
+            if(framesSinceLastUpdate == speed)
             {
-                grid[y][x] = null;
-                y++;
-                grid[y][x] = this;
+                if(y+1 > grid.length){return;}
 
-              
-            }
-            else // sand is on top of another tile
-            {
-                if(grid[y+1][x].getClass().equals(Water.class))
+                if(grid[y+1][x] == null)
                 {
-                    grid[y][x] = new Water(x, y);
+                    grid[y][x] = null;
                     y++;
                     grid[y][x] = this;
-                }else
-                {
-                    int randDir = (int)(Math.random() * 2);
 
-                    if(grid[y+1][x-1] == null && randDir == 0)
+                
+                }
+                else // sand is on top of another tile
+                {
+                    if(grid[y+1][x].getClass().equals(Water.class))
                     {
-                        grid[y][x] = null;
+                        grid[y][x] = new Water(x, y);
                         y++;
-                        x--;
                         grid[y][x] = this;
-                    }
-                    else if(grid[y+1][x-1] != null && grid[y+1][x-1].getClass().equals(Water.class) && randDir == 0)
+                    }else
                     {
-                            grid[y][x] = new Water(x, y);
-                            y++;
-                            x--;
-                            grid[y][x] = this;
-                    }
-                    else
-                    {
-                        if(grid[y+1][x+1] == null && randDir == 1)
+                        int randDir = (int)(Math.random() * 2);
+
+                        if(grid[y+1][x-1] == null && randDir == 0)
                         {
                             grid[y][x] = null;
                             y++;
-                            x++;
-                            grid[y][x] = this;
-                        }else if(grid[y+1][x+1] != null && grid[y+1][x+1].getClass().equals(Water.class))
-                        {
-                            grid[y][x] = new Water(x, y);
-                            y++;
-                            x++;
+                            x--;
                             grid[y][x] = this;
                         }
-                    }
-                } 
+                        else if(grid[y+1][x-1] != null && grid[y+1][x-1].getClass().equals(Water.class) && randDir == 0)
+                        {
+                                grid[y][x] = new Water(x, y);
+                                y++;
+                                x--;
+                                grid[y][x] = this;
+                        }
+                        else
+                        {
+                            if(grid[y+1][x+1] == null && randDir == 1)
+                            {
+                                grid[y][x] = null;
+                                y++;
+                                x++;
+                                grid[y][x] = this;
+                            }else if(grid[y+1][x+1] != null && grid[y+1][x+1].getClass().equals(Water.class))
+                            {
+                                grid[y][x] = new Water(x, y);
+                                y++;
+                                x++;
+                                grid[y][x] = this;
+                            }
+                        }
+                    } 
+                }
+                framesSinceLastUpdate = 0;
+
             }
-            framesSinceLastUpdate = 0;
-
+            else{
+                framesSinceLastUpdate++;
+            }
         }
-        else{
-            framesSinceLastUpdate++;
-        }
-
         ParticulateGame.grid = grid;
-        return; 
     }
 
     @Override

@@ -19,18 +19,36 @@ public class ParticulateGame extends Game  {
 
         public static Tile[][] grid;
 
-        public Class<?> currentTile = Sand.class;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        public Class<?> currentTile = Sand.class;    
+        
+        boolean isPaused = false;
+
+        boolean floorDropped = false;
+
+        Tile[] fullFloor;
+        Tile[] emptyFloor;
         
                 
         public ParticulateGame() 
         {
                 grid = new Tile[playAreaHeight / tileSize][playAreaWidth / tileSize];
                 setGridBoundsWalls();
+
+                emptyFloor = new Tile[playAreaWidth/tileSize];
+
+                fullFloor = new Tile[playAreaWidth/tileSize];
+
+                for(int c=0; c<fullFloor.length; c++)
+                {
+                        fullFloor[c] = new Bedrock(c, grid.length-1);
+                }
         }
         
 
         public void update() 
         {
+                if(isPaused){return;}
+
                 for(int r=0;r<grid.length;r++)
                 {
                         for(int c=0;c<grid[r].length;c++)
@@ -115,6 +133,22 @@ public class ParticulateGame extends Game  {
                 setGridBoundsWalls(); 
         }
 
+        public void dropFloor()
+        {
+                if(floorDropped)
+                {
+                        grid[grid.length-1] = fullFloor;
+                        floorDropped = false;
+                }
+                else
+                {
+                        grid[grid.length-1] = emptyFloor;
+                        floorDropped = true;
+
+                }
+                
+        }
+
     @Override
     public void keyTyped(KeyEvent ke) {}
 
@@ -132,9 +166,10 @@ public class ParticulateGame extends Game  {
         else if (ke.getKeyChar() == '9'){ currentTile = WaterSpawner.class; }
         else if (ke.getKeyChar() == '0'){ currentTile = LavaSpawner.class; }
 
-        else if(ke.getKeyChar() == 'r'){ 
-                resetGrid();
-        }
+        else if(ke.getKeyChar() == 'r'){ resetGrid(); }
+        else if(ke.getKeyChar() == ' '){ isPaused = !isPaused; }
+        else if(ke.getKeyCode() == 10){ dropFloor(); }
+
     }
 
     @Override

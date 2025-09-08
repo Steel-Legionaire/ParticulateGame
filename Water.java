@@ -5,7 +5,7 @@ public class Water extends Tile
     int direction;
 
     public Water(int x, int y) {
-        super(x, y, Color.CYAN, false, false, 1, 1);
+        super(x, y, Color.CYAN, false, false, 1, 3);
 
         direction = (int)(Math.random() *2); // spawn with a random direction
 
@@ -16,54 +16,60 @@ public class Water extends Tile
     {
         Tile[][] grid = ParticulateGame.grid;
 
-        if(framesSinceLastUpdate == speed)
+        if(y+1 >= grid.length)
         {
-
-            if(grid[y+1][x] == null)
-            {
-                grid[y][x] = null;
-                this.y++;
-                grid[y][x] = this;
-            }
-            else
-            {
-                if(direction == 1)
-                {
-                    if(grid[y][x+1] == null)
-                    {
-                        grid[y][x] = null;
-                        this.x++;
-                        grid[y][x] = this;
-                    }
-                    else
-                    {
-                        direction = 0;
-                    }
-                }
-                else
-                {
-                    if(grid[y][x-1] == null)
-                    {
-                        grid[y][x] = null;
-                        this.x--;
-                        grid[y][x] = this;
-                    }
-                    else
-                    {
-                        direction = 1;
-                    }
-                }
-            }
-
-            ParticulateGame.grid = grid;
-
-            framesSinceLastUpdate = 0;
+            grid[y][x] = null;
         }
         else
         {
-            framesSinceLastUpdate++;
-        }
+    if(framesSinceLastUpdate == speed)
+            {
 
+                if(grid[y+1][x] == null)
+                {
+                    grid[y][x] = null;
+                    this.y++;
+                    grid[y][x] = this;
+                }
+                else
+                {
+                    if(direction == 1)
+                    {
+                        if(grid[y][x+1] == null)
+                        {
+                            grid[y][x] = null;
+                            this.x++;
+                            grid[y][x] = this;
+                        }
+                        else
+                        {
+                            direction = 0;
+                        }
+                    }
+                    else
+                    {
+                        if(grid[y][x-1] == null)
+                        {
+                            grid[y][x] = null;
+                            this.x--;
+                            grid[y][x] = this;
+                        }
+                        else
+                        {
+                            direction = 1;
+                        }
+                    }
+                }
+
+                ParticulateGame.grid = grid;
+
+                framesSinceLastUpdate = 0;
+            }
+            else
+            {
+                framesSinceLastUpdate++;
+            }
+        }
     }
 
     @Override
