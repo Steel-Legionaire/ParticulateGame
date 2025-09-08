@@ -3,7 +3,7 @@ import java.awt.Color;
 public class Wall extends Tile{
 
     public Wall(int x, int y) {
-        super(x, y, Color.GRAY, false, true, 5);
+        super(x, y, Color.GRAY, false, true, 5,1);
     }
 
     @Override

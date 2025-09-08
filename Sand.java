@@ -3,7 +3,7 @@ import java.awt.Color;
 public class Sand extends Tile {
     
     public Sand(int x, int y) {
-        super(x, y, Color.YELLOW, false, true, 2);
+        super(x, y, Color.YELLOW, false, true, 2,1);
     }
 
     @Override
@@ -11,55 +11,75 @@ public class Sand extends Tile {
     { 
         Tile[][]grid = ParticulateGame.grid;
 
-        if(!updatedThisFrame)
+        if(y+1 >= grid.length)
         {
-            if(y+1 > grid.length){return;}
-
-            if(grid[y+1][x] == null)
+            grid[y][x] = null;
+        }
+        else
+        {
+            if(framesSinceLastUpdate == speed)
             {
-                grid[y][x] = null;
-                y++;
-                grid[y][x] = this;
+                if(y+1 > grid.length){return;}
 
-              
-            }
-            else // sand is on top of another tile
-            {
+                if(grid[y+1][x] == null)
+                {
+                    grid[y][x] = null;
+                    y++;
+                    grid[y][x] = this;
+
                 
-                //if(grid[y+1][x+1] == null && grid[y+1][x-1] == null)
-                //{
-                //    // choose a random one
-                //    grid[y][x] = null;
-                //}
-                //else 
+                }
+                else // sand is on top of another tile
+                {
+                    if(grid[y+1][x].getClass().equals(Water.class))
+                    {
+                        grid[y][x] = new Water(x, y);
+                        y++;
+                        grid[y][x] = this;
+                    }else
+                    {
+                        int randDir = (int)(Math.random() * 2);
 
-                if(grid[y+1][x-1] == null)
-                {
-                    //go left
-                    grid[y][x] = null;
-                    y++;
-                    x--;
-                    grid[y][x] = this;
-                    
+                        if(grid[y+1][x-1] == null && randDir == 0)
+                        {
+                            grid[y][x] = null;
+                            y++;
+                            x--;
+                            grid[y][x] = this;
+                        }
+                        else if(grid[y+1][x-1] != null && grid[y+1][x-1].getClass().equals(Water.class) && randDir == 0)
+                        {
+                                grid[y][x] = new Water(x, y);
+                                y++;
+                                x--;
+                                grid[y][x] = this;
+                        }
+                        else
+                        {
+                            if(grid[y+1][x+1] == null && randDir == 1)
+                            {
+                                grid[y][x] = null;
+                                y++;
+                                x++;
+                                grid[y][x] = this;
+                            }else if(grid[y+1][x+1] != null && grid[y+1][x+1].getClass().equals(Water.class))
+                            {
+                                grid[y][x] = new Water(x, y);
+                                y++;
+                                x++;
+                                grid[y][x] = this;
+                            }
+                        }
+                    } 
                 }
-                else if(grid[y+1][x+1] == null) 
-                {
-                    grid[y][x] = null;
-                    y++;
-                    x++;
-                    grid[y][x] = this;
-                    // go right
-                }
+                framesSinceLastUpdate = 0;
+
             }
-            this.updatedThisFrame = true;
+            else{
+                framesSinceLastUpdate++;
+            }
         }
-        else{
-            updatedThisFrame = false; 
-            // updatedThisFrame will become false after this object is checked for the second within the same frame 
-        }
-
         ParticulateGame.grid = grid;
-        return; 
     }
 
     @Override

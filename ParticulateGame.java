@@ -1,10 +1,11 @@
 
-import java.awt.Color;  
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.time.chrono.Era;
 
 public class ParticulateGame extends Game  {
     
@@ -15,14 +16,20 @@ public class ParticulateGame extends Game  {
         public int playAreaWidth = 1500;
         public int playAreaHeight = 1000;
 
-        public int sideMenuX = 1500;
-
         public static int tileSize = 5;
 
         public static Tile[][] grid;
 
-        public Class<?> currentTile = Sand.class;
+        public Class<?> currentTile = Sand.class;    
         
+        boolean isPaused = false;
+
+        boolean floorDropped = false;
+
+        Tile[] fullFloor;
+        Tile[] emptyFloor;
+        
+        boolean eraseMode = false;
 
         Button[] particleMenu;
         Button[] blockMenu = new Button[]{ new Button(100,100, 100,100, "Test")};
@@ -40,6 +47,15 @@ public class ParticulateGame extends Game  {
                 grid = new Tile[playAreaHeight / tileSize][playAreaWidth / tileSize];
                 setGridBoundsWalls();
 
+                emptyFloor = new Tile[playAreaWidth/tileSize];
+
+                fullFloor = new Tile[playAreaWidth/tileSize];
+
+                for(int c=0; c<fullFloor.length; c++)
+                {
+                        fullFloor[c] = new Bedrock(c, grid.length-1);
+                }
+
                 menus[0] = particleMenu;
                 menus[1] = blockMenu;
                 menus[2] = optionsMenu; 
@@ -53,6 +69,8 @@ public class ParticulateGame extends Game  {
 
         public void update() 
         {
+                if(isPaused){return;}
+
                 for(int r=0;r<grid.length;r++)
                 {
                         for(int c=0;c<grid[r].length;c++)
@@ -97,7 +115,24 @@ public class ParticulateGame extends Game  {
                                 }
                         }
                 }
-        }
+
+                pen.setColor(Color.WHITE);
+
+                int sx = playAreaWidth + ((SCREEN_WIDTH - playAreaWidth) / 2);
+                int sy = SCREEN_HEIGHT / 2;
+
+                pen.drawString("1: Sand", sx, sy);
+                pen.drawString("2: Water", sx, sy+10);
+                pen.drawString("3: Lava", sx, sy+20);
+                pen.drawString("4: Fire", sx, sy+30);
+                pen.drawString("5: Wall", sx, sy+40);
+                pen.drawString("6: Wood", sx, sy+50);
+                pen.drawString("7: TNT", sx, sy+60);
+                pen.drawString("8: SandSpawner", sx, sy+70);
+                pen.drawString("9: WaterSpawner", sx, sy+80);
+                pen.drawString("0: LavaSpawner", sx, sy+90);
+        }       
+
 
         public void setGridBoundsWalls()
         {
@@ -115,6 +150,18 @@ public class ParticulateGame extends Game  {
         
         public void createTile(int x, int y, Class<?> clazz)
         {
+                if(clazz.equals(Eraser.class) && y < grid.length)
+                {
+
+                        if(grid[y][x] != null && grid[y][x].isDestructable)
+                        {
+
+                                grid[y][x] = null;
+                        }
+
+                        return;
+                }
+
                 if(grid[y][x] == null)
                 {
                         try {
@@ -130,7 +177,34 @@ public class ParticulateGame extends Game  {
                                 System.out.println(e);
                         }
                 }
+                else if(Eraser.class.equals(clazz))
+                {
+                        grid[y][x] = null;
+                }
         }
+
+        public void resetGrid()
+        {
+                grid = new Tile[playAreaHeight / tileSize][playAreaWidth / tileSize];
+                setGridBoundsWalls(); 
+        }
+
+        public void dropFloor()
+        {
+                if(floorDropped)
+                {
+                        grid[grid.length-1] = fullFloor;
+                        floorDropped = false;
+                }
+                else
+                {
+                        grid[grid.length-1] = emptyFloor;
+                        floorDropped = true;
+
+                }
+                
+        }
+
     @Override
     public void keyTyped(KeyEvent ke) {}
 
@@ -147,6 +221,13 @@ public class ParticulateGame extends Game  {
         else if (ke.getKeyChar() == '8'){ currentTile = SandSpawner.class; }
         else if (ke.getKeyChar() == '9'){ currentTile = WaterSpawner.class; }
         else if (ke.getKeyChar() == '0'){ currentTile = LavaSpawner.class; }
+
+        else if(ke.getKeyChar() == 'r'){ resetGrid(); }
+        else if(ke.getKeyChar() == ' '){ isPaused = !isPaused; }
+        else if(ke.getKeyCode() == 10){ dropFloor(); }
+
+        else if(ke.getKeyChar() == 'e'){  currentTile = Eraser.class;}
+
     }
 
     @Override
@@ -180,7 +261,7 @@ public class ParticulateGame extends Game  {
         int my = me.getY() / tileSize;
 
         try {
-                if(grid[my][mx] == null)
+                if(grid[my][mx] == null || currentTile.equals(Eraser.class))
                 {
                         createTile(mx, my, currentTile);        
                 }

@@ -15,8 +15,11 @@ public abstract class Tile
     public boolean isFlammable;
     public boolean isDestructable;
     public int toughness;
+    public int speed;
 
-    Tile(int x, int y, Color color, boolean isFlammable, boolean isDestructable, int toughness)
+    public int framesSinceLastUpdate = 0;
+
+    Tile(int x, int y, Color color, boolean isFlammable, boolean isDestructable, int toughness, int speed)
     {
         this.x = x;
         this.y = y;
@@ -24,6 +27,9 @@ public abstract class Tile
         this.isFlammable = isFlammable;
         this.isDestructable = isDestructable;
         this.toughness = toughness;
+
+        this.speed = speed;
+        // Speed is in terms of how many frames until the objects moves again, this does not affect the actions
     }
 
     public abstract void move();
