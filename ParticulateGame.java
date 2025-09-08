@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.time.chrono.Era;
 
 public class ParticulateGame extends Game  {
     
@@ -15,7 +16,7 @@ public class ParticulateGame extends Game  {
         public int playAreaWidth = 1500;
         public int playAreaHeight = 1000;
 
-        public static int tileSize = 10;
+        public static int tileSize = 5;
 
         public static Tile[][] grid;
 
@@ -28,6 +29,7 @@ public class ParticulateGame extends Game  {
         Tile[] fullFloor;
         Tile[] emptyFloor;
         
+        boolean eraseMode = false;
                 
         public ParticulateGame() 
         {
@@ -110,6 +112,18 @@ public class ParticulateGame extends Game  {
         
         public void createTile(int x, int y, Class<?> clazz)
         {
+                if(clazz.equals(Eraser.class) && y < grid.length)
+                {
+
+                        if(grid[y][x] != null && grid[y][x].isDestructable)
+                        {
+
+                                grid[y][x] = null;
+                        }
+
+                        return;
+                }
+
                 if(grid[y][x] == null)
                 {
                         try {
@@ -124,6 +138,10 @@ public class ParticulateGame extends Game  {
                         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                                 System.out.println(e);
                         }
+                }
+                else if(Eraser.class.equals(clazz))
+                {
+                        grid[y][x] = null;
                 }
         }
 
@@ -170,6 +188,8 @@ public class ParticulateGame extends Game  {
         else if(ke.getKeyChar() == ' '){ isPaused = !isPaused; }
         else if(ke.getKeyCode() == 10){ dropFloor(); }
 
+        else if(ke.getKeyChar() == 'e'){  currentTile = Eraser.class;}
+
     }
 
     @Override
@@ -191,7 +211,7 @@ public class ParticulateGame extends Game  {
         int my = me.getY() / tileSize;
 
         try {
-                if(grid[my][mx] == null)
+                if(grid[my][mx] == null || currentTile.equals(Eraser.class))
                 {
                         createTile(mx, my, currentTile);        
                 }
