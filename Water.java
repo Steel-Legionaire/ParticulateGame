@@ -67,8 +67,29 @@ public class Water extends Tile
     }
 
     @Override
-    public void action() {
+    public void action() 
+    {
+        Tile[][] grid = ParticulateGame.grid;
 
+        if(grid[y-1][x].getClass().equals(Lava.class))
+        {
+            grid[y][x] = new Obsidian(x,y);
+        }
+
+        if(grid[y][x+1].getClass().equals(Lava.class))
+        {
+            grid[y][x] = new Obsidian(x,y);
+        }
+
+        if(grid[y+1][x].getClass().equals(Lava.class))
+        {
+            grid[y][x] = new Obsidian(x,y);
+        }
+
+        if(grid[y][x-1].getClass().equals(Lava.class))
+        {
+            grid[y][x] = new Obsidian(x,y);
+        }
     }
     
 }
