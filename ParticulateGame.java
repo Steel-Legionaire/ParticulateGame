@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -56,7 +57,24 @@ public class ParticulateGame extends Game  {
                                 }
                         }
                 }
-        }
+
+                pen.setColor(Color.WHITE);
+
+                int sx = playAreaWidth + ((SCREEN_WIDTH - playAreaWidth) / 2);
+                int sy = SCREEN_HEIGHT / 2;
+
+                pen.drawString("1: Sand", sx, sy);
+                pen.drawString("2: Water", sx, sy+10);
+                pen.drawString("3: Lava", sx, sy+20);
+                pen.drawString("4: Fire", sx, sy+30);
+                pen.drawString("5: Wall", sx, sy+40);
+                pen.drawString("6: Wood", sx, sy+50);
+                pen.drawString("7: TNT", sx, sy+60);
+                pen.drawString("8: SandSpawner", sx, sy+70);
+                pen.drawString("9: WaterSpawner", sx, sy+80);
+                pen.drawString("0: LavaSpawner", sx, sy+90);
+        }       
+
 
         public void setGridBoundsWalls()
         {
