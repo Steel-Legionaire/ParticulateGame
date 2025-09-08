@@ -1,4 +1,5 @@
 
+import java.awt.Color;  
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -14,17 +15,39 @@ public class ParticulateGame extends Game  {
         public int playAreaWidth = 1500;
         public int playAreaHeight = 1000;
 
-        public static int tileSize = 10;
+        public int sideMenuX = 1500;
+
+        public static int tileSize = 5;
 
         public static Tile[][] grid;
 
         public Class<?> currentTile = Sand.class;
         
+
+        Button[] particleMenu;
+        Button[] blockMenu = new Button[]{ new Button(100,100, 100,100, "Test")};
+        Button[] optionsMenu;
+        Button[] spawnerMenu;
+
+        Button[][] menus = new Button[4][10];
+
+        int selectedMenu = 0;
+
+        Button testButton = new Button(sideMenuX + 50, 50, 100, 50, "Click Me!");
                 
         public ParticulateGame() 
         {
                 grid = new Tile[playAreaHeight / tileSize][playAreaWidth / tileSize];
                 setGridBoundsWalls();
+
+                menus[0] = particleMenu;
+                menus[1] = blockMenu;
+                menus[2] = optionsMenu; 
+                menus[3] = spawnerMenu;
+
+                System.out.println(menus[1]);
+
+                particleMenu = new Button[]{new Button(sideMenuX + 50, 100, 100, 500, "TEST")};
         }
         
 
@@ -46,6 +69,24 @@ public class ParticulateGame extends Game  {
         
         public void draw(Graphics pen)
         {    
+
+
+
+                for(int r=0;r<menus.length;r++)
+                {
+                        if(menus[r] != null)
+                        {
+                                for(int c=0;c<menus[r].length;c++)
+                                {
+                                        if(menus[r][c] != null)
+                                        {
+                                                //menus[r][c].draw(pen);
+                                        }
+                                }
+                        }
+
+                }
+                
                 for(int r=0;r<grid.length;r++)
                 {
                         for(int c=0;c<grid[r].length;c++)
@@ -114,10 +155,22 @@ public class ParticulateGame extends Game  {
     @Override
     public void mouseClicked(MouseEvent me) 
     { 
-        int mx = me.getX() / tileSize;
-        int my = me.getY() / tileSize; 
+        int mxg = me.getX() / tileSize;
+        int myg = me.getY() / tileSize; 
+
+        int mx = me.getX();
+        int my = me.getY();
         
-        createTile(mx, my, currentTile);
+        try{ createTile(mxg, myg, currentTile); }
+        catch(ArrayIndexOutOfBoundsException e){}
+
+        if(mx >= sideMenuX)
+        {
+                if(testButton.clickedButton(mx, my)){
+                        System.out.println("Clicked Button!");
+                }
+        }
+
     }
 
     @Override
