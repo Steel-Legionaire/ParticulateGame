@@ -1,3 +1,26 @@
-public class SandSpawner {
+import java.awt.Color;
+
+public class SandSpawner extends Tile{
+
+    public SandSpawner(int x, int y) {
+        super(x, y, Color.RED, false, true, 8);
+
+    }
+
+    @Override
+    public void move() { return; }
+
+    @Override
+    public void action() 
+    {
+        Tile[][] grid = ParticulateGame.grid;
+
+        if(grid[y+1][x] == null)
+        {
+            grid[y+1][x] = new Sand(x, y+1);
+        }
+
+        ParticulateGame.grid = grid;
+    }
     
 }
