@@ -5,7 +5,7 @@ public class Water extends Tile
     int direction;
 
     public Water(int x, int y) {
-        super(x, y, Color.CYAN, false, false, 1, 3);
+        super(x, y, Color.CYAN, false, true, 1, 3);
 
         direction = (int)(Math.random() *2); // spawn with a random direction
 
