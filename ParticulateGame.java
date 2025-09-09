@@ -16,6 +16,11 @@ public class ParticulateGame extends Game  {
         public int playAreaWidth = 1500;
         public int playAreaHeight = 1000;
 
+        int sideMenuX = playAreaWidth;
+
+        int outlinedTileX = 0;
+        int outlinedTileY = 0;
+
         public static int tileSize = 5;
 
         public static Tile[][] grid;
@@ -61,8 +66,6 @@ public class ParticulateGame extends Game  {
                 menus[2] = optionsMenu; 
                 menus[3] = spawnerMenu;
 
-                System.out.println(menus[1]);
-
                 particleMenu = new Button[]{new Button(sideMenuX + 50, 100, 100, 500, "TEST")};
         }
         
@@ -87,9 +90,7 @@ public class ParticulateGame extends Game  {
         
         public void draw(Graphics pen)
         {    
-
-
-
+                pen.drawRect(outlinedTileX * tileSize, outlinedTileY * tileSize, tileSize, tileSize);
                 for(int r=0;r<menus.length;r++)
                 {
                         if(menus[r] != null)
@@ -132,7 +133,6 @@ public class ParticulateGame extends Game  {
                 pen.drawString("9: WaterSpawner", sx, sy+80);
                 pen.drawString("0: LavaSpawner", sx, sy+90);
         }       
-
 
         public void setGridBoundsWalls()
         {
@@ -236,8 +236,8 @@ public class ParticulateGame extends Game  {
     @Override
     public void mouseClicked(MouseEvent me) 
     { 
-        int mxg = me.getX() / tileSize;
-        int myg = me.getY() / tileSize; 
+        int mxg = (me.getX() / tileSize) - 2;
+        int myg = (me.getY() / tileSize) - 7; 
 
         int mx = me.getX();
         int my = me.getY();
@@ -257,8 +257,12 @@ public class ParticulateGame extends Game  {
     @Override
     public void mouseDragged(MouseEvent me) 
     {
-        int mx = me.getX() / tileSize;
-        int my = me.getY() / tileSize;
+
+        int mx = (me.getX() / tileSize )- 2;
+        int my = (me.getY() / tileSize )- 7;
+
+        outlinedTileX = mx;
+        outlinedTileY = my;
 
         try {
                 if(grid[my][mx] == null || currentTile.equals(Eraser.class))
@@ -284,8 +288,10 @@ public class ParticulateGame extends Game  {
     public void mouseExited(MouseEvent me) {}
 
     @Override
-    public void mouseMoved(MouseEvent e) {
-
+    public void mouseMoved(MouseEvent me) 
+    {
+        outlinedTileX = (me.getX() / tileSize) - 2;
+        outlinedTileY = (me.getY() / tileSize) - 7;
     }
         
     //Launches the Game
