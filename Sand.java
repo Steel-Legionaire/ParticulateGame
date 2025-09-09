@@ -40,14 +40,15 @@ public class Sand extends Tile {
                     {
                         int randDir = (int)(Math.random() * 2);
 
-                        if(grid[y+1][x-1] == null && randDir == 0)
+                        if(grid[y][x-1] == null && grid[y+1][x-1] == null && randDir == 0)
                         {
                             grid[y][x] = null;
                             y++;
                             x--;
                             grid[y][x] = this;
                         }
-                        else if(grid[y+1][x-1] != null && grid[y+1][x-1].getClass().equals(Water.class) && randDir == 0)
+                        else if((grid[y+1][x-1] != null && grid[y+1][x-1].getClass().equals(Water.class) && randDir == 0) && 
+                                (grid[y][x-1] != null && grid[y][x-1].getClass().equals(Water.class)))
                         {
                                 grid[y][x] = new Water(x, y);
                                 y++;
@@ -56,13 +57,15 @@ public class Sand extends Tile {
                         }
                         else
                         {
-                            if(grid[y+1][x+1] == null && randDir == 1)
+                            if(grid[y][x+1] == null && grid[y+1][x+1] == null && randDir == 1)
                             {
                                 grid[y][x] = null;
                                 y++;
                                 x++;
                                 grid[y][x] = this;
-                            }else if(grid[y+1][x+1] != null && grid[y+1][x+1].getClass().equals(Water.class))
+                            }
+                            else if((grid[y+1][x+1] != null && grid[y+1][x+1].getClass().equals(Water.class)) &&
+                                    (grid[y][x+1] != null && grid[y][x+1].getClass().equals(Water.class)))
                             {
                                 grid[y][x] = new Water(x, y);
                                 y++;
