@@ -1,13 +1,10 @@
 
 import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.time.chrono.Era;
 
 public class ParticulateGame extends Game  {
     
