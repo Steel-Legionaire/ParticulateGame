@@ -97,6 +97,15 @@ public class ParticulateGame extends Game  {
                 menus[1] = spawnerMenu;
                 menus[2] = optionsMenu; 
 
+                for(int k=0; k<50; k++)
+                {
+                        for(int i=0; i<50; i++)
+                        {
+                                grid[50+i][50+k] = new Wall(50+k, 50+i);
+                        }
+                }
+
+
         }
         
 
@@ -283,43 +292,51 @@ public class ParticulateGame extends Game  {
 
         int mx = me.getX();
         int my = me.getY();
-        
-        try{ createTile(mxg, myg, currentTile); }
-        catch(ArrayIndexOutOfBoundsException e){}
 
-        if(mx >= sideMenuX)
+        if(me.isShiftDown())
         {
-
-                if(pageLeftButton.clickedButton(mx, my)){ selectedMenu = 0; }
-                else if(pageRightButton.clickedButton(mx, my)){ selectedMenu = 1; }
-                else if(optionsButton.clickedButton(mx, my)){ selectedMenu = 2; }
-                else if(eraserButton.clickedButton(mx, my)) { currentTile = Eraser.class; }
-
-                if(selectedMenu == 0)
+                if(grid[myg][mxg] instanceof TNT)
                 {
-                        if( wallButton.clickedButton(mx, my)) { currentTile = Wall.class; }
-                        else if(bedrockButton.clickedButton(mx, my)) { currentTile = Bedrock.class; }
-                        else if(obsidianButton.clickedButton(mx, my)) { currentTile = Obsidian.class; }
-                        else if(woodButton.clickedButton(mx, my)) { currentTile = Wood.class; }
-                        else if(tntButton.clickedButton(mx, my)) {currentTile = TNT.class; }
-                        else if(sandButton.clickedButton(mx, my)){ currentTile = Sand.class; }
-                        else if(waterButton.clickedButton(mx, my)) { currentTile = Water.class; }
-                        else if(lavaButton.clickedButton(mx, my)) { currentTile = Lava.class; }
-                        else if(fireButton.clickedButton(mx, my)) { currentTile = Fire.class; }
-                        else if(ashButton.clickedButton(mx, my)) { currentTile = Ash.class; }
+                        ((TNT)grid[myg][mxg]).explode();
                 }
-                else if(selectedMenu == 1)
-                {
-                        if(sandSpawner.clickedButton(mx, my)) { currentTile = SandSpawner.class; }
-                        else if(waterSpawner.clickedButton(mx, my)) { currentTile = WaterSpawner.class; }
-                        else if(lavaSpawner.clickedButton(mx, my)) { currentTile = LavaSpawner.class; }
-                }
-                else if(selectedMenu == 3)
+        }
+        else
+        {
+                try{ createTile(mxg, myg, currentTile); }
+                catch(ArrayIndexOutOfBoundsException e){}
+
+                if(mx >= sideMenuX)
                 {
 
+                        if(pageLeftButton.clickedButton(mx, my)){ selectedMenu = 0; }
+                        else if(pageRightButton.clickedButton(mx, my)){ selectedMenu = 1; }
+                        else if(optionsButton.clickedButton(mx, my)){ selectedMenu = 2; }
+                        else if(eraserButton.clickedButton(mx, my)) { currentTile = Eraser.class; }
+
+                        if(selectedMenu == 0)
+                        {
+                                if( wallButton.clickedButton(mx, my)) { currentTile = Wall.class; }
+                                else if(bedrockButton.clickedButton(mx, my)) { currentTile = Bedrock.class; }
+                                else if(obsidianButton.clickedButton(mx, my)) { currentTile = Obsidian.class; }
+                                else if(woodButton.clickedButton(mx, my)) { currentTile = Wood.class; }
+                                else if(tntButton.clickedButton(mx, my)) {currentTile = TNT.class; }
+                                else if(sandButton.clickedButton(mx, my)){ currentTile = Sand.class; }
+                                else if(waterButton.clickedButton(mx, my)) { currentTile = Water.class; }
+                                else if(lavaButton.clickedButton(mx, my)) { currentTile = Lava.class; }
+                                else if(fireButton.clickedButton(mx, my)) { currentTile = Fire.class; }
+                                else if(ashButton.clickedButton(mx, my)) { currentTile = Ash.class; }
+                        }
+                        else if(selectedMenu == 1)
+                        {
+                                if(sandSpawner.clickedButton(mx, my)) { currentTile = SandSpawner.class; }
+                                else if(waterSpawner.clickedButton(mx, my)) { currentTile = WaterSpawner.class; }
+                                else if(lavaSpawner.clickedButton(mx, my)) { currentTile = LavaSpawner.class; }
+                        }
+                        else if(selectedMenu == 3)
+                        {
+
+                        }
                 }
-
-
         }
 
     }
@@ -334,14 +351,30 @@ public class ParticulateGame extends Game  {
         outlinedTileX = mx;
         outlinedTileY = my;
 
-        try {
-                if(grid[my][mx] == null || currentTile.equals(Eraser.class))
-                {
-                        createTile(mx, my, currentTile);        
-                }
-        } catch (ArrayIndexOutOfBoundsException e) {
+        if(!(me.isShiftDown()))
+        {
+                
+                try {
+                        if(grid[my][mx] == null || currentTile.equals(Eraser.class))
+                        {
+                                createTile(mx, my, currentTile);        
+                        }
+                } catch (ArrayIndexOutOfBoundsException e) {
 
+                }
         }
+        else
+        {
+                try {
+                        if(grid[my][mx] != null && grid[my][mx].getClass().equals(TNT.class))
+                        {
+                                ((TNT)grid[my][mx]).explode();  
+                        }
+                } catch (ArrayIndexOutOfBoundsException e) {
+
+                }
+        }
+
 
 
     }
