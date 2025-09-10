@@ -48,46 +48,46 @@ public class TNT extends Tile{
         {
             for(int c = x-radius; c<x+radius; c++)
             {
-                Tile curTile = grid[r][c];
-
-                if(curTile != null)
+                try
                 {
-                    //System.out.println(isExploding);
-                    if(curTile instanceof TNT)
+                    Tile curTile = grid[r][c];
+
+                    if(curTile != null)
                     {
-                        System.out.println(((TNT)curTile).isExploding);
-                        if(!((TNT)curTile).isExploding)
+                        //System.out.println(isExploding);
+                        if(curTile instanceof TNT)
                         {
-                            if(!((TNT)curTile).equals(this))
+                            System.out.println(((TNT)curTile).isExploding);
+                            if(!((TNT)curTile).isExploding)
                             {
-                                ((TNT)curTile).explode();
+                                if(!((TNT)curTile).equals(this))
+                                {
+                                    ((TNT)curTile).explode();
+                                }
+                                else 
+                                {
+                                    grid[r][c] = null;
+                                }
                             }
                             else 
                             {
                                 grid[r][c] = null;
                             }
+                            
                         }
-                        else 
+                        else
                         {
-                            grid[r][c] = null;
+                            if(curTile.toughness <= power && curTile.isDestructable)
+                            {
+                                grid[r][c] = null;
+                            }
                         }
-                        
-                    }
-                    else
-                    {
-                        if(curTile.toughness <= power && curTile.isDestructable)
-                        {
-                            grid[r][c] = null;
-                        }
-                    }
 
+                    }
                 }
-                
+                catch(ArrayIndexOutOfBoundsException e){}
             }
         }
-
-
-
     }
     
 }

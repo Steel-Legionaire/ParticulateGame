@@ -70,25 +70,48 @@ public class Lava extends Tile{
     public void action() {
         Tile[][] grid = ParticulateGame.grid;
 
-        if(grid[y-1][x] != null && grid[y-1][x].getClass().equals(Water.class))
+        Tile topTile = grid[y-1][x];
+        Tile rightTile = grid[y][x+1];
+        Tile leftTile = grid[y][x-1];
+        Tile bottomTile = grid[y+1][x];
+
+        if(topTile instanceof Water)
         {
             grid[y][x] = new Obsidian(x,y);
+        }
+        else if(topTile instanceof TNT)
+        {
+            ((TNT)topTile).explode();
         }
 
-        if(grid[y][x+1] != null && grid[y][x+1].getClass().equals(Water.class))
+        if(rightTile instanceof Water)
         {
             grid[y][x] = new Obsidian(x,y);
+        }
+        else if(rightTile instanceof TNT)
+        {
+            ((TNT)rightTile).explode();
         }
 
-        if(y+1 < grid.length && grid[y+1][x] != null && grid[y+1][x].getClass().equals(Water.class))
+        if(y+1 < grid.length &&  bottomTile instanceof Water)
         {
             grid[y][x] = new Obsidian(x,y);
+        }
+        else if(y+1 < grid.length && bottomTile instanceof TNT)
+        {
+            ((TNT)bottomTile).explode();
         }
 
-        if(grid[y][x-1] != null && grid[y][x-1].getClass().equals(Water.class))
+        if(leftTile instanceof Water)
         {
             grid[y][x] = new Obsidian(x,y);
         }
+        else if(leftTile instanceof TNT)
+        {
+            ((TNT)leftTile).explode();
+        }
+
+
     }
     
 }

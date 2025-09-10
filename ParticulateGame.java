@@ -96,6 +96,7 @@ public class ParticulateGame extends Game  {
                 //menus[2] = blockMenu;
                 menus[1] = spawnerMenu;
                 menus[2] = optionsMenu;
+                
         }
         
 
@@ -110,7 +111,11 @@ public class ParticulateGame extends Game  {
                                 if(grid[r][c] != null)
                                 {
                                         grid[r][c].action();
-                                        grid[r][c].move();
+                                        if(grid[r][c] != null)
+                                        {
+                                                grid[r][c].move();
+                                        }
+                                        
                                         
                                 }
                         }
