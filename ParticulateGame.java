@@ -95,17 +95,7 @@ public class ParticulateGame extends Game  {
                 menus[0] = tilesMenu;
                 //menus[2] = blockMenu;
                 menus[1] = spawnerMenu;
-                menus[2] = optionsMenu; 
-
-                for(int k=0; k<50; k++)
-                {
-                        for(int i=0; i<50; i++)
-                        {
-                                grid[50+i][50+k] = new Wall(50+k, 50+i);
-                        }
-                }
-
-
+                menus[2] = optionsMenu;
         }
         
 
