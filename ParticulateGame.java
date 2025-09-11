@@ -35,6 +35,8 @@ public class ParticulateGame extends Game  {
         
         boolean eraseMode = false;
 
+        String[] controlsList = new String[]{ "r: Reset Play Area", "e: Select Eraser", "Space: Pause Simulation", "Enter: Drop Floor", "1: Sand", "2: Water", "3: Lava", "4: Fire", "5: Wall", "6: Wood", "7: Tnt", "8: Sand Spawner", "9: Water Spawner", "0 Lava Spawner"};
+
         
 
         // Define Block Buttons
@@ -58,8 +60,9 @@ public class ParticulateGame extends Game  {
         Button fireSpawner = new Button(sideMenuX + 60, 300, 200, 50, "Fire Spawner");
 
 
-        // Define Options button
+        // Define Options button and menu buttons
         Button optionsButton = new Button(sideMenuX + 135, 930, 50, 50, "\u2699" );
+        Button exitGameButton = new Button(sideMenuX + 60, 75, 200, 50, "Exit Game");
 
         // Define page switcher buttons
         Button pageLeftButton = new Button(sideMenuX + 60, 930, 50, 50, "\u2190");
@@ -70,7 +73,7 @@ public class ParticulateGame extends Game  {
 
         Button[] tilesMenu = new Button[]{ wallButton, bedrockButton, obsidianButton, woodButton, tntButton, sandButton, waterButton, lavaButton, fireButton, ashButton};
         //Button[] blockMenu = new Button[]{ };
-        Button[] optionsMenu;
+        Button[] optionsMenu = new Button[]{ exitGameButton};
         Button[] spawnerMenu = new Button[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner };
 
         Button[][] menus = new Button[4][10];
@@ -154,7 +157,8 @@ public class ParticulateGame extends Game  {
                                 {
                                         menus[selectedMenu][c].draw(pen);
 
-                                        pen.setColor(Color.WHITE);
+                                        pen.setColor(Color.WHITE);      
+                                        //System.out.println(selectedMenu);
 
                                         if(selectedMenu == 0)
                                         {
@@ -167,18 +171,20 @@ public class ParticulateGame extends Game  {
                                         }
                                         else if(selectedMenu == 2)
                                         {
+                                                //System.out.println("IN OPTIONS MENU");
                                                 pen.drawString("Options", sideMenuX + 115, 50);
+
+                                                // Draw all controls strings
+
+                                                for(int i=0; i<controlsList.length; i++)
+                                                {
+                                                        pen.drawString(controlsList[i], sideMenuX + 60, 250 + (i * 25));
+                                                }
                                         }
                                 }
                         }
                 }
-
-                
                 pen.drawRect(outlinedTileX * tileSize, outlinedTileY * tileSize, tileSize, tileSize);
-
-
-
-
         }       
 
         public void setGridBoundsWalls()
@@ -303,7 +309,7 @@ public class ParticulateGame extends Game  {
 
                 if(mx >= sideMenuX)
                 {
-
+                        System.out.println(selectedMenu);
                         if(pageLeftButton.clickedButton(mx, my)){ selectedMenu = 0; }
                         else if(pageRightButton.clickedButton(mx, my)){ selectedMenu = 1; }
                         else if(optionsButton.clickedButton(mx, my)){ selectedMenu = 2; }
@@ -329,9 +335,9 @@ public class ParticulateGame extends Game  {
                                 else if(lavaSpawner.clickedButton(mx, my)) { currentTile = LavaSpawner.class; }
                                 else if(fireSpawner.clickedButton(mx, my)) { currentTile = FireSpawner.class; }
                         }
-                        else if(selectedMenu == 3)
+                        else if(selectedMenu == 2)
                         {
-
+                                if(exitGameButton.clickedButton(mx, my)){ System.exit(0); }
                         }
                 }
         }
