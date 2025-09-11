@@ -73,7 +73,16 @@ public class Lava extends Tile{
         Tile topTile = grid[y-1][x];
         Tile rightTile = grid[y][x+1];
         Tile leftTile = grid[y][x-1];
-        Tile bottomTile = grid[y+1][x];
+
+
+        Tile bottomTile = null;
+
+        if(y+1 < grid.length)
+        {
+            bottomTile = grid[y+1][x];
+        }
+
+        
 
         if(topTile instanceof Water)
         {
