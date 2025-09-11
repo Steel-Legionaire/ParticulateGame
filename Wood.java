@@ -44,6 +44,25 @@ public class Wood extends Tile{
                 }
                 else
                 {
+                    if(grid[y][x-1] instanceof Wood)
+                    {
+                        ((Wood)grid[y][x-1]).onFire = true;
+                    }
+                    else if(grid[y][x+1] instanceof Wood)
+                    {
+                        ((Wood)grid[y][x+1]).onFire = true;
+                    }
+                    else if(grid[y+1][x] instanceof Wood)
+                    {
+                        ((Wood)grid[y+1][x]).onFire = true;
+                    }
+                    else if(grid[y-1][x] instanceof Wood)
+                    {
+                        ((Wood)grid[y-1][x]).onFire = true;
+                    }
+
+
+
                     if(framesOnFire >= framesUntilCanBeBurnt)
                     {
                         
