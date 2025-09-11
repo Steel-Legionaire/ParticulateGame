@@ -321,7 +321,18 @@ public class ParticulateGame extends Game  {
                         System.out.println(selectedMenu);
                         if(pageLeftButton.clickedButton(mx, my)){ selectedMenu = 0; }
                         else if(pageRightButton.clickedButton(mx, my)){ selectedMenu = 1; }
-                        else if(optionsButton.clickedButton(mx, my)){ selectedMenu = 2; }
+                        else if(optionsButton.clickedButton(mx, my))
+                        { 
+                                if(selectedMenu == 2)
+                                {
+                                        selectedMenu = 0;
+                                }
+                                else
+                                {
+                                        selectedMenu = 2;
+                                }       
+                                 
+                        }
                         else if(eraserButton.clickedButton(mx, my)) { currentTile = Eraser.class; }
 
                         if(selectedMenu == 0)
