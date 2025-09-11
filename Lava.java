@@ -92,6 +92,9 @@ public class Lava extends Tile{
         {
             ((TNT)topTile).explode();
         }
+        else if(topTile instanceof Wood){
+            ((Wood)topTile).onFire = true;
+        }
 
         if(rightTile instanceof Water)
         {
@@ -100,6 +103,9 @@ public class Lava extends Tile{
         else if(rightTile instanceof TNT)
         {
             ((TNT)rightTile).explode();
+        }
+        else if(rightTile instanceof Wood){
+            ((Wood)rightTile).onFire = true;
         }
 
         if(y+1 < grid.length &&  bottomTile instanceof Water)
@@ -110,6 +116,9 @@ public class Lava extends Tile{
         {
             ((TNT)bottomTile).explode();
         }
+        else if(y+1 < grid.length && bottomTile instanceof Wood){
+            ((Wood)bottomTile).onFire = true;
+        }
 
         if(leftTile instanceof Water)
         {
@@ -119,7 +128,9 @@ public class Lava extends Tile{
         {
             ((TNT)leftTile).explode();
         }
-
+        else if(leftTile instanceof Wood){
+            ((Wood)leftTile).onFire = true;
+        }
 
     }
     
