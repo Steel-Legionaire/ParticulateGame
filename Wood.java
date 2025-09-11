@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 public class Wood extends Tile{
 
 
@@ -7,6 +9,8 @@ public class Wood extends Tile{
     int framesUntilCanBeBurnt = 300;
     int framesOnFire = 0;
 
+    Color normalColor = new java.awt.Color(139,69,19);
+    Color onFireColor = new java.awt.Color(200, 100, 20);
 
 
     public Wood(int x, int y) {
@@ -21,6 +25,8 @@ public class Wood extends Tile{
     {
         if(onFire)
         {
+            super.color = onFireColor;
+
             if(framesSinceLastUpdate == speed)
             {
                 //System.out.println("is on fire");
@@ -34,6 +40,7 @@ public class Wood extends Tile{
                     //System.out.println("TEST");
                     onFire = false;
                     framesOnFire = 0;
+                    super.color = normalColor;
                 }
                 else
                 {
