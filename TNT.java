@@ -54,25 +54,7 @@ public class TNT extends Tile{
                             {
                                 // TNT is NOT exploding
                                 ((TNT)curTile).isExploding = true;
-                            }
-
-                            //System.out.println(((TNT)curTile).isExploding);
-                            /*if(!((TNT)curTile).isExploding)
-                            {
-                                if(!((TNT)curTile).equals(this))
-                                {
-                                    ((TNT)curTile).explode();
-                                }
-                                else 
-                                {
-                                    grid[r][c] = null;
-                                }
-                            }
-                            else 
-                            {
-                                grid[r][c] = null;
-                            }*/
-                            
+                            }                      
                         }
                         else
                         {
