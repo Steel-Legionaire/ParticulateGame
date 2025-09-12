@@ -5,7 +5,7 @@ import java.awt.Color;
 public class TNT extends Tile{
 
 
-    public boolean isExploding = true;
+    public boolean isExploding = false;
 
     public TNT(int x, int y) {
         super(x, y, Color.RED, true, true, 2, 2);
@@ -19,32 +19,20 @@ public class TNT extends Tile{
     @Override
     public void action() 
     {
-
+        if(isExploding)
+        {
+            explode();
+        }
     }
 
     public void explode()
     {
-        System.out.println("BOOM!");
+        //System.out.println("BOOM!");
         isExploding = true;
         Tile[][] grid = ParticulateGame.grid;
 
-        int radius = 3;
+        int radius = 6;
         int power = 10;
-
-        //grid[y-radius][x-radius] = top left
-
-        
-        //System.out.println((y) + " " + (x));
-        //System.out.println((y-radius) + " " + (x-radius));
-
-        
-        /*grid[y-radius][x-radius] = new Wood(x-radius, y-radius);
-
-        grid[y+radius][x+radius] = new Wood(x+radius, y+radius);
-
-        grid[y+radius][x-radius] = new Wood(x-radius, y+radius);
-
-        grid[y-radius][x+radius] = new Wood(x+radius, y-radius);*/
 
         for(int r=y-radius; r<y+radius; r++)
         {
@@ -57,31 +45,40 @@ public class TNT extends Tile{
                     if(curTile != null)
                     {
                         //System.out.println(isExploding);
-                        if(curTile instanceof TNT)
+                        if(curTile instanceof TNT && !(curTile.equals(this)))
                         {
-                            System.out.println(((TNT)curTile).isExploding);
-                            if(!((TNT)curTile).isExploding)
+
+                            if(((TNT)curTile).isExploding)
                             {
-                                if(!((TNT)curTile).equals(this))
-                                {
-                                    ((TNT)curTile).explode();
-                                }
-                                else 
-                                {
-                                    grid[r][c] = null;
-                                }
+                                continue;
                             }
-                            else 
+                            else
                             {
-                                grid[r][c] = null;
-                            }
-                            
+                                // TNT is NOT exploding
+                                ((TNT)curTile).isExploding = true;
+                            }                      
                         }
                         else
                         {
                             if(curTile.toughness <= power && curTile.isDestructable)
                             {
-                                grid[r][c] = null;
+                                double distance = Math.sqrt(Math.pow(c - x, 2) + Math.pow(r - y, 2));
+
+                                int innerRad = (int)(radius/4);
+                                
+                                if(distance <= innerRad)
+                                {
+                                    grid[r][c] = null;
+                                }
+                                else if (distance <= radius) {
+                                    double probability = Math.max(0, 1 - (distance / radius));
+
+                                    if(Math.random() < probability)
+                                    {
+                                        grid[r][c] = null;
+                                    }
+                                }
+                                
                             }
                         }
 

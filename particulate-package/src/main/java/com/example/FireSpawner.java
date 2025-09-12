@@ -1,4 +1,5 @@
 package com.example;
+
 import java.awt.Color;
 
 public class FireSpawner extends Tile

@@ -37,8 +37,9 @@ public class ParticulateGame extends Game  {
         
         boolean eraseMode = false;
 
-        String[] controlsList = new String[]{ "r: Reset Play Area", "e: Select Eraser", "Space: Pause Simulation", "Enter: Drop Floor", "1: Sand", "2: Water", "3: Lava", "4: Fire", "5: Wall", "6: Wood", "7: Tnt", "8: Sand Spawner", "9: Water Spawner", "0 Lava Spawner"};
+        String[] controlsList = new String[]{ "r: Reset Play Area", "e: Select Eraser", "Space: Pause Simulation", "Enter: Drop Floor", "1: Sand", "2: Water", "3: Lava", "4: Fire", "5: Wall", "6: Wood", "7: Tnt", "8: Sand Spawner", "9: Water Spawner", "0: Lava Spawner"};
 
+        int drawSize = 1;
         
 
         // Define Block Buttons
@@ -73,12 +74,20 @@ public class ParticulateGame extends Game  {
         // Define eraser button
         Button eraserButton = new Button(sideMenuX + 60, 855, 200, 50, "Eraser"); 
 
+        // Define square draw size buttons
+        Button smallSquareDrawSize = new Button(sideMenuX + 60, 575, 200, 50, "Small");
+        Button mediumSquareDrawSize = new Button(sideMenuX + 60, 635, 200, 50, "Medium");
+        Button largeSquareDrawSize = new Button(sideMenuX + 60, 695, 200, 50, "Large");
+        Button massiveSquareDrawSize = new Button(sideMenuX + 60, 755, 200, 50, "Massive");
+
         Button[] tilesMenu = new Button[]{ wallButton, bedrockButton, obsidianButton, woodButton, tntButton, sandButton, waterButton, lavaButton, fireButton, ashButton};
         //Button[] blockMenu = new Button[]{ };
         Button[] optionsMenu = new Button[]{ exitGameButton};
         Button[] spawnerMenu = new Button[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner };
 
         Button[][] menus = new Button[4][10];
+
+        Button[] squareDrawSizeButtons = new Button[]{smallSquareDrawSize, mediumSquareDrawSize, largeSquareDrawSize, massiveSquareDrawSize};
 
         int selectedMenu = 0;
 
@@ -102,6 +111,16 @@ public class ParticulateGame extends Game  {
                 //menus[2] = blockMenu;
                 menus[1] = spawnerMenu;
                 menus[2] = optionsMenu;
+
+
+                // Leftover code to create a large square of walls
+                //for(int i=0; i<50; i++)
+                //{
+                //        for(int k=0; k<50; k++)
+                //        {
+                //                grid[50+i][50+k] = new Wall(50+k, 50+i);
+                //        }
+                //}
                 
         }
         
@@ -180,12 +199,23 @@ public class ParticulateGame extends Game  {
 
                                                 for(int i=0; i<controlsList.length; i++)
                                                 {
-                                                        pen.drawString(controlsList[i], sideMenuX + 60, 250 + (i * 25));
+                                                        pen.drawString(controlsList[i], sideMenuX + 60, 150 + (i * 25));
                                                 }
+
+                                                pen.drawString("Square Draw Sizes", sideMenuX + 70, 550);
+
+                                                for(Button b : squareDrawSizeButtons)
+                                                {
+                                                        b.draw(pen);
+                                                }
+
+
                                         }
                                 }
                         }
                 }
+                
+                
                 pen.drawRect(outlinedTileX * tileSize, outlinedTileY * tileSize, tileSize, tileSize);
         }       
 
@@ -205,36 +235,76 @@ public class ParticulateGame extends Game  {
         
         public void createTile(int x, int y, Class<?> clazz)
         {
-                if(clazz.equals(Eraser.class) && y < grid.length)
+                if(drawSize == 1)
                 {
-
-                        if(grid[y][x] != null && grid[y][x].isDestructable)
+                        if(clazz.equals(Eraser.class) && y < grid.length)
                         {
 
+                                if(grid[y][x] != null && grid[y][x].isDestructable)
+                                {
+
+                                        grid[y][x] = null;
+                                }
+
+                                return;
+                        }
+
+                        if(grid[y][x] == null)
+                        {
+                                try {
+                                        Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
+        
+                                        Tile t = (Tile) argConstructor.newInstance(x, y);
+
+                                        //System.out.println(clazz.cast(t));
+
+                                        grid[y][x] = t;
+
+                                } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                                        System.out.println(e);
+                                }
+                        }
+                        else if(Eraser.class.equals(clazz))
+                        {
                                 grid[y][x] = null;
                         }
-
-                        return;
-                }
-
-                if(grid[y][x] == null)
+                }                                
+                else 
                 {
-                        try {
-                                Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
-  
-                                Tile t = (Tile) argConstructor.newInstance(x, y);
+                        for(int r = y - ((int)(drawSize / 2)); r < y+((int)(drawSize / 2)) + 1; r++)
+                        {
+                                for(int c = x - ((int)(drawSize / 2)); c < x+((int)(drawSize / 2)) + 1; c++)
+                                {
+                                        if(r>=1 && r<grid.length && c >= 1 && c <= grid[r].length)
+                                        {
+                                                if(clazz.equals(Eraser.class))
+                                                {
 
-                                //System.out.println(clazz.cast(t));
+                                                        if(grid[r][c] != null && grid[r][c].isDestructable)
+                                                        {
 
-                                grid[y][x] = t;
+                                                                grid[r][c] = null;
+                                                        }
+                                                }
+                                                else
+                                                {
+                                                        if(grid[r][c] == null)
+                                                        {
+                                                                try {
+                                                                        Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
+                                        
+                                                                        Tile t = (Tile) argConstructor.newInstance(c, r);
+                                                                        grid[r][c] = t;
 
-                        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                                System.out.println(e);
+                                                                } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                                                                        System.out.println(e);
+                                                                }
+                                                        }
+                                                }
+
+                                        }
+                                }
                         }
-                }
-                else if(Eraser.class.equals(clazz))
-                {
-                        grid[y][x] = null;
                 }
         }
 
@@ -306,15 +376,28 @@ public class ParticulateGame extends Game  {
         }
         else
         {
-                try{ createTile(mxg, myg, currentTile); }
-                catch(ArrayIndexOutOfBoundsException e){}
+                if(mx < sideMenuX + tileSize)
+                {
+                        createTile(mxg, myg, currentTile); 
 
-                if(mx >= sideMenuX)
+                }
+                else if(mx >= sideMenuX)
                 {
                         System.out.println(selectedMenu);
                         if(pageLeftButton.clickedButton(mx, my)){ selectedMenu = 0; }
                         else if(pageRightButton.clickedButton(mx, my)){ selectedMenu = 1; }
-                        else if(optionsButton.clickedButton(mx, my)){ selectedMenu = 2; }
+                        else if(optionsButton.clickedButton(mx, my))
+                        { 
+                                if(selectedMenu == 2)
+                                {
+                                        selectedMenu = 0;
+                                }
+                                else
+                                {
+                                        selectedMenu = 2;
+                                }       
+                                 
+                        }
                         else if(eraserButton.clickedButton(mx, my)) { currentTile = Eraser.class; }
 
                         if(selectedMenu == 0)
@@ -340,8 +423,13 @@ public class ParticulateGame extends Game  {
                         else if(selectedMenu == 2)
                         {
                                 if(exitGameButton.clickedButton(mx, my)){ System.exit(0); }
+                                else if(smallSquareDrawSize.clickedButton(mx, my)){ drawSize = 1; }
+                                else if(mediumSquareDrawSize.clickedButton(mx, my)){ drawSize = 11; }
+                                else if(largeSquareDrawSize.clickedButton(mx, my)){ drawSize = 51; }
+                                else if(massiveSquareDrawSize.clickedButton(mx, my)){ drawSize = 101; }
                         }
                 }
+
         }
 
     }
@@ -350,20 +438,25 @@ public class ParticulateGame extends Game  {
     public void mouseDragged(MouseEvent me) 
     {
 
-        int mx = (me.getX() / tileSize )- 2;
-        int my = (me.getY() / tileSize )- 7;
+        int mxg = (me.getX() / tileSize )- 2;
+        int myg = (me.getY() / tileSize )- 7;
 
-        outlinedTileX = mx;
-        outlinedTileY = my;
+        int mx = me.getX();
+
+        outlinedTileX = mxg;
+        outlinedTileY = myg;
 
         if(!(me.isShiftDown()))
         {
                 
                 try {
-                        if(grid[my][mx] == null || currentTile.equals(Eraser.class))
+
+                        if(mx < sideMenuX + tileSize)
                         {
-                                createTile(mx, my, currentTile);        
+                                createTile(mxg, myg, currentTile);     
                         }
+                           
+                        
                 } catch (ArrayIndexOutOfBoundsException e) {
 
                 }
@@ -371,9 +464,9 @@ public class ParticulateGame extends Game  {
         else
         {
                 try {
-                        if(grid[my][mx] != null && grid[my][mx].getClass().equals(TNT.class))
+                        if(grid[myg][mxg] instanceof TNT)
                         {
-                                ((TNT)grid[my][mx]).explode();  
+                                ((TNT)grid[myg][mxg]).explode();  
                         }
                 } catch (ArrayIndexOutOfBoundsException e) {
 
