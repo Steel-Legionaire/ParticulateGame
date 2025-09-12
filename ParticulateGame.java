@@ -111,13 +111,14 @@ public class ParticulateGame extends Game  {
                 menus[2] = optionsMenu;
 
 
-                for(int i=0; i<50; i++)
-                {
-                        for(int k=0; k<50; k++)
-                        {
-                                grid[50+i][50+k] = new Wall(50+k, 50+i);
-                        }
-                }
+                // Leftover code to create a large square of walls
+                //for(int i=0; i<50; i++)
+                //{
+                //        for(int k=0; k<50; k++)
+                //        {
+                //                grid[50+i][50+k] = new Wall(50+k, 50+i);
+                //        }
+                //}
                 
         }
         
@@ -272,7 +273,7 @@ public class ParticulateGame extends Game  {
                         {
                                 for(int c = x - ((int)(drawSize / 2)); c < x+((int)(drawSize / 2)) + 1; c++)
                                 {
-                                        if(r>=1 && r<grid.length && c >= 1 && c < grid[r].length-1)
+                                        if(r>=1 && r<grid.length && c >= 1 && c <= grid[r].length)
                                         {
                                                 if(clazz.equals(Eraser.class))
                                                 {
@@ -291,19 +292,12 @@ public class ParticulateGame extends Game  {
                                                                         Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
                                         
                                                                         Tile t = (Tile) argConstructor.newInstance(c, r);
-
-                                                                        //System.out.println(clazz.cast(t));
-
                                                                         grid[r][c] = t;
 
                                                                 } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                                                                         System.out.println(e);
                                                                 }
                                                         }
-                                                        else
-                                                        {
-                                                                continue;
-                                                        } 
                                                 }
 
                                         }
@@ -380,8 +374,7 @@ public class ParticulateGame extends Game  {
         }
         else
         {
-                try{ createTile(mxg, myg, currentTile); }
-                catch(ArrayIndexOutOfBoundsException e){}
+
 
                 if(mx >= sideMenuX)
                 {
@@ -431,6 +424,11 @@ public class ParticulateGame extends Game  {
                                 else if(massiveSquareDrawSize.clickedButton(mx, my)){ drawSize = 101; }
                         }
                 }
+                else 
+                {
+                        try{ createTile(mxg, myg, currentTile); }
+                        catch(ArrayIndexOutOfBoundsException e){}
+                }
         }
 
     }
@@ -439,17 +437,24 @@ public class ParticulateGame extends Game  {
     public void mouseDragged(MouseEvent me) 
     {
 
-        int mx = (me.getX() / tileSize )- 2;
-        int my = (me.getY() / tileSize )- 7;
+        int mxg = (me.getX() / tileSize )- 2;
+        int myg = (me.getY() / tileSize )- 7;
 
-        outlinedTileX = mx;
-        outlinedTileY = my;
+        int mx = me.getX();
+
+        outlinedTileX = mxg;
+        outlinedTileY = myg;
 
         if(!(me.isShiftDown()))
         {
                 
                 try {
-                        createTile(mx, my, currentTile);        
+
+                        if(mx < playAreaWidth)
+                        {
+                                createTile(mxg, myg, currentTile);     
+                        }
+                           
                         
                 } catch (ArrayIndexOutOfBoundsException e) {
 
@@ -458,9 +463,9 @@ public class ParticulateGame extends Game  {
         else
         {
                 try {
-                        if(grid[my][mx] instanceof TNT)
+                        if(grid[myg][mxg] instanceof TNT)
                         {
-                                ((TNT)grid[my][mx]).explode();  
+                                ((TNT)grid[myg][mxg]).explode();  
                         }
                 } catch (ArrayIndexOutOfBoundsException e) {
 
