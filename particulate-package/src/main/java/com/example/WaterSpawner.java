@@ -1,5 +1,4 @@
 package com.example;
-
 import java.awt.Color;
 
 public class WaterSpawner extends Tile{

@@ -1,5 +1,4 @@
 package com.example;
-
 public class Ash extends Tile{
 
     public Ash(int x, int y) {

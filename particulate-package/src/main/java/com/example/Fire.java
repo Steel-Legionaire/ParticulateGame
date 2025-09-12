@@ -1,5 +1,4 @@
 package com.example;
-
 public class Fire extends Tile{
 
     private int lifeTime = (int)(Math.random()*20) + 50;
