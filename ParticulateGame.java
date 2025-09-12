@@ -374,9 +374,12 @@ public class ParticulateGame extends Game  {
         }
         else
         {
+                if(mx < sideMenuX + tileSize)
+                {
+                        createTile(mxg, myg, currentTile); 
 
-
-                if(mx >= sideMenuX)
+                }
+                else if(mx >= sideMenuX)
                 {
                         System.out.println(selectedMenu);
                         if(pageLeftButton.clickedButton(mx, my)){ selectedMenu = 0; }
@@ -424,11 +427,7 @@ public class ParticulateGame extends Game  {
                                 else if(massiveSquareDrawSize.clickedButton(mx, my)){ drawSize = 101; }
                         }
                 }
-                else 
-                {
-                        try{ createTile(mxg, myg, currentTile); }
-                        catch(ArrayIndexOutOfBoundsException e){}
-                }
+
         }
 
     }
@@ -450,7 +449,7 @@ public class ParticulateGame extends Game  {
                 
                 try {
 
-                        if(mx < playAreaWidth)
+                        if(mx < sideMenuX + tileSize)
                         {
                                 createTile(mxg, myg, currentTile);     
                         }
