@@ -1,4 +1,7 @@
-# ParticulateRefreshed
+# Particulate Refreshed
+
+## Requirements: 
+  java: 21.0.8
 
 
 ## How to download the game:
