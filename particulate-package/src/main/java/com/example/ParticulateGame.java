@@ -129,24 +129,7 @@ public class ParticulateGame extends Game  {
         {
                 if(isPaused){return;}
 
-                /*for(int r=0;r<grid.length;r++)
-                {
-                        for(int c=0;c<grid[r].length;c++)
-                        {
-                                if(grid[r][c] != null)
-                                {
-                                        grid[r][c].action();
-                                        if(grid[r][c] != null)
-                                        {
-                                                grid[r][c].move();
-                                        }
-                                        
-                                        
-                                }
-                        }
-                }*/
-
-                for(int r=grid.length-1;r>=0;r--)
+                for(int r=0;r<grid.length;r++)
                 {
                         for(int c=0;c<grid[r].length;c++)
                         {
@@ -162,6 +145,23 @@ public class ParticulateGame extends Game  {
                                 }
                         }
                 }
+
+                /*for(int r=grid.length-1;r>=0;r--)
+                {
+                        for(int c=0;c<grid[r].length;c++)
+                        {
+                                if(grid[r][c] != null)
+                                {
+                                        grid[r][c].action();
+                                        if(grid[r][c] != null)
+                                        {
+                                                grid[r][c].move();
+                                        }
+                                        
+                                        
+                                }
+                        }
+                }*/
         }
         
         public void draw(Graphics pen)
