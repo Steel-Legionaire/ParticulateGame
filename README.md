@@ -2,17 +2,17 @@
 
 
 ## How to download the game:
-  Click on "Releases" 
+  Click on the latest relase of Particulate under "Releases" (this will have a green box that says latest next to it)
   
   ![alt text](readmeImages/releases_location.png "releases_location image")
 
-  Click on "Particulate-1.X.jar"
+  Click on "Particulate-1.x.jar"
 
   ![alt text](readmeImages/release_page.png "release page image")
 
 ## How to run
-  Open Terminal \
-  
+  Open Terminal 
+
   cd into where you downloaded the .jar file (likely your Downloads folder)\
   ![alt text](readmeImages/cd_command.png "release page image")
   
