@@ -76,7 +76,7 @@ public class Wood extends Tile{
                         {
                             int chanceToSpawnAsh = (int)(Math.random() *100) + 1;
                             //System.out.println(chanceToSpawnAsh);
-                            if(chanceToSpawnAsh <= 80)
+                            if(chanceToSpawnAsh <= 25)
                             {
                                 grid[y][x] = new Ash(x, y);
                             }
