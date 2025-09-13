@@ -103,6 +103,8 @@ public class Wood extends Tile{
             {
                 framesSinceLastUpdate++;
             }
+            super.color = normalColor;
+            framesOnFire = 0;
         }
     }
     
