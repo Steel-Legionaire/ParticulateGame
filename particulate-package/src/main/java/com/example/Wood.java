@@ -33,10 +33,12 @@ public class Wood extends Tile{
                 //System.out.println("is on fire");
                 Tile[][] grid = ParticulateGame.grid;
 
-                int chanceToGoOut = (int)(Math.random() *100) + 1;
+                
                 //System.out.println("chanceToGoOut: "+chanceToGoOut);
 
-                if(chanceToGoOut <= 25)
+                int chanceToGoOut = (int)(Math.random() *100) + 1;
+
+                if(chanceToGoOut <= 15)
                 {
                     //System.out.println("TEST");
                     onFire = false;
@@ -45,23 +47,24 @@ public class Wood extends Tile{
                 }
                 else
                 {
-                    if(grid[y][x-1] instanceof Wood)
-                    {
-                        ((Wood)grid[y][x-1]).onFire = true;
-                    }
-                    else if(grid[y][x+1] instanceof Wood)
-                    {
-                        ((Wood)grid[y][x+1]).onFire = true;
-                    }
-                    else if(grid[y+1][x] instanceof Wood)
-                    {
-                        ((Wood)grid[y+1][x]).onFire = true;
-                    }
-                    else if(grid[y-1][x] instanceof Wood)
-                    {
-                        ((Wood)grid[y-1][x]).onFire = true;
-                    }
-
+                        int chanceToSpread = 15;
+                        if(grid[y][x-1] instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
+                        {
+                            ((Wood)grid[y][x-1]).onFire = true;
+                        }
+                        if(grid[y][x+1] instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
+                        {
+                            ((Wood)grid[y][x+1]).onFire = true;
+                        }
+                        if(grid[y+1][x] instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
+                        {
+                            ((Wood)grid[y+1][x]).onFire = true;
+                        }
+                        if(grid[y-1][x] instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
+                        {
+                            ((Wood)grid[y-1][x]).onFire = true;
+                        }
+            
 
 
                     if(framesOnFire >= framesUntilCanBeBurnt)
@@ -69,7 +72,7 @@ public class Wood extends Tile{
                         
                         int chanceToBurn = (int)(Math.random() *100) + 1;
                         //System.out.println(chanceToBurn);
-                        if(chanceToBurn <= 50)
+                        if(chanceToBurn <= 30)
                         {
                             int chanceToSpawnAsh = (int)(Math.random() *100) + 1;
                             //System.out.println(chanceToSpawnAsh);
