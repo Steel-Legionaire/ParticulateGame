@@ -6,6 +6,19 @@ public class TNT extends Tile{
 
     public boolean isExploding = false;
 
+    boolean staticTnt = false;
+    boolean primedTnt = false;
+    boolean primedFallingTnt = false;
+
+    int framesBetweenFlashes = 100;
+    int framesSinceLastFlash = 0;
+
+    // fuse is how many frames until... BOOOM 
+    int fuse = 500;
+    int framesWhileLit = 0;
+
+    boolean coloredRed = true;
+
     public TNT(int x, int y) {
         super(x, y, Color.RED, true, true, 2, 2);
     }
@@ -22,6 +35,7 @@ public class TNT extends Tile{
         {
             explode();
         }
+        
     }
 
     public void explode()
@@ -33,32 +47,21 @@ public class TNT extends Tile{
         int radius = 6;
         int power = 10;
 
-        for(int r=y-radius; r<y+radius; r++)
+        if(framesWhileLit == fuse)
         {
-            for(int c = x-radius; c<x+radius; c++)
+            System.out.println("IN IF STATEMENT");
+            for(int r=y-radius; r<y+radius; r++)
             {
-                try
+                for(int c = x-radius; c<x+radius; c++)
                 {
-                    Tile curTile = grid[r][c];
-
-                    if(curTile != null)
+                    try
                     {
-                        //System.out.println(isExploding);
-                        if(curTile instanceof TNT && !(curTile.equals(this)))
-                        {
+                        Tile curTile = grid[r][c];
 
-                            if(((TNT)curTile).isExploding)
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                // TNT is NOT exploding
-                                ((TNT)curTile).isExploding = true;
-                            }                      
-                        }
-                        else
+                        if(curTile != null)
                         {
+                            //System.out.println(isExploding);
+
                             if(curTile.toughness <= power && curTile.isDestructable)
                             {
                                 double distance = Math.sqrt(Math.pow(c - x, 2) + Math.pow(r - y, 2));
@@ -74,18 +77,56 @@ public class TNT extends Tile{
 
                                     if(Math.random() < probability)
                                     {
-                                        grid[r][c] = null;
+                                        if(curTile instanceof TNT && !(curTile.equals(this)))
+                                        {
+
+                                            if(((TNT)curTile).isExploding)
+                                            {
+                                                continue;
+                                            }
+                                            else
+                                            {
+                                                // TNT is NOT exploding
+                                                ((TNT)curTile).isExploding = true;
+                                            }                      
+                                        }
+                                        else
+                                        {
+                                            grid[r][c] = null;
+                                        }
+                                        
                                     }
                                 }
                                 
                             }
-                        }
+                            
 
+                        }
                     }
+                    catch(ArrayIndexOutOfBoundsException e){}
                 }
-                catch(ArrayIndexOutOfBoundsException e){}
             }
         }
+        else 
+        {
+            
+            framesWhileLit++;
+            if(framesBetweenFlashes == framesSinceLastFlash)
+            {   System.out.println("TEST");
+                if(coloredRed)
+                {
+                    super.color = Color.WHITE;
+                    coloredRed = false;
+                }
+                else
+                {
+                    super.color = Color.RED;
+                    coloredRed = true;
+                }
+                framesSinceLastFlash = 0;
+            }
+        }
+        framesSinceLastFlash++;
     }
     
 }
