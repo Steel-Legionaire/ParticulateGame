@@ -52,17 +52,36 @@ public class Wood extends Tile{
                         {
                             ((Wood)grid[y][x-1]).onFire = true;
                         }
+                        else if(grid[y][x-1] instanceof TNT)
+                        {   
+                            ((TNT)(grid[y][x-1])).isExploding = true;
+                        }
+                        
                         if(grid[y][x+1] instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
                         {
                             ((Wood)grid[y][x+1]).onFire = true;
                         }
+                        else if(grid[y][x+1] instanceof TNT)
+                        {   
+                            ((TNT)(grid[y][x+1])).isExploding = true;
+                        }
+                        
                         if(grid[y+1][x] instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
                         {
                             ((Wood)grid[y+1][x]).onFire = true;
                         }
+                        else if(grid[y+1][x] instanceof TNT)
+                        {   
+                            ((TNT)(grid[y+1][x])).isExploding = true;
+                        }
+
                         if(grid[y-1][x] instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
                         {
                             ((Wood)grid[y-1][x]).onFire = true;
+                        }
+                        else if(grid[y-1][x] instanceof TNT)
+                        {   
+                            ((TNT)(grid[y-1][x])).isExploding = true;
                         }
             
 
