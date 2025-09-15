@@ -6,9 +6,8 @@ public class TNT extends Tile{
 
     public boolean isExploding = false;
 
-    boolean staticTnt = false;
-    boolean primedTnt = false;
-    boolean primedFallingTnt = false;
+    public boolean isStatic = false;
+    public boolean isFalling = false;
 
     int framesBetweenFlashes = 100;
     int framesSinceLastFlash = 0;
@@ -21,6 +20,14 @@ public class TNT extends Tile{
 
     public TNT(int x, int y) {
         super(x, y, Color.RED, true, true, 2, 2);
+        if(isFalling)
+        {
+                this.isFalling = true;
+        }
+        else
+        {
+                isStatic = true;
+        }
     }
 
     @Override

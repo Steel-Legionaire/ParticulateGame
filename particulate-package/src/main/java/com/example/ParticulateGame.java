@@ -46,12 +46,15 @@ public class ParticulateGame extends Game  {
 
         int buttonX = sideMenuX + 60;
 
+        boolean mouseHeld = false;
+
         // Define Block Buttons
         Button wallButton = new Button(buttonX, 75, buttonWidth, buttonHeight, "Wall");
         Button bedrockButton = new Button(buttonX, 150, buttonWidth, buttonHeight, "Bedrock");
         Button obsidianButton = new Button(buttonX, 225, buttonWidth, buttonHeight, "Obsidian");
         Button woodButton = new Button(buttonX, 300, buttonWidth, buttonHeight, "Wood");
-        Button tntButton = new Button(buttonX, 375, buttonWidth, buttonHeight, "TNT");
+        Button staticTntButton = new Button(buttonX, 375, buttonWidth, buttonHeight, "Satic TNT");
+        Button fallingTntButton = new Button(buttonX, 450, buttonWidth, buttonHeight, "Falling TNT");
 
         // Define particle buttons
         Button sandButton = new Button(buttonX, 75, buttonWidth, buttonHeight, "Sand");
@@ -84,7 +87,7 @@ public class ParticulateGame extends Game  {
         Button massiveSquareDrawSize = new Button(buttonX, 755, buttonWidth, buttonHeight, "Massive");
 
         Button[] particlesButtons = new Button[]{ sandButton, waterButton, lavaButton, fireButton, ashButton};
-        Button[] blockMenu = new Button[]{ wallButton, bedrockButton, obsidianButton, woodButton, tntButton};
+        Button[] blockMenu = new Button[]{ wallButton, bedrockButton, obsidianButton, woodButton, staticTntButton, fallingTntButton};
         Button[] optionsMenu = new Button[]{ exitGameButton};
         Button[] spawnerMenu = new Button[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner };
 
@@ -132,6 +135,11 @@ public class ParticulateGame extends Game  {
         public void update() 
         {
                 if(isPaused){return;}
+
+                if(mouseHeld)
+                {
+                        createTile(outlinedTileX, outlinedTileY, currentTile);
+                }
 
                 for(int r=0;r<grid.length;r++)
                 {
@@ -285,6 +293,10 @@ public class ParticulateGame extends Game  {
                                         //System.out.println(clazz.cast(t));
 
                                         grid[y][x] = t;
+                                        if(clazz.equals(TNT.class))
+                                        {
+                                                
+                                        }
 
                                 } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                                         System.out.println(e);
@@ -453,7 +465,8 @@ public class ParticulateGame extends Game  {
                                 else if(bedrockButton.clickedButton(mx, my)) { currentTile = Bedrock.class; }
                                 else if(obsidianButton.clickedButton(mx, my)) { currentTile = Obsidian.class; }
                                 else if(woodButton.clickedButton(mx, my)) { currentTile = Wood.class; }
-                                else if(tntButton.clickedButton(mx, my)) {currentTile = TNT.class; }
+                                else if(staticTntButton.clickedButton(mx, my)) {currentTile = TNT.class; }
+                                else if(fallingTntButton.clickedButton(mx, my)) {currentTile = TNT.class; }
                         }
                         else if(selectedMenu == 2)
                         {
@@ -479,6 +492,7 @@ public class ParticulateGame extends Game  {
     @Override
     public void mouseDragged(MouseEvent me) 
     {
+        mouseHeld = false;
 
         int mxg = (me.getX() / tileSize )- 2;
         int myg = (me.getY() / tileSize )- 7;
@@ -520,9 +534,19 @@ public class ParticulateGame extends Game  {
     }
 
     @Override
-    public void mousePressed(MouseEvent me) {}
+    public void mousePressed(MouseEvent me) 
+    {
+        if(me.getX() < sideMenuX)
+        {
+                mouseHeld = true;
+        }
+        
+    }
     @Override
-    public void mouseReleased(MouseEvent me) {}
+    public void mouseReleased(MouseEvent me) 
+    {
+        mouseHeld = false;
+    }
 
     @Override
     public void mouseEntered(MouseEvent me) {}
