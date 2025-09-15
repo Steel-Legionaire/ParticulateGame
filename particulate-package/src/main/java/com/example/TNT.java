@@ -49,7 +49,6 @@ public class TNT extends Tile{
 
         if(framesWhileLit == fuse)
         {
-            System.out.println("IN IF STATEMENT");
             for(int r=y-radius; r<y+radius; r++)
             {
                 for(int c = x-radius; c<x+radius; c++)
@@ -112,7 +111,7 @@ public class TNT extends Tile{
             
             framesWhileLit++;
             if(framesBetweenFlashes == framesSinceLastFlash)
-            {   System.out.println("TEST");
+            {  
                 if(coloredRed)
                 {
                     super.color = Color.WHITE;

@@ -409,7 +409,7 @@ public class ParticulateGame extends Game  {
                 }
                 else if(mx >= sideMenuX)
                 {
-                        System.out.println(selectedMenu);
+                        
                         if(pageLeftButton.clickedButton(mx, my))
                         { 
                                 if(selectedMenu > 0)
