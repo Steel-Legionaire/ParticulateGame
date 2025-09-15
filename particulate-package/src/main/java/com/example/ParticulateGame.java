@@ -41,47 +41,50 @@ public class ParticulateGame extends Game  {
 
         int drawSize = 1;
         
+        int buttonWidth = 200;
+        int buttonHeight = 50;
+
+        int buttonX = sideMenuX + 60;
 
         // Define Block Buttons
-        Button wallButton = new Button(sideMenuX + 60, 75, 200, 50, "Wall");
-        Button bedrockButton = new Button(sideMenuX + 60, 150, 200, 50, "Bedrock");
-        Button obsidianButton = new Button(sideMenuX + 60, 225, 200, 50, "Obsidian");
-        Button woodButton = new Button(sideMenuX + 60, 300, 200, 50, "Wood");
-        Button tntButton = new Button(sideMenuX + 60, 375, 200, 50, "TNT");
+        Button wallButton = new Button(buttonX, 75, buttonWidth, buttonHeight, "Wall");
+        Button bedrockButton = new Button(buttonX, 150, buttonWidth, buttonHeight, "Bedrock");
+        Button obsidianButton = new Button(buttonX, 225, buttonWidth, buttonHeight, "Obsidian");
+        Button woodButton = new Button(buttonX, 300, buttonWidth, buttonHeight, "Wood");
+        Button tntButton = new Button(buttonX, 375, buttonWidth, buttonHeight, "TNT");
 
         // Define particle buttons
-        Button sandButton = new Button(sideMenuX + 60, 480, 200, 50, "Sand");
-        Button waterButton = new Button(sideMenuX + 60, 555, 200, 50, "Water");
-        Button lavaButton = new Button(sideMenuX + 60, 630, 200, 50, "Lava");
-        Button fireButton = new Button(sideMenuX + 60, 705, 200, 50, "Fire");
-        Button ashButton = new Button(sideMenuX + 60, 780, 200, 50, "Ash");
+        Button sandButton = new Button(buttonX, 75, buttonWidth, buttonHeight, "Sand");
+        Button waterButton = new Button(buttonX, 150, buttonWidth, buttonHeight, "Water");
+        Button lavaButton = new Button(buttonX, 225, buttonWidth, buttonHeight, "Lava");
+        Button fireButton = new Button(buttonX, 300, buttonWidth, buttonHeight, "Fire");
+        Button ashButton = new Button(buttonX, 375, buttonWidth, buttonHeight, "Ash");
 
         // Define Spawner Buttons
-        Button sandSpawner = new Button(sideMenuX + 60, 75, 200, 50, "Sand Spawner");
-        Button waterSpawner = new Button(sideMenuX + 60, 150, 200, 50, "Water Spawner");
-        Button lavaSpawner = new Button(sideMenuX + 60, 225, 200, 50, "Lava Spawner");
-        Button fireSpawner = new Button(sideMenuX + 60, 300, 200, 50, "Fire Spawner");
-
+        Button sandSpawner = new Button(buttonX, 75, buttonWidth, buttonHeight, "Sand Spawner");
+        Button waterSpawner = new Button(buttonX, 150, buttonWidth, buttonHeight, "Water Spawner");
+        Button lavaSpawner = new Button(buttonX, 225, buttonWidth, buttonHeight, "Lava Spawner");
+        Button fireSpawner = new Button(buttonX, 300, buttonWidth, buttonHeight, "Fire Spawner");
 
         // Define Options button and menu buttons
-        Button optionsButton = new Button(sideMenuX + 135, 930, 50, 50, "\u2699" );
-        Button exitGameButton = new Button(sideMenuX + 60, 75, 200, 50, "Exit Game");
+        Button optionsButton = new Button(sideMenuX + 135, 930, 50, buttonHeight, "\u2699" );
+        Button exitGameButton = new Button(buttonX, 75, buttonWidth, buttonHeight, "Exit Game");
 
         // Define page switcher buttons
-        Button pageLeftButton = new Button(sideMenuX + 60, 930, 50, 50, "\u2190");
-        Button pageRightButton = new Button(sideMenuX + 210, 930, 50, 50, "\u2192");
+        Button pageLeftButton = new Button(sideMenuX + 60, 930, 50, buttonHeight, "\u2190");
+        Button pageRightButton = new Button(sideMenuX + 210, 930, 50, buttonHeight, "\u2192");
         
         // Define eraser button
-        Button eraserButton = new Button(sideMenuX + 60, 855, 200, 50, "Eraser"); 
+        Button eraserButton = new Button(buttonX, 855, buttonWidth, buttonHeight, "Eraser"); 
 
         // Define square draw size buttons
-        Button smallSquareDrawSize = new Button(sideMenuX + 60, 575, 200, 50, "Small");
-        Button mediumSquareDrawSize = new Button(sideMenuX + 60, 635, 200, 50, "Medium");
-        Button largeSquareDrawSize = new Button(sideMenuX + 60, 695, 200, 50, "Large");
-        Button massiveSquareDrawSize = new Button(sideMenuX + 60, 755, 200, 50, "Massive");
+        Button smallSquareDrawSize = new Button(buttonX, 575, buttonWidth, buttonHeight, "Small");
+        Button mediumSquareDrawSize = new Button(buttonX, 635, buttonWidth, buttonHeight, "Medium");
+        Button largeSquareDrawSize = new Button(buttonX, 695, buttonWidth, buttonHeight, "Large");
+        Button massiveSquareDrawSize = new Button(buttonX, 755, buttonWidth, buttonHeight, "Massive");
 
-        Button[] tilesMenu = new Button[]{ wallButton, bedrockButton, obsidianButton, woodButton, tntButton, sandButton, waterButton, lavaButton, fireButton, ashButton};
-        //Button[] blockMenu = new Button[]{ };
+        Button[] particlesButtons = new Button[]{ sandButton, waterButton, lavaButton, fireButton, ashButton};
+        Button[] blockMenu = new Button[]{ wallButton, bedrockButton, obsidianButton, woodButton, tntButton};
         Button[] optionsMenu = new Button[]{ exitGameButton};
         Button[] spawnerMenu = new Button[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner };
 
@@ -107,10 +110,11 @@ public class ParticulateGame extends Game  {
                         fullFloor[c] = new Bedrock(c, grid.length-1);
                 }
 
-                menus[0] = tilesMenu;
-                //menus[2] = blockMenu;
-                menus[1] = spawnerMenu;
-                menus[2] = optionsMenu;
+                menus[0] = particlesButtons;
+                menus[1] = blockMenu;
+                menus[2] = spawnerMenu;
+                menus[3] = optionsMenu;
+                
 
 
                 // Leftover code to create a large square of walls
@@ -200,14 +204,17 @@ public class ParticulateGame extends Game  {
 
                                         if(selectedMenu == 0)
                                         {
-                                                pen.drawString("Blocks", sideMenuX + 130, 50);
-                                                pen.drawString("Particles", sideMenuX + 115, 465);
+                                                pen.drawString("Particles", sideMenuX + 115, 50);
                                         }
                                         else if(selectedMenu == 1)
                                         {
-                                                pen.drawString("Spawners", sideMenuX + 115, 50);
+                                                pen.drawString("Blocks", sideMenuX + 130, 50);
                                         }
                                         else if(selectedMenu == 2)
+                                        {
+                                                pen.drawString("Spawners", sideMenuX + 115, 50);
+                                        }
+                                        else if(selectedMenu == 3)
                                         {
                                                 //System.out.println("IN OPTIONS MENU");
                                                 pen.drawString("Options", sideMenuX + 115, 50);
@@ -228,7 +235,9 @@ public class ParticulateGame extends Game  {
 
 
                                         }
+
                                 }
+
                         }
                 }
                 
@@ -401,17 +410,30 @@ public class ParticulateGame extends Game  {
                 else if(mx >= sideMenuX)
                 {
                         System.out.println(selectedMenu);
-                        if(pageLeftButton.clickedButton(mx, my)){ selectedMenu = 0; }
-                        else if(pageRightButton.clickedButton(mx, my)){ selectedMenu = 1; }
+                        if(pageLeftButton.clickedButton(mx, my))
+                        { 
+                                if(selectedMenu > 0)
+                                {
+                                        selectedMenu--;
+                                }
+                        }
+                        else if(pageRightButton.clickedButton(mx, my))
+                        { 
+                                if(selectedMenu < 2)
+                                {
+                                        selectedMenu++;
+                                }
+
+                        }
                         else if(optionsButton.clickedButton(mx, my))
                         { 
-                                if(selectedMenu == 2)
+                                if(selectedMenu == 3)
                                 {
                                         selectedMenu = 0;
                                 }
                                 else
                                 {
-                                        selectedMenu = 2;
+                                        selectedMenu = 3;
                                 }       
                                  
                         }
@@ -419,12 +441,7 @@ public class ParticulateGame extends Game  {
 
                         if(selectedMenu == 0)
                         {
-                                if( wallButton.clickedButton(mx, my)) { currentTile = Wall.class; }
-                                else if(bedrockButton.clickedButton(mx, my)) { currentTile = Bedrock.class; }
-                                else if(obsidianButton.clickedButton(mx, my)) { currentTile = Obsidian.class; }
-                                else if(woodButton.clickedButton(mx, my)) { currentTile = Wood.class; }
-                                else if(tntButton.clickedButton(mx, my)) {currentTile = TNT.class; }
-                                else if(sandButton.clickedButton(mx, my)){ currentTile = Sand.class; }
+                                if(sandButton.clickedButton(mx, my)){ currentTile = Sand.class; }
                                 else if(waterButton.clickedButton(mx, my)) { currentTile = Water.class; }
                                 else if(lavaButton.clickedButton(mx, my)) { currentTile = Lava.class; }
                                 else if(fireButton.clickedButton(mx, my)) { currentTile = Fire.class; }
@@ -432,12 +449,20 @@ public class ParticulateGame extends Game  {
                         }
                         else if(selectedMenu == 1)
                         {
+                                if( wallButton.clickedButton(mx, my)) { currentTile = Wall.class; }
+                                else if(bedrockButton.clickedButton(mx, my)) { currentTile = Bedrock.class; }
+                                else if(obsidianButton.clickedButton(mx, my)) { currentTile = Obsidian.class; }
+                                else if(woodButton.clickedButton(mx, my)) { currentTile = Wood.class; }
+                                else if(tntButton.clickedButton(mx, my)) {currentTile = TNT.class; }
+                        }
+                        else if(selectedMenu == 2)
+                        {
                                 if(sandSpawner.clickedButton(mx, my)) { currentTile = SandSpawner.class; }
                                 else if(waterSpawner.clickedButton(mx, my)) { currentTile = WaterSpawner.class; }
                                 else if(lavaSpawner.clickedButton(mx, my)) { currentTile = LavaSpawner.class; }
                                 else if(fireSpawner.clickedButton(mx, my)) { currentTile = FireSpawner.class; }
                         }
-                        else if(selectedMenu == 2)
+                        else if(selectedMenu == 3)
                         {
                                 if(exitGameButton.clickedButton(mx, my)){ System.exit(0); }
                                 else if(smallSquareDrawSize.clickedButton(mx, my)){ drawSize = 1; }
