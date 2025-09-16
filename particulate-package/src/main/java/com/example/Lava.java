@@ -96,6 +96,10 @@ public class Lava extends Tile{
         else if(topTile instanceof Wood){
             ((Wood)topTile).onFire = true;
         }
+        else if(topTile instanceof Ash)
+        {
+                grid[y-1][x] = null;
+        }
 
         if(rightTile instanceof Water)
         {
@@ -107,6 +111,10 @@ public class Lava extends Tile{
         }
         else if(rightTile instanceof Wood){
             ((Wood)rightTile).onFire = true;
+        }
+        else if(rightTile instanceof Ash)
+        {
+                grid[y][x+1] = null;
         }
 
         if(y+1 < grid.length &&  bottomTile instanceof Water)
@@ -120,6 +128,10 @@ public class Lava extends Tile{
         else if(y+1 < grid.length && bottomTile instanceof Wood){
             ((Wood)bottomTile).onFire = true;
         }
+        else if(bottomTile instanceof Ash)
+        {
+                grid[y+1][x] = null;
+        }
 
         if(leftTile instanceof Water)
         {
@@ -132,7 +144,10 @@ public class Lava extends Tile{
         else if(leftTile instanceof Wood){
             ((Wood)leftTile).onFire = true;
         }
-
+        else if(leftTile instanceof Ash)
+        {
+                grid[y][x-1] = null;
+        }
     }
     
 }
