@@ -311,36 +311,38 @@ public class ParticulateGame extends Game  {
                 {
                         for(int r = y - ((int)(drawSize / 2)); r < y+((int)(drawSize / 2)) + 1; r++)
                         {
+                                if(r<1 || r>=grid.length){ break; }
+
                                 for(int c = x - ((int)(drawSize / 2)); c < x+((int)(drawSize / 2)) + 1; c++)
                                 {
-                                        if(r>=1 && r<grid.length && c >= 1 && c <= grid[r].length)
+                                        if(c < 1 || c >= grid[0].length){ break; }
+
+                                        if(clazz.equals(Eraser.class))
                                         {
-                                                if(clazz.equals(Eraser.class))
+
+                                                if(grid[r][c] != null && grid[r][c].isDestructable)
                                                 {
 
-                                                        if(grid[r][c] != null && grid[r][c].isDestructable)
-                                                        {
-
-                                                                grid[r][c] = null;
-                                                        }
+                                                        grid[r][c] = null;
                                                 }
-                                                else
-                                                {
-                                                        if(grid[r][c] == null)
-                                                        {
-                                                                try {
-                                                                        Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
-                                        
-                                                                        Tile t = (Tile) argConstructor.newInstance(c, r);
-                                                                        grid[r][c] = t;
-
-                                                                } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                                                                        System.out.println(e);
-                                                                }
-                                                        }
-                                                }
-
                                         }
+                                        else
+                                        {
+                                                if(grid[r][c] == null)
+                                                {
+                                                        try {
+                                                                Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
+                                
+                                                                Tile t = (Tile) argConstructor.newInstance(c, r);
+                                                                grid[r][c] = t;
+
+                                                        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                                                                System.out.println(e);
+                                                        }
+                                                }
+                                        }
+
+                                
                                 }
                         }
                 }
