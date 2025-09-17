@@ -316,7 +316,8 @@ public class ParticulateGame extends Game  {
 
                                 for(int c = x - ((int)(drawSize / 2)); c < x+((int)(drawSize / 2)) + 1; c++)
                                 {
-                                        if(c < 1 || c > grid[0].length){ break; }
+                                        if(c < 1){continue;} 
+                                        else if(c >= grid[0].length){ break; }
 
                                         
                                         if(clazz.equals(Eraser.class))
