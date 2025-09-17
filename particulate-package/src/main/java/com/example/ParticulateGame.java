@@ -311,12 +311,14 @@ public class ParticulateGame extends Game  {
                 {
                         for(int r = y - ((int)(drawSize / 2)); r < y+((int)(drawSize / 2)) + 1; r++)
                         {
-                                if(r<1 || r>=grid.length){ break; }
+                                if(r<1){ continue; }
+                                else if(r>=grid.length){ break; }
 
                                 for(int c = x - ((int)(drawSize / 2)); c < x+((int)(drawSize / 2)) + 1; c++)
                                 {
-                                        if(c < 1 || c >= grid[0].length){ break; }
+                                        if(c < 1 || c > grid[0].length){ break; }
 
+                                        
                                         if(clazz.equals(Eraser.class))
                                         {
 
