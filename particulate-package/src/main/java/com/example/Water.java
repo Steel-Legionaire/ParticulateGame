@@ -76,7 +76,7 @@ public class Water extends Tile
     @Override
     public void action() 
     {
-Tile[][] grid = ParticulateGame.grid;
+        Tile[][] grid = ParticulateGame.grid;
 
         Tile topTile = grid[y-1][x];
         Tile rightTile = grid[y][x+1];
@@ -90,21 +90,38 @@ Tile[][] grid = ParticulateGame.grid;
             bottomTile = grid[y+1][x];
         }
 
+
         
         if(topTile instanceof Wood){
             ((Wood)topTile).onFire = false;
+        }
+        else if(topTile instanceof Fire)
+        {
+            grid[y-1][x] = null;
         }
 
         if(rightTile instanceof Wood){
             ((Wood)rightTile).onFire = false;
         }
+        else if(rightTile instanceof Fire)
+        {
+            grid[y][x+1] = null;
+        }
 
         if(y+1 < grid.length && bottomTile instanceof Wood){
             ((Wood)bottomTile).onFire = false;
         }
+        else if(y+1 < grid.length && bottomTile instanceof Fire)
+        {
+            grid[y+1][x] = null;
+        }
 
         if(leftTile instanceof Wood){
             ((Wood)leftTile).onFire = false;
+        }
+        else if(leftTile instanceof Fire)
+        {
+            grid[y][x-1] = null;
         }
     }
     

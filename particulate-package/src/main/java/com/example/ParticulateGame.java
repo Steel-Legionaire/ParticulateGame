@@ -433,12 +433,20 @@ public class ParticulateGame extends Game  {
                                 {
                                         selectedMenu--;
                                 }
+                                else if(selectedMenu == 0)
+                                {
+                                        selectedMenu = 2;
+                                }
                         }
                         else if(pageRightButton.clickedButton(mx, my))
                         { 
                                 if(selectedMenu < 2)
                                 {
                                         selectedMenu++;
+                                }
+                                else if(selectedMenu == 2)
+                                { 
+                                        selectedMenu = 0;
                                 }
 
                         }
