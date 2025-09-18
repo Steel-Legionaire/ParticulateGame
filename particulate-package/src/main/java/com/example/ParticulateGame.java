@@ -87,7 +87,7 @@ public class ParticulateGame extends Game  {
         Button massiveSquareDrawSize = new Button(buttonX, 755, buttonWidth, buttonHeight, "Massive");
 
         Button[] particlesButtons = new Button[]{ sandButton, waterButton, lavaButton, fireButton, ashButton};
-        Button[] blockMenu = new Button[]{ wallButton, bedrockButton, obsidianButton, woodButton, staticTntButton, fallingTntButton};
+        Button[] blockMenu = new Button[]{ wallButton, bedrockButton, obsidianButton, woodButton, staticTntButton};
         Button[] optionsMenu = new Button[]{ exitGameButton};
         Button[] spawnerMenu = new Button[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner };
 
