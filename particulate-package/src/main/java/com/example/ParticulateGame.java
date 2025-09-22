@@ -403,7 +403,7 @@ public class ParticulateGame extends Game  {
 
         public void saveGridToTextFile()
         {
-                String filePath = Paths.get(System.getProperty("user.home"), "Desktop", "output.txt").toString();
+                String filePath = getUniqueFileName("savedPlayArea", "txt");
 
                 StringBuilder sb = new StringBuilder();
 
@@ -478,6 +478,22 @@ public class ParticulateGame extends Game  {
                 }).start();
         }
 
+    public static String getUniqueFileName(String baseName, String extension) {
+        String userHome = System.getProperty("user.home");
+        String desktopPath = Paths.get(userHome, "Desktop").toString();
+
+        String fileName = baseName + "." + extension;
+        File file = new File(desktopPath, fileName);
+
+        int counter = 1;
+        while (file.exists()) {
+            fileName = baseName + "(" + counter + ")." + extension;
+            file = new File(desktopPath, fileName);
+            counter++;
+        }
+
+        return file.getAbsolutePath();
+    }
     @Override
     public void keyTyped(KeyEvent ke) {}
 
