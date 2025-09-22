@@ -53,7 +53,7 @@ public class ParticulateGame extends Game  {
         public Class<?> currentTile = Sand.class;    
         
         boolean isPaused = false;
-        boolean dropMenuActive = false;
+        boolean dropMenuActive = true;
         boolean floorDropped = false;
 
         Tile[] fullFloor;
@@ -672,7 +672,7 @@ public class ParticulateGame extends Game  {
     @Override
     public void mousePressed(MouseEvent me) 
     {
-        if(me.getX() < sideMenuX)
+        if(me.getX()/tileSize < grid[0].length+1)
         {
                 mouseHeld = true;
         }
