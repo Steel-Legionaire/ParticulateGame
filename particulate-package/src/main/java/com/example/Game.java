@@ -2,22 +2,26 @@ package com.example;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.dnd.DropTargetListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.awt.dnd.DropTarget;
 
-public abstract class Game implements KeyListener, MouseListener, MouseMotionListener
+
+public abstract class Game implements KeyListener, MouseListener, MouseMotionListener, DropTargetListener
 {
-    private JFrame frame;
+    public JFrame frame;
     private GamePanel gamePanel;
     boolean running;
     private ParticulateGame game;    
 
+
     protected void start(String title, int width, int height)
     {
-    	this.game = (ParticulateGame)this;
+        this.game = (ParticulateGame)this;
     	running = true;
         frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,6 +35,8 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
         frame.addMouseListener(this);
         frame.setBackground(Color.lightGray);
         frame.addMouseMotionListener(this);
+
+        new DropTarget(frame.getContentPane(), this);
         run();
     }
 

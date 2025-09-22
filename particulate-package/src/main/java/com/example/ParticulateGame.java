@@ -3,10 +3,32 @@ package com.example;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.Timer;
 
 public class ParticulateGame extends Game  {
     
@@ -19,6 +41,8 @@ public class ParticulateGame extends Game  {
 
         int sideMenuX = playAreaWidth;
 
+        
+
         int outlinedTileX = 0;
         int outlinedTileY = 0;
 
@@ -29,7 +53,7 @@ public class ParticulateGame extends Game  {
         public Class<?> currentTile = Sand.class;    
         
         boolean isPaused = false;
-
+        boolean dropMenuActive = false;
         boolean floorDropped = false;
 
         Tile[] fullFloor;
@@ -37,7 +61,7 @@ public class ParticulateGame extends Game  {
         
         boolean eraseMode = false;
 
-        String[] controlsList = new String[]{ "r: Reset Play Area", "e: Select Eraser", "Space: Pause Simulation", "Enter: Drop Floor", "1: Sand", "2: Water", "3: Lava", "4: Fire", "5: Wall", "6: Wood", "7: Tnt", "8: Sand Spawner", "9: Water Spawner", "0: Lava Spawner"};
+        String[] controlsList = new String[]{ "r: Reset Play Area", "e: Select Eraser", "Space: Pause Simulation", "s: save play area", "Drag file on screen", " to load it", "Enter: Drop Floor", "1: Sand", "2: Water", "3: Lava", "4: Fire", "5: Wall", "6: Wood", "7: Tnt"};
 
         int drawSize = 1;
         
@@ -81,14 +105,17 @@ public class ParticulateGame extends Game  {
         Button eraserButton = new Button(buttonX, 855, buttonWidth, buttonHeight, "Eraser"); 
 
         // Define square draw size buttons
-        Button smallSquareDrawSize = new Button(buttonX, 575, buttonWidth, buttonHeight, "Small");
-        Button mediumSquareDrawSize = new Button(buttonX, 635, buttonWidth, buttonHeight, "Medium");
-        Button largeSquareDrawSize = new Button(buttonX, 695, buttonWidth, buttonHeight, "Large");
-        Button massiveSquareDrawSize = new Button(buttonX, 755, buttonWidth, buttonHeight, "Massive");
+        Button smallSquareDrawSize = new Button(buttonX, 515, buttonWidth, buttonHeight, "Small");
+        Button mediumSquareDrawSize = new Button(buttonX, 575, buttonWidth, buttonHeight, "Medium");
+        Button largeSquareDrawSize = new Button(buttonX, 635, buttonWidth, buttonHeight, "Large");
+        Button massiveSquareDrawSize = new Button(buttonX, 695, buttonWidth, buttonHeight, "Massive");
+
+        // Define save play area button
+        Button savePlayAreaButton = new Button(buttonX, 775, buttonWidth, buttonHeight, "Save Play Area");
 
         Button[] particlesButtons = new Button[]{ sandButton, waterButton, lavaButton, fireButton, ashButton};
         Button[] blockMenu = new Button[]{ wallButton, bedrockButton, obsidianButton, woodButton, staticTntButton};
-        Button[] optionsMenu = new Button[]{ exitGameButton};
+        Button[] optionsMenu = new Button[]{ exitGameButton, savePlayAreaButton};
         Button[] spawnerMenu = new Button[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner };
 
         Button[][] menus = new Button[4][10];
@@ -97,7 +124,9 @@ public class ParticulateGame extends Game  {
 
         int selectedMenu = 0;
 
-        
+        int tempMsgX = (SCREEN_WIDTH/2) - 80;
+        int tempMsgY = 50;
+        int tempMsgDurationMilis = 3000;
                 
         public ParticulateGame() 
         {
@@ -118,7 +147,6 @@ public class ParticulateGame extends Game  {
                 menus[2] = spawnerMenu;
                 menus[3] = optionsMenu;
                 
-
 
                 // Leftover code to create a large square of walls
                 //for(int i=0; i<50; i++)
@@ -234,7 +262,7 @@ public class ParticulateGame extends Game  {
                                                         pen.drawString(controlsList[i], sideMenuX + 60, 150 + (i * 25));
                                                 }
 
-                                                pen.drawString("Square Draw Sizes", sideMenuX + 70, 550);
+                                                pen.drawString("Square Draw Sizes", sideMenuX + 70, 500);
 
                                                 for(Button b : squareDrawSizeButtons)
                                                 {
@@ -373,13 +401,91 @@ public class ParticulateGame extends Game  {
                 
         }
 
+        public void saveGridToTextFile()
+        {
+                String filePath = Paths.get(System.getProperty("user.home"), "Desktop", "output.txt").toString();
+
+                StringBuilder sb = new StringBuilder();
+
+                for(int r=0; r<grid.length; r++)
+                {
+                        for(int c=0; c<grid[r].length; c++)
+                        {
+                                // get the class at the curret position and chop off the @segf98shg at the end
+                                if(grid[r][c] == null){ continue; }
+
+                                String classStr = (grid[r][c].toString().split("@"))[0];
+
+                                sb.append(classStr+","+r+","+c+"\n");
+                                
+                        }
+                }
+
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                        writer.write(sb.toString());
+                        showTemporaryMessage(super.frame, "Saved Grid Succesfully! Saved to: "+filePath, tempMsgX, tempMsgY, tempMsgDurationMilis);
+                } catch (IOException e) {
+                        e.printStackTrace();
+                        showTemporaryMessage(super.frame, "Error LoadingGrid!", tempMsgX, tempMsgY, tempMsgDurationMilis);
+                }
+                
+        }
+    
+        public void setGridToReadInTextFile(String filecontent) throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
+        {
+                Tile[][] importedGrid = new Tile[playAreaHeight / tileSize][playAreaWidth / tileSize];
+
+                String[] listOfEveryTile = filecontent.split("\n");
+                for(String s : listOfEveryTile)
+                {
+                        String[] classAndPositions = s.split(",");
+
+                        Class<?> clazz = Class.forName(classAndPositions[0]);
+
+                        Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
+
+                        int y = Integer.parseInt(classAndPositions[1]);
+                        int x = Integer.parseInt(classAndPositions[2]);
+        
+                        Tile t = (Tile) argConstructor.newInstance(x, y);
+                        importedGrid[y][x] = t;
+                }       
+
+                grid = importedGrid;
+
+                showTemporaryMessage(super.frame, "Loaded Grid Succesfully!", tempMsgX, tempMsgY, tempMsgDurationMilis);
+        }
+
+        public static void showTemporaryMessage(JFrame frame, String message, int x, int y, int durationMillis) {
+                // Create the message label
+                JLabel tempMessage = new JLabel(message);
+                tempMessage.setOpaque(true);
+                tempMessage.setBackground(new Color(0, 0, 0, 170)); // semi-transparent black
+                tempMessage.setForeground(Color.WHITE);
+                tempMessage.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                tempMessage.setSize(tempMessage.getPreferredSize());
+                tempMessage.setLocation(x, y);  // Custom position
+
+                // Add to layered pane so it floats above other components
+                JLayeredPane layeredPane = frame.getLayeredPane();
+                layeredPane.add(tempMessage, JLayeredPane.PALETTE_LAYER);
+                layeredPane.repaint();
+
+                // Set timer to remove it after the specified duration
+                new Timer(durationMillis, (ActionEvent e) -> {
+                layeredPane.remove(tempMessage);
+                layeredPane.repaint();
+                }).start();
+        }
+
     @Override
     public void keyTyped(KeyEvent ke) {}
 
     @Override
     public void keyPressed(KeyEvent ke) 
     {
-        if(ke.getKeyChar() == '1')      { currentTile = Sand.class; }
+        if(ke.getKeyChar() == 's') {saveGridToTextFile(); }
+        else if(ke.getKeyChar() == '1') { currentTile = Sand.class; }
         else if (ke.getKeyChar() == '2'){ currentTile = Water.class; }
         else if (ke.getKeyChar() == '3'){ currentTile = Lava.class; }
         else if (ke.getKeyChar() == '4'){ currentTile = Fire.class; }
@@ -495,6 +601,7 @@ public class ParticulateGame extends Game  {
                                 else if(mediumSquareDrawSize.clickedButton(mx, my)){ drawSize = 11; }
                                 else if(largeSquareDrawSize.clickedButton(mx, my)){ drawSize = 51; }
                                 else if(massiveSquareDrawSize.clickedButton(mx, my)){ drawSize = 101; }
+                                else if(savePlayAreaButton.clickedButton(mx, my)) { saveGridToTextFile(); }
                         }
                 }
 
@@ -573,10 +680,55 @@ public class ParticulateGame extends Game  {
         outlinedTileX = (me.getX() / tileSize) - 2;
         outlinedTileY = (me.getY() / tileSize) - 7;
     }
-        
+
+    @Override
+    public void drop(DropTargetDropEvent event) 
+    {
+        if(!dropMenuActive) { return; }
+        try {
+                event.acceptDrop(DnDConstants.ACTION_COPY);
+                Transferable t = event.getTransferable();
+                List<File> droppedFiles = (List<File>) t.getTransferData(DataFlavor.javaFileListFlavor);
+
+
+                        StringBuilder sb = new StringBuilder();
+
+                        try (BufferedReader reader = new BufferedReader(new FileReader(droppedFiles.getFirst()))) {
+
+                        String line;
+                        
+                        while ((line = reader.readLine()) != null) {
+                                sb.append(line+"\n");
+                        }
+                        }
+
+                        String fileContent = sb.toString();
+                        //System.out.println("File content:\n\n" + fileContent);
+                
+                        setGridToReadInTextFile(fileContent);
+                
+
+        } catch (Exception ex) {
+                ex.printStackTrace();
+        }
+    }
+
+    // Unused but required
+    @Override
+    public void dragEnter(DropTargetDragEvent arg0) {}
+
+
+    @Override
+    public void dragExit(DropTargetEvent arg0) {}
+
+
+    @Override
+    public void dragOver(DropTargetDragEvent arg0) {}
+
+    @Override
+    public void dropActionChanged(DropTargetDragEvent arg0) {}
+
     //Launches the Game
     public static void main(String[] args) { new ParticulateGame().start(TITLE, SCREEN_WIDTH,SCREEN_HEIGHT); }
-
-
 
 }
