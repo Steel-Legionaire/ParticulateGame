@@ -7,7 +7,15 @@ public class Lava extends Tile{
 
     public Lava(int x, int y) {
         super(x, y, true, true, 2, 8);
-        setAllPossibleColors(new Color[]{ Color.ORANGE });
+        setAllPossibleColors(new Color[]{ new Color(255, 185, 0),
+
+new Color(255, 192, 0),
+
+new Color(255, 200, 0),
+
+new Color(255, 208, 0),
+
+new Color(255, 215, 0) });
         setColor();
     }
 

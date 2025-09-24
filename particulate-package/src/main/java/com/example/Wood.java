@@ -10,14 +10,15 @@ public class Wood extends Tile{
     int framesUntilCanBeBurnt = 300;
     int framesOnFire = 0;
 
-    Color normalColor = new java.awt.Color(139,69,19);
+    Color normalColor;
     Color onFireColor = new java.awt.Color(200, 100, 20);
 
 
     public Wood(int x, int y) {
         super(x, y, true, true, 4, 50);
-        setAllPossibleColors(new Color[]{ new Color(139,69,19) });
+        setAllPossibleColors(new Color[]{ new Color(129, 64, 18), new Color(134, 67, 19), new Color(139, 69, 19), new Color(145, 72, 21), new Color(150, 75, 22) });
         setColor();
+        normalColor = super.color;
     }
 
     @Override

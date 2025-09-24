@@ -17,11 +17,14 @@ public class TNT extends Tile{
     int framesWhileLit = 0;
 
     boolean coloredRed = true;
+    Color spawnedColor;
 
     public TNT(int x, int y) {
         super(x, y, true, true, 2, 2);
-        setAllPossibleColors(new Color[]{ Color.RED });
+        setAllPossibleColors(new Color[]{new Color(200, 0, 0), new Color(220, 0, 0), new Color(255, 0, 0), new Color(255, 30, 30), new Color(255, 60, 60)});
         setColor();
+        spawnedColor = super.color;
+        
         if(isFalling)
         {
                 this.isFalling = true;
@@ -128,7 +131,7 @@ public class TNT extends Tile{
                 }
                 else
                 {
-                    super.color = Color.RED;
+                    super.color = spawnedColor;
                     coloredRed = true;
                 }
                 framesSinceLastFlash = 0;

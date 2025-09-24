@@ -8,7 +8,7 @@ public class Fire extends Tile{
 
     public Fire(int x, int y) {
         super(x, y, false, true, 1, 2);
-        setAllPossibleColors(new Color[]{ new Color(255,150,0) });
+        setAllPossibleColors(new Color[]{ new Color(255,135,0), new Color(255,142,0), new Color(255,150,0), new Color(255,158,0), new Color(255,165,0) });
         setColor();
     }
 
