@@ -488,7 +488,7 @@ public class ParticulateGame extends Game  {
         else if (ke.getKeyChar() == '2'){ currentTile = Water.class; }
         else if (ke.getKeyChar() == '3'){ currentTile = Lava.class; }
         else if (ke.getKeyChar() == '4'){ currentTile = Fire.class; }
-        else if (ke.getKeyChar() == '5'){ currentTile = Wall.class; }
+        else if (ke.getKeyChar() == '5'){ currentTile = Stone.class; }
         else if (ke.getKeyChar() == '6'){ currentTile = Wood.class; }
         else if (ke.getKeyChar() == '7'){ currentTile = TNT.class; }
         else if (ke.getKeyChar() == '8'){ currentTile = SandSpawner.class; }
@@ -579,7 +579,7 @@ public class ParticulateGame extends Game  {
                         }
                         else if(selectedMenu == 1)
                         {
-                                if( wallButton.clickedButton(mx, my)) { currentTile = Wall.class; }
+                                if( wallButton.clickedButton(mx, my)) { currentTile = Stone.class; }
                                 else if(bedrockButton.clickedButton(mx, my)) { currentTile = Bedrock.class; }
                                 else if(obsidianButton.clickedButton(mx, my)) { currentTile = Obsidian.class; }
                                 else if(woodButton.clickedButton(mx, my)) { currentTile = Wood.class; }
