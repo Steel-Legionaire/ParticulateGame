@@ -73,7 +73,7 @@ public class ParticulateGame extends Game  {
         boolean mouseHeld = false;
 
         // Define Block Buttons
-        Button wallButton = new Button(buttonX, 75, buttonWidth, buttonHeight, "Wall");
+        Button stoneButton = new Button(buttonX, 75, buttonWidth, buttonHeight, "Stone");
         Button bedrockButton = new Button(buttonX, 150, buttonWidth, buttonHeight, "Bedrock");
         Button obsidianButton = new Button(buttonX, 225, buttonWidth, buttonHeight, "Obsidian");
         Button woodButton = new Button(buttonX, 300, buttonWidth, buttonHeight, "Wood");
@@ -114,7 +114,7 @@ public class ParticulateGame extends Game  {
         Button savePlayAreaButton = new Button(buttonX, 775, buttonWidth, buttonHeight, "Save Play Area");
 
         Button[] particlesButtons = new Button[]{ sandButton, waterButton, lavaButton, fireButton, ashButton};
-        Button[] blockMenu = new Button[]{ wallButton, bedrockButton, obsidianButton, woodButton, staticTntButton};
+        Button[] blockMenu = new Button[]{ stoneButton, bedrockButton, obsidianButton, woodButton, staticTntButton};
         Button[] optionsMenu = new Button[]{ exitGameButton, savePlayAreaButton};
         Button[] spawnerMenu = new Button[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner };
 
@@ -579,7 +579,7 @@ public class ParticulateGame extends Game  {
                         }
                         else if(selectedMenu == 1)
                         {
-                                if( wallButton.clickedButton(mx, my)) { currentTile = Stone.class; }
+                                if( stoneButton.clickedButton(mx, my)) { currentTile = Stone.class; }
                                 else if(bedrockButton.clickedButton(mx, my)) { currentTile = Bedrock.class; }
                                 else if(obsidianButton.clickedButton(mx, my)) { currentTile = Obsidian.class; }
                                 else if(woodButton.clickedButton(mx, my)) { currentTile = Wood.class; }
