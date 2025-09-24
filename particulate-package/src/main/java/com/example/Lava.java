@@ -6,7 +6,9 @@ public class Lava extends Tile{
     int direction = (int)(Math.random() * 2);
 
     public Lava(int x, int y) {
-        super(x, y, Color.ORANGE, true, true, 2, 8);
+        super(x, y, true, true, 2, 8);
+        setAllPossibleColors(new Color[]{ Color.ORANGE });
+        setColor();
     }
 
     @Override

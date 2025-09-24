@@ -1,8 +1,13 @@
 package com.example;
+
+import java.awt.Color;
+
 public class Ash extends Tile{
 
     public Ash(int x, int y) {
-        super(x, y, new java.awt.Color(230,230,230), false, true, 1, 2);
+        super(x, y, false, true, 1, 2);
+        setAllPossibleColors(new Color[]{ new Color(230,230,230)});
+        setColor();
     }
 
     @Override

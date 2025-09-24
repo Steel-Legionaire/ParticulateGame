@@ -19,7 +19,9 @@ public class TNT extends Tile{
     boolean coloredRed = true;
 
     public TNT(int x, int y) {
-        super(x, y, Color.RED, true, true, 2, 2);
+        super(x, y, true, true, 2, 2);
+        setAllPossibleColors(new Color[]{ Color.RED });
+        setColor();
         if(isFalling)
         {
                 this.isFalling = true;

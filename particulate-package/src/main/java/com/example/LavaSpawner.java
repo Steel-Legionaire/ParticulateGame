@@ -4,8 +4,9 @@ import java.awt.Color;
 public class LavaSpawner extends Tile{
 
     public LavaSpawner(int x, int y){
-        super(x, y, Color.GREEN, false, true, 8, 0);
-        //TODO Auto-generated constructor stub
+        super(x, y, false, true, 8, 0);
+        setAllPossibleColors(new Color[]{ Color.GREEN });
+        setColor();
     }
 
     @Override

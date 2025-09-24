@@ -4,7 +4,9 @@ import java.awt.Color;
 public class SandSpawner extends Tile{
 
     public SandSpawner(int x, int y) {
-        super(x, y, Color.RED, false, true, 8, 1);
+        super(x, y, false, true, 8, 1);
+        setAllPossibleColors(new Color[]{ Color.RED });
+        setColor();
 
     }
 

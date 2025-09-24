@@ -5,7 +5,9 @@ public class FireSpawner extends Tile
 {
 
     public FireSpawner(int x, int y) {
-        super(x, y, Color.magenta, false, true, 8, 1);
+        super(x, y, false, true, 8, 1);
+        setAllPossibleColors(new Color[]{Color.magenta });
+        setColor();
     }
 
     @Override

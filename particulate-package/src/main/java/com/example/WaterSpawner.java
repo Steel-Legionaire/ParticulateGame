@@ -4,7 +4,9 @@ import java.awt.Color;
 public class WaterSpawner extends Tile{
 
     public WaterSpawner(int x, int y) {
-        super(x, y, Color.BLUE, false, true, 8, 1);
+        super(x, y, false, true, 8, 1);
+        setAllPossibleColors(new Color[]{ Color.CYAN });
+        setColor();
 
     }
 

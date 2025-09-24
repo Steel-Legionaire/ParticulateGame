@@ -20,11 +20,12 @@ public abstract class Tile
 
     public int framesSinceLastUpdate = 0;
 
-    Tile(int x, int y, Color color, boolean isFlammable, boolean isDestructable, int toughness, int speed)
+    static public Color[] colors;
+
+    Tile(int x, int y, boolean isFlammable, boolean isDestructable, int toughness, int speed)
     {
         this.x = x;
         this.y = y;
-        this.color = color;
         this.isFlammable = isFlammable;
         this.isDestructable = isDestructable;
         this.toughness = toughness;
@@ -44,4 +45,24 @@ public abstract class Tile
         pen.setColor(Color.BLACK);
     }
 
+    public void setAllPossibleColors(Color[] c)
+    {
+        colors = new Color[c.length];
+        for(int i=0; i<colors.length; i++)
+        {
+            try{
+                colors[i] = c[i];
+            }
+            catch(ArrayIndexOutOfBoundsException e)
+            {
+                System.out.println("Error setting Tiles color: \n"+e);
+            }
+            
+        }
+    }
+
+    public void setColor()
+    {
+        this.color = colors[(int)(Math.random() * colors.length)];
+    }
 }

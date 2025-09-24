@@ -4,7 +4,9 @@ import java.awt.Color;
 public class Wall extends Tile{
 
     public Wall(int x, int y) {
-        super(x, y, Color.GRAY, false, true, 5,1);
+        super(x, y, false, true, 5,1);
+        setAllPossibleColors(new Color[]{ Color.GRAY });
+        setColor();
     }
 
     @Override

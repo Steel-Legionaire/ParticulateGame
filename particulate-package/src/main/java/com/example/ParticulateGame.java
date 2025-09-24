@@ -46,7 +46,7 @@ public class ParticulateGame extends Game  {
         int outlinedTileX = 0;
         int outlinedTileY = 0;
 
-        public static int tileSize = 3;
+        public static int tileSize = 5;
 
         public static Tile[][] grid;
 
@@ -692,7 +692,7 @@ public class ParticulateGame extends Game  {
 
                         StringBuilder sb = new StringBuilder();
 
-                        try (BufferedReader reader = new BufferedReader(new FileReader(droppedFiles.getFirst()))) {
+                        try (BufferedReader reader = new BufferedReader(new FileReader(droppedFiles.get(0)))) {
 
                         String line;
                         

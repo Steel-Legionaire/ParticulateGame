@@ -15,7 +15,9 @@ public class Wood extends Tile{
 
 
     public Wood(int x, int y) {
-        super(x, y, new java.awt.Color(139,69,19), true, true, 4, 50);
+        super(x, y, true, true, 4, 50);
+        setAllPossibleColors(new Color[]{ new Color(139,69,19) });
+        setColor();
     }
 
     @Override
