@@ -6,8 +6,7 @@ public class Sand extends Tile {
 
     public Sand(int x, int y) {
         super(x, y, false, true, 2,1);
-        setAllPossibleColors(new Color[]{new Color(255,255,130), new Color (230, 200, 110), new Color(180, 180, 120), new Color(175, 175, 120
-            )});
+        setAllPossibleColors(new Color[]{new Color(210, 190, 10), new Color(220, 200, 20), new Color(230, 210, 30), new Color(240, 220, 40), new Color(245, 225, 50)});
         setColor();
     }
 
