@@ -1,9 +1,9 @@
 package com.example;
 import java.awt.Color;
 
-public class Wall extends Tile{
+public class Stone extends Tile{
 
-    public Wall(int x, int y) {
+    public Stone(int x, int y) {
         super(x, y, false, true, 5,1);
         setAllPossibleColors(new Color[]{ Color.GRAY });
         setColor();
