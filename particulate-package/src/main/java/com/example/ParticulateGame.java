@@ -12,6 +12,7 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.io.BufferedReader;
@@ -689,6 +690,19 @@ public class ParticulateGame extends Game  {
         }
 
     }
+    
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent mwe) {
+        int notches = mwe.getWheelRotation(); // Positive for down, negative for up
+            if (notches < 0) {
+                drawSize++;
+            } else {
+                if(drawSize > 1)
+                {
+                        drawSize--;
+                }
+            }
+    }
 
     @Override
     public void mouseDragged(MouseEvent me) 
@@ -816,5 +830,8 @@ public class ParticulateGame extends Game  {
 
     //Launches the Game
     public static void main(String[] args) { new ParticulateGame().start(TITLE, SCREEN_WIDTH,SCREEN_HEIGHT); }
+
+
+
 
 }

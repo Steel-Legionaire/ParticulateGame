@@ -9,9 +9,10 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.dnd.DropTarget;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
-
-public abstract class Game implements KeyListener, MouseListener, MouseMotionListener, DropTargetListener
+public abstract class Game implements KeyListener, MouseListener, MouseMotionListener, DropTargetListener, MouseWheelListener
 {
     public JFrame frame;
     private GamePanel gamePanel;
@@ -35,6 +36,7 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
         frame.addMouseListener(this);
         frame.setBackground(new Color(40,40,40));
         frame.addMouseMotionListener(this);
+        frame.addMouseWheelListener(game);
         new DropTarget(frame.getContentPane(), this);
         run();
     }
