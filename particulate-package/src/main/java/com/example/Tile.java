@@ -9,7 +9,7 @@ public abstract class Tile
     public int x;
     public int y;
     
-    private int tileSize = ParticulateGame.tileSize;
+    public int tileSize = ParticulateGame.tileSize;
 
     public boolean updatedThisFrame = false;
 

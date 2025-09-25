@@ -42,9 +42,7 @@ public class ParticulateGame extends Game  {
         public int playAreaWidth = 1500;
         public int playAreaHeight = 1000;
 
-        int sideMenuX = playAreaWidth;
-
-        
+        int sideMenuX = playAreaWidth;   
 
         int outlinedTileX = 0;
         int outlinedTileY = 0;
@@ -130,6 +128,8 @@ public class ParticulateGame extends Game  {
         int tempMsgX = (SCREEN_WIDTH/2) - 80;
         int tempMsgY = 50;
         int tempMsgDurationMilis = 3000;
+
+        ArrayList<ArrayList<Chunk>> chunks;
                 
         public ParticulateGame() 
         {
@@ -151,6 +151,19 @@ public class ParticulateGame extends Game  {
                 menus[3] = optionsMenu;
                 
 
+                chunks = generateChunks();
+                System.out.println(chunks.size());
+
+                /*for(ArrayList<Chunk> chunkArr: chunks)
+                {
+                        for(Chunk c : chunkArr)
+                        {
+                                System.out.println("topLeft: "+c.getTopLeft()[0]+", "+c.getTopLeft()[1]+" bottomRight: "+c.getBottomRight()[0]+", "+c.getBottomRight()[1]);
+                        }
+                }*/
+
+                System.out.println(getChunkForCoordinates(0, 0).getShouldStep());
+
                 // Leftover code to create a large square of walls
                 //for(int i=0; i<50; i++)
                 //{
@@ -167,6 +180,14 @@ public class ParticulateGame extends Game  {
         {
                 if(isPaused){return;}
 
+                for(ArrayList<Chunk> r : chunks)
+                {
+                        for( Chunk c : r)
+                        {
+                                c.shiftShouldStepAndReset();
+                        }
+                }
+
                 if(mouseHeld)
                 {
                         createTile(outlinedTileX, outlinedTileY, currentTile);
@@ -178,12 +199,20 @@ public class ParticulateGame extends Game  {
                         {
                                 if(grid[r][c] != null)
                                 {
-                                        grid[r][c].action();
-                                        if(grid[r][c] != null)
+                                        
+                                        if(grid[r][c] != null && getChunkForCoordinates(c, r).getShouldStep())
                                         {
+                                                grid[r][c].action();
                                                 Tile t = grid[r][c];
                                                 t.move();
+                                                if(t.updatedThisFrame)
+                                                {
+                                                        // this means the tile has succesfully moved this frame
+                                                        // if it has then we are to wake the chunk it is in and any potential neighbors
 
+                                                        System.out.println("HAS MOVED THIS FRAME");
+                                                        reportToChunkActive(t);
+                                                }
                                         }
                                         
                                         
@@ -242,12 +271,24 @@ public class ParticulateGame extends Game  {
                 {
                         for(int c=0;c<grid[r].length;c++)
                         {
+                                if(getChunkForCoordinates(c, r).getShouldStep())
+                                {       
+                                        pen.setColor(Color.RED);
+                                        Chunk chunk = getChunkForCoordinates(c,r);
+
+                                        pen.drawRect(chunk.getTopLeft()[0], chunk.getTopLeft()[1], Chunk.size, Chunk.size);
+                                }
+
                                 if(grid[r][c] != null)
-                                {
+                                {       
+                                        
+                                        
                                         grid[r][c].draw(pen);
                                 }
                         }
                 }
+                //Chunk chunk = getChunkForCoordinates(40, 40);
+                //System.out.println("topLeft: "+chunk.getTopLeft()[0]+", "+chunk.getTopLeft()[1]+" bottomRight: "+chunk.getBottomRight()[0]+", "+chunk.getBottomRight()[1]);
 
 
                 if(menus[selectedMenu] != null)
@@ -302,6 +343,8 @@ public class ParticulateGame extends Game  {
                 
                 
                 pen.drawRect(outlinedTileX * tileSize, outlinedTileY * tileSize, tileSize, tileSize);
+
+                
         }       
 
         public void setGridBoundsWalls()
@@ -517,6 +560,88 @@ public class ParticulateGame extends Game  {
 
         return file.getAbsolutePath();
     }
+   
+    // following few methods also inspired heavily from DavidMcLaughin208 on github
+    // see Chunk class for link
+    public ArrayList<ArrayList<Chunk>> generateChunks()
+    {
+        ArrayList<ArrayList<Chunk>> chunks = new ArrayList<>();
+
+        // number of rows
+        // Use Math.ceil to take into account partial chunks (chunks at the edge)
+        int rows = (int) Math.ceil((double) grid.length / Chunk.size);
+
+        int columns = (int) Math.ceil((double) grid[0].length / Chunk.size );
+
+        for(int r = 0; r < rows; r++)
+        {
+                // itterale through the rows add create a new array of Chunks
+                chunks.add(new ArrayList<>());
+                for(int c = 0; c < columns; c++)
+                {
+                        // get the x and y of the chunk
+                        int xPos = c * Chunk.size;
+                        int yPos = r * Chunk.size;
+                        Chunk newChunk = new Chunk();
+
+                        // Creat a new chunk object and add it to the current row
+                        chunks.get(r).add(newChunk);
+
+                        // Set the chunks values
+                        // Use math.min to ensure it stays inside the bounds of the grid
+                        newChunk.setTopLeft( Math.min(xPos, grid[0].length), Math.min(yPos, grid.length));
+                        newChunk.setBottomRight( Math.min(xPos + Chunk.size, grid[0].length), Math.min(yPos + Chunk.size, grid.length) );
+                }
+        }
+
+        return chunks;
+    }
+
+    public void reportToChunkActive(Tile t)
+    {
+        reportToChunkActive(t.x, t.y);
+    }
+
+    public void reportToChunkActive(int x, int y)
+    {
+        // if tile is on the left edge set the chunk to the left to step next frame
+        if (x % Chunk.size == 0) {
+                Chunk chunk = getChunkForCoordinates(x - 1 , y);
+                if (chunk != null) chunk.setShouldStepNextFrame(true);
+        }
+        // if tile is on the right edge set the chunk to the right to step next frame
+        if (x % Chunk.size == Chunk.size - 1) {
+                Chunk chunk = getChunkForCoordinates(x + 1 , y);
+                if (chunk != null) chunk.setShouldStepNextFrame(true);
+        }
+        // if tile is on the top edge set the chunk to the top to step next frame
+        if (y % Chunk.size == 0) {
+                Chunk chunk = getChunkForCoordinates(x, y - 1);
+                if (chunk != null) chunk.setShouldStepNextFrame(true);
+        }
+        // if tile is on the bottom edge set the chunk to the bottom to step next frame
+        if (y % Chunk.size == Chunk.size - 1) {
+                Chunk chunk = getChunkForCoordinates(x, y + 1);
+                if (chunk != null) chunk.setShouldStepNextFrame(true);
+        }
+        // Always set the chunk we are currently in to step next frame
+        getChunkForCoordinates(x, y).setShouldStepNextFrame(true);
+    }
+
+    public Chunk getChunkForCoordinates(Tile t)
+    {
+
+        return getChunkForCoordinates(t.x, t.y);
+    }
+
+    public Chunk getChunkForCoordinates(int x, int y)
+    {
+        int chunkY = y / Chunk.size;
+        int chunkX = x / Chunk.size;
+        return chunks.get(chunkY).get(chunkX);
+    }
+   
+   
     @Override
     public void keyTyped(KeyEvent ke) {}
 

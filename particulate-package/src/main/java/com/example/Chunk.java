@@ -3,7 +3,7 @@ package com.example;
 public class Chunk 
 {
 
-    // This class takes inspiration from DavidMcLaughlin208's GitHub page 
+    // This class is taken and slightly modified from DavidMcLaughlin208's GitHub page 
     // where he also uses a chunk based system in his FallingSandGame
     // Github link: https://github.com/DavidMcLaughlin208/FallingSandJava/blob/master/core/src/com/gdx/cellular/util/Chunk.java
 
@@ -12,29 +12,32 @@ public class Chunk
     private boolean shouldStep = true;
     private boolean shouldStepNextFrame = true;
 
-    private int topLeft;
-    private int bottomRight;
+    // x and y coordinate on the window, x first then y
+    private int[] topLeft;
+    private int[] bottomRight;
 
-    public Chunk(int topLleft, int bottomRight)
+    public Chunk(int[] topLeft, int[] bottomRight)
     {
-        this.topLeft = topLleft;
+        this.topLeft = topLeft;
         this.bottomRight = bottomRight;
     }
 
-    public void setTopLeft(int topLeft)
+    public Chunk(){}
+
+    public void setTopLeft(int x, int y)
     {
-        this.topLeft = topLeft;
+        this.topLeft = new int[]{x,y};
     }
-    public int getTopLeft()
+    public int[] getTopLeft()
     {
         return this.topLeft;
     }
     
-    public void setBottomRight(int bottomRight)
+    public void setBottomRight(int x, int y)
     {
-        this.bottomRight = bottomRight;
+        this.bottomRight = new int[]{x,y};
     }
-    public int getBottomRight()
+    public int[] getBottomRight()
     {
         return this.bottomRight ;
     }
@@ -58,6 +61,22 @@ public class Chunk
     public void shiftShouldStepAndReset() {
         this.shouldStep = this.shouldStepNextFrame;
         this.shouldStepNextFrame = false;
+    }
+
+    public boolean isTileInChunk(Tile t)
+    {
+        int tileX = t.x * t.tileSize;
+        int tileY = t.y * t.tileSize;
+
+        if(tileX >= topLeft[0] && tileX+t.tileSize <= bottomRight[0])
+        {
+            if(tileY >= topLeft[1] && tileY+t.tileSize <= bottomRight[1])
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
