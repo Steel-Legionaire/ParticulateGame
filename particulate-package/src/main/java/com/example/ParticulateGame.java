@@ -356,7 +356,7 @@ public class ParticulateGame extends Game  {
                                 return;
                         }
 
-                        if(grid[y][x] == null)
+                        if(x > 0 && y > 0 && y < grid.length && x < grid[y].length && grid[y][x] == null)
                         {
                                 try {
                                         Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
