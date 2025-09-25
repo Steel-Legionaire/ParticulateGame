@@ -130,7 +130,7 @@ public class ParticulateGame extends Game  {
         int tempMsgX = (SCREEN_WIDTH/2) - 80;
         int tempMsgY = 50;
         int tempMsgDurationMilis = 3000;
-                
+
         public ParticulateGame() 
         {
                 grid = new Tile[playAreaHeight / tileSize][playAreaWidth / tileSize];
@@ -176,7 +176,7 @@ public class ParticulateGame extends Game  {
         {
                 if(isPaused){return;}
 
-                if(mouseHeld)
+                if(mouseHeld && outlinedTileX < grid[0].length)
                 {
                         createTile(outlinedTileX, outlinedTileY, currentTile);
                 }
@@ -185,17 +185,12 @@ public class ParticulateGame extends Game  {
                 {
                         for(int c=0;c<grid[r].length;c++)
                         {
-                                if(grid[r][c] != null)
-                                {
-                                        grid[r][c].action();
-                                        if(grid[r][c] != null)
-                                        {
-                                                Tile t = grid[r][c];
-                                                t.move();
+                                Tile t = grid[r][c];
 
-                                        }
-                                        
-                                        
+                                if(t != null)
+                                {
+                                        t.action();
+                                        t.move();
                                 }
                         }
                 }
@@ -591,12 +586,7 @@ public class ParticulateGame extends Game  {
         }
         else
         {
-                if(mx < sideMenuX + tileSize)
-                {
-                        createTile(mxg, myg, currentTile); 
-
-                }
-                else if(mx >= sideMenuX)
+                if(mx >= sideMenuX)
                 {
                         
                         if(pageLeftButton.clickedButton(mx, my))
@@ -678,24 +668,41 @@ public class ParticulateGame extends Game  {
     @Override
     public void mouseDragged(MouseEvent me) 
     {
-        mouseHeld = false;
+        int mxg = (me.getX() / tileSize )- 2;
+        int myg = (me.getY() / tileSize )- 7;
+        outlinedTileX = mxg;
+        outlinedTileY = myg;
 
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) 
+    {
+        mouseHeld = true;
+        
         int mxg = (me.getX() / tileSize )- 2;
         int myg = (me.getY() / tileSize )- 7;
 
         int mx = me.getX();
+        int my = me.getX();
 
         outlinedTileX = mxg;
         outlinedTileY = myg;
 
+        //ArrayList<int[]> path = traceThroughGrid(mxLastFrame, myLastFrame, mx, my);
         if(!(me.isShiftDown()))
         {
                 
                 try {
-
-                        if(mx < sideMenuX + tileSize)
+                        
+                        if(mxg < grid[0].length)
                         {
-                                createTile(mxg, myg, currentTile);     
+                                createTile(mxg, myg, currentTile); 
+                                //for(int[] pos : path)
+                                //{
+                                //        createTile((pos[0] / tileSize) - 2, (pos[1] / tileSize) - 2, currentTile); 
+                                //}
+                                    
                         }
                            
                         
@@ -713,18 +720,6 @@ public class ParticulateGame extends Game  {
                 } catch (ArrayIndexOutOfBoundsException e) {
 
                 }
-        }
-
-
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent me) 
-    {
-        if(me.getX()/tileSize < grid[0].length+1)
-        {
-                mouseHeld = true;
         }
         
     }
