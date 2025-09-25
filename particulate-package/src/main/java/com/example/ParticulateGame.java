@@ -159,6 +159,15 @@ public class ParticulateGame extends Game  {
                 //                grid[50+i][50+k] = new Wall(50+k, 50+i);
                 //        }
                 //}
+
+                /*ArrayList<int[]> test = traceThroughGrid(0, 0, 5, 0);
+                System.out.println(test.size());
+                for(int[] i : test)
+                {
+
+                        System.out.println("("+i[0]+","+i[1]+")");
+                        
+                }*/
                 
         }
         
@@ -303,6 +312,24 @@ public class ParticulateGame extends Game  {
                 
                 pen.drawRect(outlinedTileX * tileSize, outlinedTileY * tileSize, tileSize, tileSize);
         }       
+
+
+        public ArrayList<int[]> traceThroughGrid(int startX, int startY, int endX, int endY)
+        {
+                // slope = y2 - y2 / x2 - x1
+                ArrayList<int[]> allCoords = new ArrayList<int[]>(); 
+
+                int y;
+                double slope = (double)(endY - startY)  / (double)(endX - startX);
+
+                for( int x = startX; x <= endX; x++)
+                {
+                        y = (int) Math.round(slope * x);
+                        allCoords.add(new int[]{x, y});
+                }
+                
+                return allCoords;
+        }
 
         public void setGridBoundsWalls()
         {
