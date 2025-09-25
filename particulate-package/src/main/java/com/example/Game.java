@@ -35,7 +35,6 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
         frame.addMouseListener(this);
         frame.setBackground(new Color(40,40,40));
         frame.addMouseMotionListener(this);
-
         new DropTarget(frame.getContentPane(), this);
         run();
     }

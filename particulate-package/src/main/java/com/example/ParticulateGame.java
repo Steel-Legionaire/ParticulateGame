@@ -22,7 +22,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -178,7 +181,9 @@ public class ParticulateGame extends Game  {
                                         grid[r][c].action();
                                         if(grid[r][c] != null)
                                         {
-                                                grid[r][c].move();
+                                                Tile t = grid[r][c];
+                                                t.move();
+
                                         }
                                         
                                         
@@ -190,13 +195,48 @@ public class ParticulateGame extends Game  {
         public void draw(Graphics pen)
         {    
 
+                // Draw side menu background
                 pen.setColor(Color.DARK_GRAY);
                 pen.fillRect(playAreaWidth - tileSize, 0, SCREEN_WIDTH - playAreaWidth + tileSize, SCREEN_HEIGHT);
                 
+                // Side menu buttons 
                 pageLeftButton.draw(pen);
                 pageRightButton.draw(pen);
                 optionsButton.draw(pen);
                 eraserButton.draw(pen);
+
+                // Group tiles by color
+                Map<Color, List<Tile>> tileBuckets = new HashMap<>();
+
+                for(int r=0; r< grid.length; r++)
+                {
+                        for(int c=0; c<grid[r].length; c++)
+                        {
+                                Tile t = grid[r][c];
+
+                                if(t != null)
+                                {
+                                        // Add tile to correct color group
+                                        tileBuckets
+                                                .computeIfAbsent(t.color, k -> new ArrayList<>())
+                                                .add(t);
+                                }
+                        }
+                }
+
+                // Draw all tiles, grouped by color 
+                for (Map.Entry<Color, List<Tile>> entry : tileBuckets.entrySet())
+                {
+                        Color color = entry.getKey();
+                        List<Tile> tiles = entry.getValue();
+
+                        pen.setColor(color);
+
+                        for(Tile t : tiles)
+                        {
+                                pen.fillRect(t.x * tileSize, t.y * tileSize, tileSize, tileSize);
+                        }
+                }
 
                 for(int r=0;r<grid.length;r++)
                 {

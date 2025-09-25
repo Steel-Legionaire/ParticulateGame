@@ -1,6 +1,7 @@
 package com.example;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.*;
 
 public abstract class Tile 
 {
@@ -20,7 +21,9 @@ public abstract class Tile
 
     public int framesSinceLastUpdate = 0;
 
-    static public Color[] colors;
+    protected static Color[] colors;
+
+    int counter = 0;
 
     Tile(int x, int y, boolean isFlammable, boolean isDestructable, int toughness, int speed)
     {
@@ -32,6 +35,7 @@ public abstract class Tile
 
         this.speed = speed;
         // Speed is in terms of how many frames until the objects moves again, this does not affect the actions
+        
     }
 
     public abstract void move();
@@ -40,9 +44,7 @@ public abstract class Tile
 
     public void draw(Graphics pen)
     {
-        pen.setColor(color);
-        pen.fillRect(x*tileSize, y*tileSize, tileSize, tileSize);
-        pen.setColor(Color.BLACK);
+        return;
     }
 
     public void setAllPossibleColors(Color[] c)
@@ -63,6 +65,13 @@ public abstract class Tile
 
     public void setColor()
     {
-        this.color = colors[(int)(Math.random() * colors.length)];
+        if (colors != null && colors.length > 0) {
+            color = colors[(int)(Math.random() * colors.length)];
+        } else {
+            color = Color.MAGENTA; // fallback
+        }
+        //dSystem.out.println("Color ID: " + System.identityHashCode(color));
+
+
     }
 }

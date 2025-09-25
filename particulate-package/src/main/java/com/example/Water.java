@@ -5,17 +5,12 @@ public class Water extends Tile
 {
     int direction;
 
+    private static final Color[] COLORS = new Color[]{ new Color(0, 0, 230), new Color(0, 0, 240), new Color(0, 0, 250), new Color(0, 0, 255), new Color(10, 10, 255) };
+    private static boolean colorsInitialized = false;
+    
     public Water(int x, int y) {
         super(x, y, false, true, 1, 3);
-        setAllPossibleColors(new Color[]{ new Color(0, 0, 230),
-
-new Color(0, 0, 240),
-
-new Color(0, 0, 250),
-
-new Color(0, 0, 255), 
-
-new Color(10, 10, 255) });
+        setAllPossibleColors(COLORS);
         setColor();
 
         direction = (int)(Math.random() *2); // spawn with a random direction
