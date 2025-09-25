@@ -49,6 +49,7 @@ public class ParticulateGame extends Game  {
         int outlinedTileX = 0;
         int outlinedTileY = 0;
 
+
         public static int tileSize = 5;
 
         public static Tile[][] grid;
@@ -160,12 +161,13 @@ public class ParticulateGame extends Game  {
                 //        }
                 //}
 
-                /*ArrayList<int[]> test = traceThroughGrid(0, 0, 5, 0);
+                /*ArrayList<int[]> test = traceThroughGrid(299, 199, 0, 0);
                 System.out.println(test.size());
                 for(int[] i : test)
                 {
 
                         System.out.println("("+i[0]+","+i[1]+")");
+                        createTile(i[0], i[1], Stone.class);
                         
                 }*/
                 
@@ -174,12 +176,12 @@ public class ParticulateGame extends Game  {
 
         public void update() 
         {
-                if(isPaused){return;}
-
                 if(mouseHeld && outlinedTileX < grid[0].length)
                 {
                         createTile(outlinedTileX, outlinedTileY, currentTile);
                 }
+
+                if(isPaused){ return; }
 
                 for(int r=grid.length-1;r>=0;r--)
                 {
@@ -317,11 +319,30 @@ public class ParticulateGame extends Game  {
                 int y;
                 double slope = (double)(endY - startY)  / (double)(endX - startX);
 
-                for( int x = startX; x <= endX; x++)
+                if(startX > endX)
                 {
-                        y = (int) Math.round(slope * x);
-                        allCoords.add(new int[]{x, y});
+                        // endX is behind startX
+                        for( int x = startX; x >= endX; x--)
+                        {
+                                y = (int) Math.round(slope * x);
+                                allCoords.add(new int[]{x, y});
+                        }
                 }
+                else if(startX < endX)
+                {
+                        // endX is in front of startX
+                        for( int x = startX; x <= endX; x++)
+                        {
+                                y = (int) Math.round(slope * x);
+                                allCoords.add(new int[]{x, y});
+                        }
+                }
+                else
+                {
+                        // in same spot
+                        
+                }
+
                 
                 return allCoords;
         }
