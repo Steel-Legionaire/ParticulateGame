@@ -96,6 +96,7 @@ public class ParticulateGame extends Game  {
         Button waterSpawner = new Button(buttonX, 150, buttonWidth, buttonHeight, "Water Spawner");
         Button lavaSpawner = new Button(buttonX, 225, buttonWidth, buttonHeight, "Lava Spawner");
         Button fireSpawner = new Button(buttonX, 300, buttonWidth, buttonHeight, "Fire Spawner");
+        Button ashSpawner = new Button(buttonX, 375, buttonWidth, buttonHeight, "Ash Spawner");
 
         // Define Options button and menu buttons
         Button optionsButton = new Button(sideMenuX + 135, 930, 50, buttonHeight, "\u2699" );
@@ -120,7 +121,7 @@ public class ParticulateGame extends Game  {
         Button[] particlesButtons = new Button[]{ sandButton, waterButton, lavaButton, fireButton, ashButton};
         Button[] blockMenu = new Button[]{ stoneButton, bedrockButton, obsidianButton, woodButton, staticTntButton};
         Button[] optionsMenu = new Button[]{ exitGameButton, savePlayAreaButton};
-        Button[] spawnerMenu = new Button[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner };
+        Button[] spawnerMenu = new Button[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner, ashSpawner };
 
         Button[][] menus = new Button[4][10];
 
@@ -721,6 +722,7 @@ public class ParticulateGame extends Game  {
                                 else if(waterSpawner.clickedButton(mx, my)) { currentTile = WaterSpawner.class; }
                                 else if(lavaSpawner.clickedButton(mx, my)) { currentTile = LavaSpawner.class; }
                                 else if(fireSpawner.clickedButton(mx, my)) { currentTile = FireSpawner.class; }
+                                else if(ashSpawner.clickedButton(mx, my)) { currentTile = AshSpawner.class; }
                         }
                         else if(selectedMenu == 3)
                         {
