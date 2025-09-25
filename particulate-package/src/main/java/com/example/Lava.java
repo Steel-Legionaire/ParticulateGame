@@ -6,7 +6,6 @@ public class Lava extends Tile{
     int direction = (int)(Math.random() * 2);
 
     private static final Color[] COLORS = new Color[]{ new Color(255, 185, 0), new Color(255, 192, 0), new Color(255, 200, 0), new Color(255, 208, 0), new Color(255, 215, 0) };
-    private static boolean colorsInitialized = false;
     
     public Lava(int x, int y) {
         super(x, y, true, true, 2, 8);

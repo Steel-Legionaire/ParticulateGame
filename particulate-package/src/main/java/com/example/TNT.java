@@ -4,7 +4,6 @@ import java.awt.Color;
 public class TNT extends Tile{
 
     private static final Color[] COLORS = new Color[]{new Color(200, 0, 0), new Color(220, 0, 0), new Color(255, 0, 0), new Color(255, 30, 30), new Color(255, 60, 60)};
-    private static boolean colorsInitialized = false;
     
     public boolean isExploding = false;
 

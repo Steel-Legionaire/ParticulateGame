@@ -7,7 +7,6 @@ public class Wood extends Tile{
     public boolean onFire = false;
 
     private static final Color[] COLORS = new Color[] { new Color(129, 64, 18), new Color(134, 67, 19), new Color(139, 69, 19), new Color(145, 72, 21), new Color(150, 75, 22) };
-    private static boolean colorsInitialized = false;
     
     // when Wood is on fire, this variable is how long it'll be on fire before it burns and potentially turns to ash
     int framesUntilCanBeBurnt = 300;
