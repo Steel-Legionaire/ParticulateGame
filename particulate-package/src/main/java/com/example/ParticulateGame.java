@@ -324,7 +324,7 @@ public class ParticulateGame extends Game  {
                         // endX is behind startX
                         for( int x = startX; x >= endX; x--)
                         {
-                                y = (int) Math.round(slope * x);
+                                y = Math.abs((int) Math.round(slope * x));
                                 allCoords.add(new int[]{x, y});
                         }
                 }
@@ -333,7 +333,7 @@ public class ParticulateGame extends Game  {
                         // endX is in front of startX
                         for( int x = startX; x <= endX; x++)
                         {
-                                y = (int) Math.round(slope * x);
+                                y = Math.abs((int) Math.round(slope * x));
                                 allCoords.add(new int[]{x, y});
                         }
                 }
