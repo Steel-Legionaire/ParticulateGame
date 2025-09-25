@@ -10,7 +10,6 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Constructor;
@@ -306,8 +305,8 @@ public class ParticulateGame extends Game  {
                         }
                 }
                 
-                
-                pen.drawRect(outlinedTileX * tileSize, outlinedTileY * tileSize, tileSize, tileSize);
+                pen.setColor(Color.WHITE);
+                pen.drawRect((outlinedTileX - ((int)(drawSize / 2))) * tileSize, (outlinedTileY - ((int)(drawSize / 2))) * tileSize, tileSize * drawSize, tileSize * drawSize );
         }       
 
 
@@ -403,7 +402,7 @@ public class ParticulateGame extends Game  {
                 }                                
                 else 
                 {
-                        for(int r = y - ((int)(drawSize / 2)); r < y+((int)(drawSize / 2)) + 1; r++)
+                        for(int r = y - ((int)(drawSize / 2)); r < y + ((int)(drawSize / 2)) + 1; r++)
                         {
                                 if(r<1){ continue; }
                                 else if(r>=grid.length){ break; }
