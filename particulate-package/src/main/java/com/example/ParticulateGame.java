@@ -200,15 +200,7 @@ public class ParticulateGame extends Game  {
         public void draw(Graphics pen)
         {    
 
-                // Draw side menu background
-                pen.setColor(Color.DARK_GRAY);
-                pen.fillRect(playAreaWidth - tileSize, 0, SCREEN_WIDTH - playAreaWidth + tileSize, SCREEN_HEIGHT);
-                
-                // Side menu buttons 
-                pageLeftButton.draw(pen);
-                pageRightButton.draw(pen);
-                optionsButton.draw(pen);
-                eraserButton.draw(pen);
+
 
                 // Group tiles by color
                 Map<Color, List<Tile>> tileBuckets = new HashMap<>();
@@ -254,6 +246,20 @@ public class ParticulateGame extends Game  {
                         }
                 }
 
+                // Draw in outline for the brush
+                pen.setColor(Color.WHITE);
+                pen.drawRect((outlinedTileX - ((int)(drawSize / 2))) * tileSize, (outlinedTileY - ((int)(drawSize / 2))) * tileSize, tileSize * drawSize, tileSize * drawSize );
+
+
+                // Draw side menu background
+                pen.setColor(Color.DARK_GRAY);
+                pen.fillRect(playAreaWidth - tileSize, 0, SCREEN_WIDTH - playAreaWidth + tileSize, SCREEN_HEIGHT);
+                
+                // Side menu buttons 
+                pageLeftButton.draw(pen);
+                pageRightButton.draw(pen);
+                optionsButton.draw(pen);
+                eraserButton.draw(pen);
 
                 if(menus[selectedMenu] != null)
                 {
@@ -305,8 +311,7 @@ public class ParticulateGame extends Game  {
                         }
                 }
                 
-                pen.setColor(Color.WHITE);
-                pen.drawRect((outlinedTileX - ((int)(drawSize / 2))) * tileSize, (outlinedTileY - ((int)(drawSize / 2))) * tileSize, tileSize * drawSize, tileSize * drawSize );
+                
         }       
 
 
