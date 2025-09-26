@@ -7,7 +7,7 @@
   
   ![alt text](readmeImages/releases_location.png "releases_location image")
 
-  Click on "Particulate-1.x.jar"
+  Click on "Particulate-2.0.jar"
 
   ![alt text](readmeImages/release_page.png "release page image")
 
@@ -18,7 +18,7 @@
   ![alt text](readmeImages/cd_command.png "release page image")
   
   
-  run this command: java -jar particulate-1.0.jar
+  run this command: java -jar particulate-2.0.jar
   ![alt text](readmeImages/run_command.png "release page image")
   
 # Controls:
