@@ -5,7 +5,7 @@ public class AshSpawner extends Tile{
 
     public AshSpawner(int x, int y) {
         super(x, y, false, true, 8, 1);
-        setAllPossibleColors(new Color[]{ Color.PINK });
+        setAllPossibleColors(new Color[]{ new Color(15, 125, 15) });
         setColor();
 
     }
