@@ -259,7 +259,7 @@ public class ParticulateGame extends Game  {
 
                 // Draw side menu background
                 pen.setColor(Color.DARK_GRAY);
-                pen.fillRect(playAreaWidth - tileSize, 0, SCREEN_WIDTH - playAreaWidth + tileSize, SCREEN_HEIGHT);
+                pen.fillRect(playAreaWidth, 0, SCREEN_WIDTH - playAreaWidth + tileSize, SCREEN_HEIGHT);
                 
                 // Side menu buttons 
                 pageLeftButton.draw(pen);
