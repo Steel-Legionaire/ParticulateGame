@@ -1,5 +1,3 @@
-# Particulate Refreshed
-
 ## Requirements: 
   java: 21.0.8
 
@@ -23,3 +21,25 @@
   run this command: java -jar particulate-1.0.jar
   ![alt text](readmeImages/run_command.png "release page image")
   
+# Controls:
+
+| Key | Action |
+|-----|--------|
+|R| Reset Play Area|
+|Enter| Drop the floor|
+|Space| Pause Game|
+|Left Click| Spawn Particle|
+|Middle Mouse Up| Increase Brush Size|
+|Middle Mouse Down| Decrease Brush Size|
+|S| Save Play Area To Desktop|
+|Drag saved file to play area| Load stored play area|
+|1|Select Sand|
+|2|Select Water|
+|3|Select Lava|
+|4|Select Fire|
+|5|Select Stone|
+|6|Select Wood|
+|7|Select TNT|
+|8|Select Sand Spawner|
+|9|Select Water Spawner|
+|0|Select Lava Spawner|
