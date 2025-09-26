@@ -12,12 +12,12 @@
   ![alt text](readmeImages/releases_page.png "release page image")
 
 ## How to run
-  ### Right click on the Particulate-LINUX.zip filem then click "Extract"
+  ### Right click on the Particulate-LINUX.zip filem then click "Extract", open the folder created
 
-  ![alt text](readmeImages/cd_command.png "release page image")
+  ![alt text](readmeImages/extract_zip_file_example.gif "extrac_zip_file_gif")
 
   ### Right click on the run_game.sh file, then click "Run As a Program" 
-  ![alt text](readmeImages/run_command.png "release page image")
+  ![alt text](readmeImages/run_game_example.gif "run_game_gif")
   
 # Controls:
 
