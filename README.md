@@ -12,6 +12,7 @@
   ![alt text](readmeImages/releases_page.png "release page image")
 
 ## How to run
+  ### Open Files and go to your Downloads
   ### Right click on the Particulate-LINUX.zip filem then click "Extract", open the folder created
 
   ![alt text](readmeImages/extract_zip_file_example.gif "extrac_zip_file_gif")
