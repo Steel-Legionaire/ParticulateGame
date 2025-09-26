@@ -180,25 +180,31 @@ public class ParticulateGame extends Game  {
 
         public void update() 
         {
+
+
+                
+                if(!isPaused)
+                { 
+                        for(int r=grid.length-1;r>=0;r--)
+                        {
+                                
+                                for(int c=0;c<grid[r].length;c++)
+                                {
+                                        Tile t = grid[r][c];
+
+                                        if(t != null)
+                                        {
+                                                t.action();
+                                                t.move();
+                                        }
+                                }
+                        }      
+                }
+
+
                 if(mouseHeld && outlinedTileX < grid[0].length)
                 {
                         createTile(outlinedTileX, outlinedTileY, currentTile);
-                }
-
-                if(isPaused){ return; }
-
-                for(int r=grid.length-1;r>=0;r--)
-                {
-                        for(int c=0;c<grid[r].length;c++)
-                        {
-                                Tile t = grid[r][c];
-
-                                if(t != null)
-                                {
-                                        t.action();
-                                        t.move();
-                                }
-                        }
                 }
         }
         
