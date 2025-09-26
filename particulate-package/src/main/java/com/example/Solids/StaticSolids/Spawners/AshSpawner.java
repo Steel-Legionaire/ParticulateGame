@@ -1,5 +1,9 @@
-package com.example;
+package com.example.Solids.StaticSolids.Spawners;
 import java.awt.Color;
+
+import com.example.ParticulateGame;
+import com.example.Tile;
+import com.example.Solids.MoveableSolids.Ash;
 
 public class AshSpawner extends Tile{
 

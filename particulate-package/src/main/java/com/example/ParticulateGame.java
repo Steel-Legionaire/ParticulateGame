@@ -33,6 +33,22 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 
+import com.example.Gases.Fire;
+import com.example.Liquids.Lava;
+import com.example.Liquids.Water;
+import com.example.Solids.MoveableSolids.Ash;
+import com.example.Solids.MoveableSolids.Sand;
+import com.example.Solids.StaticSolids.Bedrock;
+import com.example.Solids.StaticSolids.Obsidian;
+import com.example.Solids.StaticSolids.Stone;
+import com.example.Solids.StaticSolids.TNT;
+import com.example.Solids.StaticSolids.Wood;
+import com.example.Solids.StaticSolids.Spawners.AshSpawner;
+import com.example.Solids.StaticSolids.Spawners.FireSpawner;
+import com.example.Solids.StaticSolids.Spawners.LavaSpawner;
+import com.example.Solids.StaticSolids.Spawners.SandSpawner;
+import com.example.Solids.StaticSolids.Spawners.WaterSpawner;
+
 public class ParticulateGame extends Game  {
     
         public static final String TITLE = "Particulate Refreshed";

@@ -1,5 +1,7 @@
-package com.example;
+package com.example.Solids.StaticSolids;
 import java.awt.Color;
+
+import com.example.Tile;
 
 public class Stone extends Tile{
 

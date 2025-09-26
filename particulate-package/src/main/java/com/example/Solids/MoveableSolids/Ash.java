@@ -1,6 +1,10 @@
-package com.example;
+package com.example.Solids.MoveableSolids;
 
 import java.awt.Color;
+
+import com.example.ParticulateGame;
+import com.example.Tile;
+import com.example.Liquids.Water;
 
 public class Ash extends Tile{
 

@@ -1,5 +1,8 @@
-package com.example;
+package com.example.Solids.StaticSolids;
 import java.awt.Color;
+
+import com.example.ParticulateGame;
+import com.example.Tile;
 
 public class TNT extends Tile{
 

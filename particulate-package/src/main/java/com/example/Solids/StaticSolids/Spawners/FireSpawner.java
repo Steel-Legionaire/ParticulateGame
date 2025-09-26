@@ -1,5 +1,9 @@
-package com.example;
+package com.example.Solids.StaticSolids.Spawners;
 import java.awt.Color;
+
+import com.example.ParticulateGame;
+import com.example.Tile;
+import com.example.Gases.Fire;
 
 public class FireSpawner extends Tile
 {

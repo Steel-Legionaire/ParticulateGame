@@ -1,5 +1,10 @@
-package com.example;
+package com.example.Liquids;
 import java.awt.Color;
+
+import com.example.ParticulateGame;
+import com.example.Tile;
+import com.example.Gases.Fire;
+import com.example.Solids.StaticSolids.Wood;
 
 public class Water extends Tile
 {

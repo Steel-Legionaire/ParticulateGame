@@ -1,5 +1,12 @@
-package com.example;
+package com.example.Liquids;
 import java.awt.Color;
+
+import com.example.ParticulateGame;
+import com.example.Tile;
+import com.example.Solids.MoveableSolids.Ash;
+import com.example.Solids.StaticSolids.Obsidian;
+import com.example.Solids.StaticSolids.TNT;
+import com.example.Solids.StaticSolids.Wood;
 
 public class Lava extends Tile{
 
