@@ -7,18 +7,16 @@
   
   ![alt text](readmeImages/releases_location.png "releases_location image")
 
-  ### Click on "Particulate-2.0.jar"
+  ### Click on "Particulate-LINUX.zip"
 
   ![alt text](readmeImages/releases_page.png "release page image")
 
 ## How to run
-  ### Open Terminal 
+  ### Right click on the Particulate-LINUX.zip filem then click "Extract"
 
-  ### cd into where you downloaded the .jar file (likely your Downloads folder)\
   ![alt text](readmeImages/cd_command.png "release page image")
-  
-  
-  ### run this command: java -jar particulate-2.0.jar
+
+  ### Right click on the run_game.sh file, then click "Run As a Program" 
   ![alt text](readmeImages/run_command.png "release page image")
   
 # Controls:
