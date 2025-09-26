@@ -135,6 +135,8 @@ public class ParticulateGame extends Game  {
 
         Button selectedButton;
 
+        Color outlineColor = Color.YELLOW;
+
         public ParticulateGame() 
         {
                 grid = new Tile[playAreaHeight / tileSize][playAreaWidth / tileSize];
@@ -259,7 +261,7 @@ public class ParticulateGame extends Game  {
                 }
 
                 // Draw in outline for the brush
-                pen.setColor(Color.WHITE);
+                pen.setColor(outlineColor);
                 pen.drawRect((outlinedTileX - ((int)(drawSize / 2))) * tileSize, (outlinedTileY - ((int)(drawSize / 2))) * tileSize, tileSize * drawSize, tileSize * drawSize );
 
 
@@ -711,6 +713,7 @@ public class ParticulateGame extends Game  {
                                         selectedButton.swapColors();
                                         eraserButton.swapColors();
                                         selectedButton = eraserButton;
+                                        outlineColor = Color.PINK;
                                 }
                         }
 
@@ -724,6 +727,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 sandButton.swapColors();
                                                 selectedButton = sandButton;
+                                                outlineColor = Color.YELLOW;
                                         }
                                 }
                                 else if(waterButton.clickedButton(mx, my)) 
@@ -734,6 +738,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 waterButton.swapColors();
                                                 selectedButton = waterButton;
+                                                outlineColor = Color.BLUE;
                                         }
                                 }
                                 else if(lavaButton.clickedButton(mx, my)) 
@@ -744,6 +749,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 lavaButton.swapColors();
                                                 selectedButton = lavaButton;
+                                                outlineColor = new Color(255, 185, 0);
                                         }
                                 }
                                 else if(fireButton.clickedButton(mx, my)) 
@@ -754,6 +760,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 fireButton.swapColors();
                                                 selectedButton = fireButton;
+                                                outlineColor = new Color(255,135,0);
                                         }
                                 }
                                 else if(ashButton.clickedButton(mx, my)) 
@@ -764,6 +771,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 ashButton.swapColors();
                                                 selectedButton = ashButton;
+                                                outlineColor = new Color(230,230,230);
                                         }
                                 }
                         }
@@ -777,6 +785,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 stoneButton.swapColors();
                                                 selectedButton = stoneButton;
+                                                outlineColor = new Color(140, 140, 140);
                                         }
                                 }
                                 else if(bedrockButton.clickedButton(mx, my)) 
@@ -787,6 +796,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 bedrockButton.swapColors();
                                                 selectedButton = bedrockButton;
+                                                outlineColor = Color.DARK_GRAY;
                                         }
                                 }
                                 else if(obsidianButton.clickedButton(mx, my)) 
@@ -797,6 +807,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 obsidianButton.swapColors();
                                                 selectedButton = obsidianButton;
+                                                outlineColor = Color.BLACK;
                                         }
                                         }
                                 else if(woodButton.clickedButton(mx, my)) 
@@ -807,6 +818,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 woodButton.swapColors();
                                                 selectedButton = woodButton;
+                                                outlineColor = new Color(129, 64, 18);
                                         }
                                 }
                                 else if(staticTntButton.clickedButton(mx, my)) 
@@ -817,6 +829,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 staticTntButton.swapColors();
                                                 selectedButton = staticTntButton;
+                                                outlineColor = Color.RED;
                                         }
                                 }
                                 else if(fallingTntButton.clickedButton(mx, my)) 
@@ -827,6 +840,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 fallingTntButton.swapColors();
                                                 selectedButton = fallingTntButton;
+                                                outlineColor = Color.RED;
                                         }
                                 }
                         }
@@ -840,6 +854,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 sandSpawner.swapColors();
                                                 selectedButton = sandSpawner;
+                                                outlineColor = Color.RED;
                                         }
                                 }
                                 else if(waterSpawner.clickedButton(mx, my)) 
@@ -850,6 +865,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 waterSpawner.swapColors();
                                                 selectedButton = waterSpawner;
+                                                outlineColor = Color.CYAN;
                                         }
                                 }
                                 else if(lavaSpawner.clickedButton(mx, my)) 
@@ -860,6 +876,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 lavaSpawner.swapColors();
                                                 selectedButton = lavaSpawner;
+                                                outlineColor = Color.GREEN;
                                         }
                                  }
                                 else if(fireSpawner.clickedButton(mx, my)) 
@@ -870,6 +887,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 fireSpawner.swapColors();
                                                 selectedButton = fireSpawner;
+                                                outlineColor = Color.MAGENTA;
                                         }
                                 }
                                 else if(ashSpawner.clickedButton(mx, my)) 
@@ -880,6 +898,7 @@ public class ParticulateGame extends Game  {
                                                 selectedButton.swapColors();
                                                 ashSpawner.swapColors();
                                                 selectedButton = ashSpawner;
+                                                outlineColor = Color.GRAY;
                                         }
                                 }
                         }
