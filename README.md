@@ -9,7 +9,7 @@
 
   Click on "Particulate-2.0.jar"
 
-  ![alt text](readmeImages/release_page.png "release page image")
+  ![alt text](readmeImages/releases_page.png "release page image")
 
 ## How to run
   Open Terminal 
