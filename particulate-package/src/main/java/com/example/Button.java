@@ -82,4 +82,11 @@ public class Button {
             }
             return false;
     }
+
+    public void swapColors()
+    {
+        Color temp = bgColor;
+        bgColor = txtColor;
+        txtColor = temp;
+    }
 }

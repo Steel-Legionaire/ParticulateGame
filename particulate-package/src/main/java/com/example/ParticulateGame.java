@@ -133,6 +133,8 @@ public class ParticulateGame extends Game  {
         int tempMsgY = 50;
         int tempMsgDurationMilis = 3000;
 
+        Button selectedButton;
+
         public ParticulateGame() 
         {
                 grid = new Tile[playAreaHeight / tileSize][playAreaWidth / tileSize];
@@ -152,6 +154,7 @@ public class ParticulateGame extends Game  {
                 menus[2] = spawnerMenu;
                 menus[3] = optionsMenu;
                 
+                selectedButton = sandButton;
 
                 // Leftover code to create a large square of walls
                 //for(int i=0; i<50; i++)
@@ -202,7 +205,8 @@ public class ParticulateGame extends Game  {
         public void draw(Graphics pen)
         {    
 
-
+                selectedButton.bgColor = Color.BLACK;
+                selectedButton.txtColor = Color.WHITE;
 
                 // Group tiles by color
                 Map<Color, List<Tile>> tileBuckets = new HashMap<>();
@@ -701,28 +705,172 @@ public class ParticulateGame extends Game  {
 
                         if(selectedMenu == 0)
                         {
-                                if(sandButton.clickedButton(mx, my)){ currentTile = Sand.class; }
-                                else if(waterButton.clickedButton(mx, my)) { currentTile = Water.class; }
-                                else if(lavaButton.clickedButton(mx, my)) { currentTile = Lava.class; }
-                                else if(fireButton.clickedButton(mx, my)) { currentTile = Fire.class; }
-                                else if(ashButton.clickedButton(mx, my)) { currentTile = Ash.class; }
+                                if(sandButton.clickedButton(mx, my))
+                                { 
+                                        currentTile = Sand.class; 
+                                        if(!sandButton.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                sandButton.swapColors();
+                                                selectedButton = sandButton;
+                                        }
+                                }
+                                else if(waterButton.clickedButton(mx, my)) 
+                                { 
+                                        currentTile = Water.class; 
+                                        if(!waterButton.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                waterButton.swapColors();
+                                                selectedButton = waterButton;
+                                        }
+                                }
+                                else if(lavaButton.clickedButton(mx, my)) 
+                                { 
+                                        currentTile = Lava.class; 
+                                        if(!lavaButton.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                lavaButton.swapColors();
+                                                selectedButton = lavaButton;
+                                        }
+                                }
+                                else if(fireButton.clickedButton(mx, my)) 
+                                { 
+                                        currentTile = Fire.class; 
+                                        if(!fireButton.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                fireButton.swapColors();
+                                                selectedButton = fireButton;
+                                        }
+                                }
+                                else if(ashButton.clickedButton(mx, my)) 
+                                { 
+                                        currentTile = Ash.class; 
+                                        if(!ashButton.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                ashButton.swapColors();
+                                                selectedButton = ashButton;
+                                        }
+                                }
                         }
                         else if(selectedMenu == 1)
                         {
-                                if( stoneButton.clickedButton(mx, my)) { currentTile = Stone.class; }
-                                else if(bedrockButton.clickedButton(mx, my)) { currentTile = Bedrock.class; }
-                                else if(obsidianButton.clickedButton(mx, my)) { currentTile = Obsidian.class; }
-                                else if(woodButton.clickedButton(mx, my)) { currentTile = Wood.class; }
-                                else if(staticTntButton.clickedButton(mx, my)) {currentTile = TNT.class; }
-                                else if(fallingTntButton.clickedButton(mx, my)) {currentTile = TNT.class; }
+                                if( stoneButton.clickedButton(mx, my)) 
+                                { 
+                                        currentTile = Stone.class; 
+                                        if(!stoneButton.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                stoneButton.swapColors();
+                                                selectedButton = stoneButton;
+                                        }
+                                }
+                                else if(bedrockButton.clickedButton(mx, my)) 
+                                { 
+                                        currentTile = Bedrock.class; 
+                                        if(!bedrockButton.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                bedrockButton.swapColors();
+                                                selectedButton = bedrockButton;
+                                        }
+                                }
+                                else if(obsidianButton.clickedButton(mx, my)) 
+                                {
+                                        currentTile = Obsidian.class; 
+                                        if(!obsidianButton.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                obsidianButton.swapColors();
+                                                selectedButton = obsidianButton;
+                                        }
+                                        }
+                                else if(woodButton.clickedButton(mx, my)) 
+                                { 
+                                        currentTile = Wood.class; 
+                                        if(!woodButton.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                woodButton.swapColors();
+                                                selectedButton = woodButton;
+                                        }
+                                }
+                                else if(staticTntButton.clickedButton(mx, my)) 
+                                {
+                                        currentTile = TNT.class; 
+                                        if(!staticTntButton.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                staticTntButton.swapColors();
+                                                selectedButton = staticTntButton;
+                                        }
+                                }
+                                else if(fallingTntButton.clickedButton(mx, my)) 
+                                {
+                                        currentTile = TNT.class; 
+                                        if(!fallingTntButton.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                fallingTntButton.swapColors();
+                                                selectedButton = fallingTntButton;
+                                        }
+                                }
                         }
                         else if(selectedMenu == 2)
                         {
-                                if(sandSpawner.clickedButton(mx, my)) { currentTile = SandSpawner.class; }
-                                else if(waterSpawner.clickedButton(mx, my)) { currentTile = WaterSpawner.class; }
-                                else if(lavaSpawner.clickedButton(mx, my)) { currentTile = LavaSpawner.class; }
-                                else if(fireSpawner.clickedButton(mx, my)) { currentTile = FireSpawner.class; }
-                                else if(ashSpawner.clickedButton(mx, my)) { currentTile = AshSpawner.class; }
+                                if(sandSpawner.clickedButton(mx, my)) 
+                                {
+                                        currentTile = SandSpawner.class; 
+                                        if(!sandSpawner.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                sandSpawner.swapColors();
+                                                selectedButton = sandSpawner;
+                                        }
+                                }
+                                else if(waterSpawner.clickedButton(mx, my)) 
+                                { 
+                                        currentTile = WaterSpawner.class; 
+                                        if(!waterSpawner.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                waterSpawner.swapColors();
+                                                selectedButton = waterSpawner;
+                                        }
+                                }
+                                else if(lavaSpawner.clickedButton(mx, my)) 
+                                { 
+                                        currentTile = LavaSpawner.class;
+                                        if(!lavaSpawner.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                lavaSpawner.swapColors();
+                                                selectedButton = lavaSpawner;
+                                        }
+                                 }
+                                else if(fireSpawner.clickedButton(mx, my)) 
+                                { 
+                                        currentTile = FireSpawner.class; 
+                                        if(!fireSpawner.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                fireSpawner.swapColors();
+                                                selectedButton = fireSpawner;
+                                        }
+                                }
+                                else if(ashSpawner.clickedButton(mx, my)) 
+                                { 
+                                        currentTile = AshSpawner.class; 
+                                        if(!ashSpawner.equals(selectedButton))
+                                        {
+                                                selectedButton.swapColors();
+                                                ashSpawner.swapColors();
+                                                selectedButton = ashSpawner;
+                                        }
+                                }
                         }
                         else if(selectedMenu == 3)
                         {
