@@ -68,10 +68,14 @@ public class TNT extends Tile{
                 {
                     try
                     {
+                        
+
                         Tile curTile = grid[r][c];
 
                         if(curTile != null)
+                        
                         {
+                            if(curTile instanceof Bedrock){continue;}
                             //System.out.println(isExploding);
 
                             if(curTile.toughness <= power && curTile.isDestructable)
