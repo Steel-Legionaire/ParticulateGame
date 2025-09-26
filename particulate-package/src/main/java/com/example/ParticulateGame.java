@@ -701,7 +701,16 @@ public class ParticulateGame extends Game  {
                                 }       
                                  
                         }
-                        else if(eraserButton.clickedButton(mx, my)) { currentTile = Eraser.class; }
+                        else if(eraserButton.clickedButton(mx, my)) 
+                        { 
+                                currentTile = Eraser.class; 
+                                if(!eraserButton.equals(selectedButton))
+                                {
+                                        selectedButton.swapColors();
+                                        eraserButton.swapColors();
+                                        selectedButton = eraserButton;
+                                }
+                        }
 
                         if(selectedMenu == 0)
                         {
