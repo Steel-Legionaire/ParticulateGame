@@ -1,5 +1,9 @@
-package com.example;
+package particulate.game.Solids.StaticSolids.Spawners;
 import java.awt.Color;
+
+import particulate.game.ParticulateGame;
+import particulate.game.Tile;
+import particulate.game.Solids.MoveableSolids.Sand;
 
 public class SandSpawner extends Tile{
 

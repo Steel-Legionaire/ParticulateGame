@@ -1,4 +1,4 @@
-package com.example;
+package particulate.game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.*;
@@ -25,7 +25,7 @@ public abstract class Tile
 
     int counter = 0;
 
-    Tile(int x, int y, boolean isFlammable, boolean isDestructable, int toughness, int speed)
+    protected Tile(int x, int y, boolean isFlammable, boolean isDestructable, int toughness, int speed)
     {
         this.x = x;
         this.y = y;

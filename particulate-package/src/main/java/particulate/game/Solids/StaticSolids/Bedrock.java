@@ -1,5 +1,7 @@
-package com.example;
+package particulate.game.Solids.StaticSolids;
 import java.awt.Color;
+
+import particulate.game.Tile;
 
 public class Bedrock extends Tile {
     

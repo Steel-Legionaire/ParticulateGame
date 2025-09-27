@@ -1,6 +1,11 @@
-package com.example;
+package particulate.game.Gases;
 
 import java.awt.Color;
+
+import particulate.game.ParticulateGame;
+import particulate.game.Tile;
+import particulate.game.Solids.StaticSolids.TNT;
+import particulate.game.Solids.StaticSolids.Wood;
 
 public class Fire extends Tile{
 

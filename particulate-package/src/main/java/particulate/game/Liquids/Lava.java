@@ -1,5 +1,12 @@
-package com.example;
+package particulate.game.Liquids;
 import java.awt.Color;
+
+import particulate.game.ParticulateGame;
+import particulate.game.Tile;
+import particulate.game.Solids.MoveableSolids.Ash;
+import particulate.game.Solids.StaticSolids.Obsidian;
+import particulate.game.Solids.StaticSolids.TNT;
+import particulate.game.Solids.StaticSolids.Wood;
 
 public class Lava extends Tile{
 

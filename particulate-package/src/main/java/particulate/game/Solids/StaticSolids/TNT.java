@@ -1,5 +1,8 @@
-package com.example;
+package particulate.game.Solids.StaticSolids;
 import java.awt.Color;
+
+import particulate.game.ParticulateGame;
+import particulate.game.Tile;
 
 public class TNT extends Tile{
 

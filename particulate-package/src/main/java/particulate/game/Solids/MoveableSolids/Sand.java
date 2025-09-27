@@ -1,22 +1,26 @@
-package com.example;
-
+package particulate.game.Solids.MoveableSolids;
 import java.awt.Color;
 
-public class Ash extends Tile{
+import particulate.game.ParticulateGame;
+import particulate.game.Tile;
+import particulate.game.Liquids.Water;
 
-    private static final Color[] COLORS = new Color[]{ new Color(230,230,230), new Color( 200, 200, 200), new Color(215, 215, 215), new Color(240, 240, 240)};
+public class Sand extends Tile {
 
-    public Ash(int x, int y) {
-        super(x, y, false, true, 1, 2);
-        
+    private static final Color[] COLORS = new Color[]{new Color(210, 190, 10), new Color(220, 200, 20), new Color(230, 210, 30), new Color(240, 220, 40), new Color(245, 225, 50)};
+
+    public Sand(int x, int y) {
+        super(x, y, false, true, 2,1);
+
         setAllPossibleColors(COLORS);
         setColor();
+        
     }
 
     @Override
     public void move() 
-    {
-Tile[][]grid = ParticulateGame.grid;
+    { 
+        Tile[][]grid = ParticulateGame.grid;
 
         if(y+1 >= grid.length)
         {
@@ -24,7 +28,7 @@ Tile[][]grid = ParticulateGame.grid;
         }
         else
         {
-            if(framesSinceLastUpdate == speed)
+            if(framesSinceLastUpdate == speed && !updatedThisFrame)
             {
                 if(y+1 > grid.length){return;}
 
@@ -33,6 +37,8 @@ Tile[][]grid = ParticulateGame.grid;
                     grid[y][x] = null;
                     y++;
                     grid[y][x] = this;
+
+                    updatedThisFrame = true;
 
                 
                 }
@@ -43,6 +49,7 @@ Tile[][]grid = ParticulateGame.grid;
                         grid[y][x] = new Water(x, y);
                         y++;
                         grid[y][x] = this;
+                        updatedThisFrame = true;
                     }else
                     {
                         int randDir = (int)(Math.random() * 2);
@@ -53,6 +60,7 @@ Tile[][]grid = ParticulateGame.grid;
                             y++;
                             x--;
                             grid[y][x] = this;
+                            updatedThisFrame = true;
                         }
                         else if((grid[y+1][x-1] != null && grid[y+1][x-1].getClass().equals(Water.class) && randDir == 0) && 
                                 (grid[y][x-1] != null && grid[y][x-1].getClass().equals(Water.class)))
@@ -61,6 +69,7 @@ Tile[][]grid = ParticulateGame.grid;
                                 y++;
                                 x--;
                                 grid[y][x] = this;
+                                updatedThisFrame = true;
                         }
                         else
                         {
@@ -70,6 +79,7 @@ Tile[][]grid = ParticulateGame.grid;
                                 y++;
                                 x++;
                                 grid[y][x] = this;
+                                updatedThisFrame = true;
                             }
                             else if((grid[y+1][x+1] != null && grid[y+1][x+1].getClass().equals(Water.class)) &&
                                     (grid[y][x+1] != null && grid[y][x+1].getClass().equals(Water.class)))
@@ -78,6 +88,7 @@ Tile[][]grid = ParticulateGame.grid;
                                 y++;
                                 x++;
                                 grid[y][x] = this;
+                                updatedThisFrame = true;
                             }
                         }
                     } 
@@ -87,16 +98,13 @@ Tile[][]grid = ParticulateGame.grid;
             }
             else{
                 framesSinceLastUpdate++;
+                updatedThisFrame = false;
             }
         }
         ParticulateGame.grid = grid;
-    
     }
 
     @Override
-    public void action() 
-    {
-
-    }
+    public void action() { return; }
     
 }

@@ -1,4 +1,4 @@
-package com.example;
+package particulate.game;
 
 
 import java.awt.Color;
@@ -32,6 +32,22 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.Timer;
+
+import particulate.game.Gases.Fire;
+import particulate.game.Liquids.Lava;
+import particulate.game.Liquids.Water;
+import particulate.game.Solids.MoveableSolids.Ash;
+import particulate.game.Solids.MoveableSolids.Sand;
+import particulate.game.Solids.StaticSolids.Bedrock;
+import particulate.game.Solids.StaticSolids.Obsidian;
+import particulate.game.Solids.StaticSolids.Stone;
+import particulate.game.Solids.StaticSolids.TNT;
+import particulate.game.Solids.StaticSolids.Wood;
+import particulate.game.Solids.StaticSolids.Spawners.AshSpawner;
+import particulate.game.Solids.StaticSolids.Spawners.FireSpawner;
+import particulate.game.Solids.StaticSolids.Spawners.LavaSpawner;
+import particulate.game.Solids.StaticSolids.Spawners.SandSpawner;
+import particulate.game.Solids.StaticSolids.Spawners.WaterSpawner;
 
 public class ParticulateGame extends Game  {
     

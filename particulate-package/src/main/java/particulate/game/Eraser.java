@@ -1,4 +1,4 @@
-package com.example;
+package particulate.game;
 public class Eraser {
     
 }
