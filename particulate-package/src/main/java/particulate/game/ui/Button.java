@@ -1,4 +1,5 @@
-package particulate.game;
+package particulate.game.ui;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Font;

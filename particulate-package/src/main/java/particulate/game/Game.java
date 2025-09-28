@@ -14,7 +14,7 @@ import java.awt.event.MouseWheelListener;
 
 public abstract class Game implements KeyListener, MouseListener, MouseMotionListener, DropTargetListener, MouseWheelListener
 {
-    public JFrame frame;
+    public static JFrame frame;
     private GamePanel gamePanel;
     boolean running;
     private ParticulateGame game;    
