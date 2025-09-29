@@ -44,7 +44,7 @@ public class ParticulateGame extends Game  {
     
         public static final String TITLE = "Particulate Refreshed";
         public static final int SCREEN_WIDTH = 1815;
-        public static final int SCREEN_HEIGHT = 1037;
+        public static final int SCREEN_HEIGHT = 1040;
 
         public static int playAreaWidth = 1500;
         public int playAreaHeight = 1000;
@@ -86,7 +86,7 @@ public class ParticulateGame extends Game  {
 
         public ParticulateGame() 
         {
-                matrix = new CellularMatrix(playAreaHeight / tileSize, playAreaWidth / tileSize);
+                matrix = new CellularMatrix(playAreaWidth / tileSize, playAreaHeight / tileSize);
                 matrix.setGridBoundsWalls();
 
                 emptyFloor = new Tile[playAreaWidth/tileSize];
