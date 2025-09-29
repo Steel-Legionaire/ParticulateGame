@@ -1,6 +1,7 @@
 package particulate.game.Solids.MoveableSolids;
 import java.awt.Color;
 
+import particulate.game.CellularMatrix;
 import particulate.game.ParticulateGame;
 import particulate.game.Tile;
 import particulate.game.Liquids.Water;
@@ -20,75 +21,68 @@ public class Sand extends Tile {
     @Override
     public void move() 
     { 
-        Tile[][]grid = ParticulateGame.grid;
+        CellularMatrix matrix = ParticulateGame.getMatrix();
 
-        if(y+1 >= grid.length)
+        
+
+        if(y >= matrix.getRowBounds())
         {
-            grid[y][x] = null;
+            matrix.setTile(x, y, null);
         }
         else
         {
-            if(framesSinceLastUpdate == speed && !updatedThisFrame)
+            if(framesSinceLastUpdate == speed)
             {
-                if(y+1 > grid.length){return;}
+                if(!matrix.yWithinBounds(y+1)){return;}
 
-                if(grid[y+1][x] == null)
+                Tile bottomLefTile = matrix.getTile(x-1, y-1);
+                Tile bottomTile = matrix.getTile(x, y-1);
+                Tile bottomRightTile = matrix.getTile(x+1, y+1);
+                Tile leftTile = matrix.getTile(x-1, y);
+                Tile righTile = matrix.getTile(x+1, y);
+
+                if(bottomTile == null)
                 {
-                    grid[y][x] = null;
+                    matrix.setTile(x, y, null);
                     y++;
-                    grid[y][x] = this;
-
-                    updatedThisFrame = true;
-
+                    matrix.setTile(x, y, this);
                 
                 }
-                else // sand is on top of another tile
+                else // ash is on top of another tile
                 {
-                    if(grid[y+1][x].getClass().equals(Water.class))
+                    if(bottomTile.getClass().equals(Water.class))
                     {
-                        grid[y][x] = new Water(x, y);
+                        matrix.setTile(x, y, new Water(x,y));
                         y++;
-                        grid[y][x] = this;
-                        updatedThisFrame = true;
+                        matrix.setTile(x, y, this);
                     }else
                     {
                         int randDir = (int)(Math.random() * 2);
 
-                        if(grid[y][x-1] == null && grid[y+1][x-1] == null && randDir == 0)
+                        if((bottomLefTile != null && bottomLefTile.getClass().equals(Water.class) && randDir == 0) && 
+                                (leftTile != null && leftTile.getClass().equals(Water.class)))
                         {
-                            grid[y][x] = null;
-                            y++;
-                            x--;
-                            grid[y][x] = this;
-                            updatedThisFrame = true;
-                        }
-                        else if((grid[y+1][x-1] != null && grid[y+1][x-1].getClass().equals(Water.class) && randDir == 0) && 
-                                (grid[y][x-1] != null && grid[y][x-1].getClass().equals(Water.class)))
-                        {
-                                grid[y][x] = new Water(x, y);
+                                matrix.setTile(x, y, new Water(x,y));
                                 y++;
                                 x--;
-                                grid[y][x] = this;
-                                updatedThisFrame = true;
+                                matrix.setTile(x, y, this);
                         }
                         else
                         {
-                            if(grid[y][x+1] == null && grid[y+1][x+1] == null && randDir == 1)
+                            if(righTile == null && bottomRightTile == null && randDir == 1)
                             {
-                                grid[y][x] = null;
+                                matrix.setTile(x, y, null);
                                 y++;
                                 x++;
-                                grid[y][x] = this;
-                                updatedThisFrame = true;
+                                matrix.setTile(x, y, this);
                             }
-                            else if((grid[y+1][x+1] != null && grid[y+1][x+1].getClass().equals(Water.class)) &&
-                                    (grid[y][x+1] != null && grid[y][x+1].getClass().equals(Water.class)))
+                            else if((bottomRightTile != null && bottomRightTile.getClass().equals(Water.class)) &&
+                                    (righTile != null && righTile.getClass().equals(Water.class)))
                             {
-                                grid[y][x] = new Water(x, y);
+                                matrix.setTile(x, y, new Water(x, y));
                                 y++;
                                 x++;
-                                grid[y][x] = this;
-                                updatedThisFrame = true;
+                                matrix.setTile(x, y, this);
                             }
                         }
                     } 
@@ -98,10 +92,8 @@ public class Sand extends Tile {
             }
             else{
                 framesSinceLastUpdate++;
-                updatedThisFrame = false;
             }
         }
-        ParticulateGame.grid = grid;
     }
 
     @Override

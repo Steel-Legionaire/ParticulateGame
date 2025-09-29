@@ -15,16 +15,11 @@ import java.awt.event.MouseWheelEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -59,7 +54,10 @@ public class ParticulateGame extends Game  {
 
         public static int tileSize = 5;
 
-        public static Tile[][] grid;
+        public static CellularMatrix matrix;
+        //public int matrixHeight;
+        //public int matrixWidth;
+        
 
         public static Class<?> currentTile = Sand.class;    
         
@@ -71,15 +69,10 @@ public class ParticulateGame extends Game  {
         Tile[] emptyFloor;
         
         boolean eraseMode = false;
-
         
         static int drawSize = 1;
-        
-
 
         boolean mouseHeld = false;
-
-
 
         int selectedMenu = 0;
 
@@ -93,16 +86,16 @@ public class ParticulateGame extends Game  {
 
         public ParticulateGame() 
         {
-                grid = new Tile[playAreaHeight / tileSize][playAreaWidth / tileSize];
-                setGridBoundsWalls();
+                matrix = new CellularMatrix(playAreaHeight / tileSize, playAreaWidth / tileSize);
+                matrix.setGridBoundsWalls();
 
                 emptyFloor = new Tile[playAreaWidth/tileSize];
-
+                
                 fullFloor = new Tile[playAreaWidth/tileSize];
 
                 for(int c=0; c<fullFloor.length; c++)
                 {
-                        fullFloor[c] = new Bedrock(c, grid.length-1);
+                        fullFloor[c] = new Bedrock(c, matrix.getRowBounds());
                 }
 
                 // Leftover code to create a large square of walls
@@ -126,17 +119,15 @@ public class ParticulateGame extends Game  {
 
         }
         
-
         public void update() 
         { 
                 if(!isPaused)
                 { 
-                        for(int r=grid.length-1;r>=0;r--)
+                        for(int r = matrix.getRowBounds(); r >= 0; r--)
                         {
-                                
-                                for(int c=0;c<grid[r].length;c++)
+                                for(int c = 0; c < matrix.getCollumnBounds(); c++)
                                 {
-                                        Tile t = grid[r][c];
+                                        Tile t = matrix.getTile(c, r);
 
                                         if(t != null)
                                         {
@@ -147,69 +138,22 @@ public class ParticulateGame extends Game  {
                         }      
                 }
 
-
-                if(mouseHeld && outlinedTileX < grid[0].length)
+                if(mouseHeld && outlinedTileX < matrix.getRowBounds())
                 {
-                        createTile(outlinedTileX, outlinedTileY, currentTile);
+                        matrix.createTile(outlinedTileX, outlinedTileY, currentTile, drawSize);
                 }
         }
         
         public void draw(Graphics pen)
         {    
-                // Group tiles by color
-                Map<Color, List<Tile>> tileBuckets = new HashMap<>();
-
-                for(int r=0; r< grid.length; r++)
-                {
-                        for(int c=0; c<grid[r].length; c++)
-                        {
-                                Tile t = grid[r][c];
-
-                                if(t != null)
-                                {
-                                        // Add tile to correct color group
-                                        tileBuckets
-                                                .computeIfAbsent(t.color, k -> new ArrayList<>())
-                                                .add(t);
-                                }
-                        }
-                }
-
-                // Draw all tiles, grouped by color 
-                for (Map.Entry<Color, List<Tile>> entry : tileBuckets.entrySet())
-                {
-                        Color color = entry.getKey();
-                        List<Tile> tiles = entry.getValue();
-
-                        pen.setColor(color);
-
-                        for(Tile t : tiles)
-                        {
-                                pen.fillRect(t.x * tileSize, t.y * tileSize, tileSize, tileSize);
-                        }
-                }
-
-                for(int r=0;r<grid.length;r++)
-                {
-                        for(int c=0;c<grid[r].length;c++)
-                        {
-                                if(grid[r][c] != null)
-                                {
-                                        grid[r][c].draw(pen);
-                                }
-                        }
-                }
+                matrix.drawAllTiles(pen, tileSize);
 
                 // Draw in outline for the brush
                 pen.setColor(outlineColor);
                 pen.drawRect((outlinedTileX - ((int)(drawSize / 2))) * tileSize, (outlinedTileY - ((int)(drawSize / 2))) * tileSize, tileSize * drawSize, tileSize * drawSize );
 
-
                 menu.draw(pen);
-                
-                
         }       
-
 
         public ArrayList<int[]> traceThroughGrid(int startX, int startY, int endX, int endY)
         {
@@ -247,169 +191,23 @@ public class ParticulateGame extends Game  {
                 return allCoords;
         }
 
-        public void setGridBoundsWalls()
-        {
-                for(int r=0;r<grid.length;r++)
-                {
-                        for(int c=0;c<grid[r].length;c++)
-                        {
-                                if(c==0 || r==grid.length-1 || r==0 || c==grid[r].length-1)
-                                {
-                                        grid[r][c] = new Bedrock(c, r);
-                                }
-                        }
-                }
-        }
-        
-        public void createTile(int x, int y, Class<?> clazz)
-        {
-                if(drawSize == 1)
-                {
-                        if(clazz.equals(Eraser.class) && y>=1 && x>=1 && y <= grid.length-1 && x <= grid[y].length-1)
-                        {
-
-                                if(grid[y][x] != null && grid[y][x].isDestructable)
-                                {
-
-                                        grid[y][x] = null;
-                                }
-
-                                return;
-                        }
-
-                        if(x >= 1 && y >= 1 && y <= grid.length-1 && x <= grid[y].length-1 && grid[y][x] == null)
-                        {
-                                try {
-                                        Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
-        
-                                        Tile t = (Tile) argConstructor.newInstance(x, y);
-
-                                        //System.out.println(clazz.cast(t));
-
-                                        grid[y][x] = t;
-                                        if(clazz.equals(TNT.class))
-                                        {
-                                                
-                                        }
-
-                                } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                                        System.out.println(e);
-                                }
-                        }
-                }                                
-                else 
-                {
-                        if(drawSize % 2 == 1)
-                        {
-                                for(int r = y - ((int)(drawSize / 2)); r < y + ((int)(drawSize / 2)) + 1; r++)
-                                {
-                                        if(r<1){ continue; }
-                                        else if(r>=grid.length-1){ break; }
-
-                                        for(int c = x - ((int)(drawSize / 2)); c < x+((int)(drawSize / 2)) + 1; c++)
-                                        {
-                                                if(c < 1){continue;} 
-                                                else if(c >= grid[0].length-1){ break; }
-
-                                                
-                                                if(clazz.equals(Eraser.class))
-                                                {
-
-                                                        if(grid[r][c] != null && grid[r][c].isDestructable)
-                                                        {
-
-                                                                grid[r][c] = null;
-                                                        }
-                                                }
-                                                else
-                                                {
-                                                        if(grid[r][c] == null)
-                                                        {
-                                                                try {
-                                                                        Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
-                                        
-                                                                        Tile t = (Tile) argConstructor.newInstance(c, r);
-                                                                        grid[r][c] = t;
-
-                                                                } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                                                                        System.out.println(e);
-                                                                }
-                                                        }
-                                                }
-
-                                        
-                                        }
-                                }
-                        }
-                        else
-                        {
-                                for(int r = y - ((int)(drawSize / 2)); r < y + ((int)(drawSize / 2)); r++)
-                                {
-                                        if(r<1){ continue; }
-                                        else if(r>=grid.length-1){ break; }
-
-                                        for(int c = x - ((int)(drawSize / 2)); c < x+((int)(drawSize / 2)); c++)
-                                        {
-                                                if(c < 1){continue;} 
-                                                else if(c >= grid[0].length-1){ break; }
-
-                                                
-                                                if(clazz.equals(Eraser.class))
-                                                {
-
-                                                        if(grid[r][c] != null && grid[r][c].isDestructable)
-                                                        {
-
-                                                                grid[r][c] = null;
-                                                        }
-                                                }
-                                                else
-                                                {
-                                                        if(grid[r][c] == null)
-                                                        {
-                                                                try {
-                                                                        Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
-                                        
-                                                                        Tile t = (Tile) argConstructor.newInstance(c, r);
-                                                                        grid[r][c] = t;
-
-                                                                } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                                                                        System.out.println(e);
-                                                                }
-                                                        }
-                                                }
-
-                                        
-                                        }
-                                }
-                        }
-
-                }
-        }
-
-        public void resetGrid()
-        {
-                grid = new Tile[playAreaHeight / tileSize][playAreaWidth / tileSize];
-                setGridBoundsWalls(); 
-        }
-
         public void dropFloor()
         {
                 if(floorDropped)
                 {
-                        grid[grid.length-1] = fullFloor;
+                        matrix.setRow(matrix.getRowBounds(), fullFloor);
                         floorDropped = false;
                 }
                 else
                 {
-                        grid[grid.length-1] = emptyFloor;
+                        matrix.setRow(matrix.getRowBounds(), emptyFloor);
                         floorDropped = true;
 
                 }
                 
         }
 
-        public static void saveGridToTextFile()
+        /*public static void saveGridToTextFile()
         {
                 String filePath = getUniqueFileName("savedPlayArea", "txt");
 
@@ -437,7 +235,7 @@ public class ParticulateGame extends Game  {
                         showTemporaryMessage(Game.frame, "Error LoadingGrid!", tempMsgX, tempMsgY, tempMsgDurationMilis);
                 }
                 
-        }
+        }*/
     
         public void setGridToReadInTextFile(String filecontent) throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
         {
@@ -459,9 +257,9 @@ public class ParticulateGame extends Game  {
                         importedGrid[y][x] = t;
                 }       
 
-                grid = importedGrid;
+                matrix.setMatrix(importedGrid);
 
-                showTemporaryMessage(super.frame, "Loaded Grid Succesfully!", tempMsgX, tempMsgY, tempMsgDurationMilis);
+                showTemporaryMessage(Game.frame, "Loaded Grid Succesfully!", tempMsgX, tempMsgY, tempMsgDurationMilis);
         }
 
         public static void showTemporaryMessage(JFrame frame, String message, int x, int y, int durationMillis) {
@@ -510,8 +308,8 @@ public class ParticulateGame extends Game  {
     @Override
     public void keyPressed(KeyEvent ke) 
     {
-        if(ke.getKeyChar() == 's') {saveGridToTextFile(); }
-        else if(ke.getKeyChar() == '1') { currentTile = Sand.class; }
+        //if(ke.getKeyChar() == 's') {saveGridToTextFile(); }
+        if(ke.getKeyChar() == '1') { currentTile = Sand.class; }
         else if (ke.getKeyChar() == '2'){ currentTile = Water.class; }
         else if (ke.getKeyChar() == '3'){ currentTile = Lava.class; }
         else if (ke.getKeyChar() == '4'){ currentTile = Fire.class; }
@@ -522,7 +320,7 @@ public class ParticulateGame extends Game  {
         else if (ke.getKeyChar() == '9'){ currentTile = WaterSpawner.class; }
         else if (ke.getKeyChar() == '0'){ currentTile = LavaSpawner.class; }
 
-        else if(ke.getKeyChar() == 'r'){ resetGrid(); }
+        else if(ke.getKeyChar() == 'r'){ matrix.resetGrid(); }
         else if(ke.getKeyChar() == ' '){ isPaused = !isPaused; }
         else if(ke.getKeyCode() == 10){ dropFloor(); }
 
@@ -538,37 +336,21 @@ public class ParticulateGame extends Game  {
 
     public static void setDrawSize(int ds){ drawSize = ds;}
 
+    public static CellularMatrix getMatrix(){ return matrix;}
+
     @Override
     public void keyReleased(KeyEvent ke) {}
 
     @Override
     public void mouseClicked(MouseEvent me) 
     { 
-        int mxg = (me.getX() / tileSize) - 2;
-        int myg = (me.getY() / tileSize) - 7; 
-
         int mx = me.getX();
         int my = me.getY();
 
-        if(me.isShiftDown())
+        if(mx >= menu.getX())
         {
-                if(grid[myg][mxg] instanceof TNT)
-                {
-                        ((TNT)grid[myg][mxg]).explode();
-                }
+                menu.clicked(mx, my);
         }
-        else
-        {
-
-                
-                if(mx >= menu.getX())
-                {
-
-                        menu.clicked(mx, my);
-                }
-
-        }
-
     }
     
     @Override
@@ -602,9 +384,6 @@ public class ParticulateGame extends Game  {
         int mxg = (me.getX() / tileSize )- 2;
         int myg = (me.getY() / tileSize )- 7;
 
-        int mx = me.getX();
-        int my = me.getX();
-
         outlinedTileX = mxg;
         outlinedTileY = myg;
 
@@ -614,9 +393,9 @@ public class ParticulateGame extends Game  {
                 
                 try {
                         
-                        if(mxg < grid[0].length)
+                        if(mxg < matrix.getCollumnBounds())
                         {
-                                createTile(mxg, myg, currentTile); 
+                                matrix.createTile(mxg, myg, currentTile, drawSize); 
                                 //for(int[] pos : path)
                                 //{
                                 //        createTile((pos[0] / tileSize) - 2, (pos[1] / tileSize) - 2, currentTile); 
@@ -632,9 +411,9 @@ public class ParticulateGame extends Game  {
         else
         {
                 try {
-                        if(grid[myg][mxg] instanceof TNT)
+                        if(matrix.getTile(mxg, myg) instanceof TNT)
                         {
-                                ((TNT)grid[myg][mxg]).explode();  
+                                ((TNT)matrix.getTile(mxg, myg)).explode();  
                         }
                 } catch (ArrayIndexOutOfBoundsException e) {
 

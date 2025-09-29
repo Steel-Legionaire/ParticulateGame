@@ -1,6 +1,7 @@
 package particulate.game.Solids.StaticSolids;
 import java.awt.Color;
 
+import particulate.game.CellularMatrix;
 import particulate.game.ParticulateGame;
 import particulate.game.Tile;
 
@@ -58,7 +59,7 @@ public class TNT extends Tile{
     {
         //System.out.println("BOOM!");
         isExploding = true;
-        Tile[][] grid = ParticulateGame.grid;
+        CellularMatrix matrix = ParticulateGame.getMatrix();
 
         int radius = 6;
         int power = 10;
@@ -73,7 +74,7 @@ public class TNT extends Tile{
                     {
                         
 
-                        Tile curTile = grid[r][c];
+                        Tile curTile = matrix.getTile(c,r);
 
                         if(curTile != null)
                         
@@ -89,7 +90,7 @@ public class TNT extends Tile{
                                 
                                 if(distance <= innerRad)
                                 {
-                                    grid[r][c] = null;
+                                    matrix.setTile(c,r, null);
                                 }
                                 else if (distance <= radius) {
                                     double probability = Math.max(0, 1 - (distance / radius));
@@ -111,15 +112,11 @@ public class TNT extends Tile{
                                         }
                                         else
                                         {
-                                            grid[r][c] = null;
+                                            matrix.setTile(c,r, null);
                                         }
-                                        
                                     }
                                 }
-                                
                             }
-                            
-
                         }
                     }
                     catch(ArrayIndexOutOfBoundsException e){}

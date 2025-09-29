@@ -1,6 +1,7 @@
 package particulate.game.Solids.StaticSolids.Spawners;
 import java.awt.Color;
 
+import particulate.game.CellularMatrix;
 import particulate.game.ParticulateGame;
 import particulate.game.Tile;
 import particulate.game.Liquids.Lava;
@@ -20,14 +21,11 @@ public class LavaSpawner extends Tile{
 
     @Override
     public void action() {
-        Tile[][] grid = ParticulateGame.grid;
+        CellularMatrix matrix = ParticulateGame.getMatrix();
 
-        if(grid[y+1][x] == null)
+        if(matrix.getTile(x,y+1) == null)
         {
-            grid[y+1][x] = new Lava(x, y+1);
+            matrix.setTile(x, y+1, new Lava(x, y+1));
         }
-    
-        ParticulateGame.grid = grid;
     }
-    
 }

@@ -1,6 +1,7 @@
 package particulate.game.Liquids;
 import java.awt.Color;
 
+import particulate.game.CellularMatrix;
 import particulate.game.ParticulateGame;
 import particulate.game.Tile;
 import particulate.game.Solids.MoveableSolids.Ash;
@@ -23,32 +24,36 @@ public class Lava extends Tile{
 
     @Override
     public void move() {
-        Tile[][] grid = ParticulateGame.grid;
+        CellularMatrix matrix = ParticulateGame.getMatrix();
 
-        if(y+1 >= grid.length)
+        if(!matrix.yWithinBounds(y))
         {
-            grid[y][x] = null;
+            matrix.setTile(x, y, null);
         }
         else
         {
+            Tile bottomTile = matrix.getTile(x,y+1);
+            Tile rightTile = matrix.getTile(x+1, y);
+            Tile leftTile = matrix.getTile(x-1, y);
+
             if(framesSinceLastUpdate == speed)
             {
 
-                if(grid[y+1][x] == null)
+                if(bottomTile == null)
                 {
-                    grid[y][x] = null;
+                    matrix.setTile(x, y, null);
                     this.y++;
-                    grid[y][x] = this;
+                    matrix.setTile(x, y, this);
                 }
                 else
                 {
                     if(direction == 1)
                     {
-                        if(grid[y][x+1] == null)
+                        if(rightTile == null)
                         {
-                            grid[y][x] = null;
+                            matrix.setTile(x, y, null);
                             this.x++;
-                            grid[y][x] = this;
+                            matrix.setTile(x, y, this);
                         }
                         else
                         {
@@ -57,11 +62,11 @@ public class Lava extends Tile{
                     }
                     else
                     {
-                        if(grid[y][x-1] == null)
+                        if(leftTile == null)
                         {
-                            grid[y][x] = null;
+                            matrix.setTile(x, y, null);
                             this.x--;
-                            grid[y][x] = this;
+                            matrix.setTile(x, y, this);
                         }
                         else
                         {
@@ -76,30 +81,29 @@ public class Lava extends Tile{
                 framesSinceLastUpdate++;
             }
         }
-        ParticulateGame.grid = grid;
     }
 
     @Override
     public void action() {
-        Tile[][] grid = ParticulateGame.grid;
+        CellularMatrix matrix = ParticulateGame.getMatrix();
 
-        Tile topTile = grid[y-1][x];
-        Tile rightTile = grid[y][x+1];
-        Tile leftTile = grid[y][x-1];
+        Tile topTile = matrix.getTile(x,y-1);
+        Tile rightTile = matrix.getTile(x,y-1);
+        Tile leftTile = matrix.getTile(x,y-1);
 
 
         Tile bottomTile = null;
 
-        if(y+1 < grid.length)
+        if(matrix.yWithinBounds(y+1))
         {
-            bottomTile = grid[y+1][x];
+            bottomTile = matrix.getTile(x, y+1);
         }
 
         
 
         if(topTile instanceof Water)
         {
-            grid[y][x] = new Obsidian(x,y);
+            matrix.setTile(x,y, new Obsidian(x,y));
         }
         else if(topTile instanceof TNT)
         {
@@ -110,12 +114,12 @@ public class Lava extends Tile{
         }
         else if(topTile instanceof Ash)
         {
-                grid[y-1][x] = null;
+            matrix.setTile(x, y-1, null);
         }
 
         if(rightTile instanceof Water)
         {
-            grid[y][x] = new Obsidian(x,y);
+            matrix.setTile(x,y, new Obsidian(x,y));
         }
         else if(rightTile instanceof TNT)
         {
@@ -126,28 +130,28 @@ public class Lava extends Tile{
         }
         else if(rightTile instanceof Ash)
         {
-                grid[y][x+1] = null;
+            matrix.setTile(x+1, y, null);
         }
 
-        if(y+1 < grid.length &&  bottomTile instanceof Water)
+        if(matrix.yWithinBounds(y+1) && bottomTile instanceof Water)
         {
-            grid[y][x] = new Obsidian(x,y);
+            matrix.setTile(x,y, new Obsidian(x,y));
         }
-        else if(y+1 < grid.length && bottomTile instanceof TNT)
+        else if(matrix.yWithinBounds(y+1) && bottomTile instanceof TNT)
         {
             ((TNT)bottomTile).explode();
         }
-        else if(y+1 < grid.length && bottomTile instanceof Wood){
+        else if(matrix.yWithinBounds(y+1) && bottomTile instanceof Wood){
             ((Wood)bottomTile).onFire = true;
         }
-        else if(bottomTile instanceof Ash)
+        else if(matrix.yWithinBounds(y+1) && bottomTile instanceof Ash)
         {
-                grid[y+1][x] = null;
+            matrix.setTile(x, y+1, null);
         }
 
         if(leftTile instanceof Water)
         {
-            grid[y][x] = new Obsidian(x,y);
+            matrix.setTile(x,y, new Obsidian(x,y));
         }
         else if(leftTile instanceof TNT)
         {
@@ -158,7 +162,7 @@ public class Lava extends Tile{
         }
         else if(leftTile instanceof Ash)
         {
-                grid[y][x-1] = null;
+            matrix.setTile(x-1, y, null);
         }
     }
     

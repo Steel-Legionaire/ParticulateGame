@@ -5,7 +5,6 @@ import java.awt.Graphics;
 
 import particulate.game.Eraser;
 import particulate.game.ParticulateGame;
-import particulate.game.Tile;
 import particulate.game.Gases.Fire;
 import particulate.game.Liquids.Lava;
 import particulate.game.Liquids.Water;
@@ -410,7 +409,7 @@ public class Menu
                 else if(mediumSquareDrawSize.clickedButton(mx, my)){ParticulateGame.setDrawSize(10); }
                 else if(largeSquareDrawSize.clickedButton(mx, my)){ ParticulateGame.setDrawSize(50); }
                 else if(massiveSquareDrawSize.clickedButton(mx, my)){ ParticulateGame.setDrawSize(100); }
-                else if(savePlayAreaButton.clickedButton(mx, my)) { ParticulateGame.saveGridToTextFile(); }
+                //else if(savePlayAreaButton.clickedButton(mx, my)) { ParticulateGame.saveGridToTextFile(); }
 
             }
 

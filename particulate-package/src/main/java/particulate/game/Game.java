@@ -9,7 +9,6 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.dnd.DropTarget;
-import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 public abstract class Game implements KeyListener, MouseListener, MouseMotionListener, DropTargetListener, MouseWheelListener

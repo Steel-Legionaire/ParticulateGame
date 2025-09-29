@@ -1,6 +1,7 @@
 package particulate.game.Solids.StaticSolids;
 import java.awt.Color;
 
+import particulate.game.CellularMatrix;
 import particulate.game.ParticulateGame;
 import particulate.game.Tile;
 import particulate.game.Solids.MoveableSolids.Ash;
@@ -40,8 +41,7 @@ public class Wood extends Tile{
             if(framesSinceLastUpdate == speed)
             {
                 //System.out.println("is on fire");
-                Tile[][] grid = ParticulateGame.grid;
-
+                CellularMatrix matrix = ParticulateGame.getMatrix();
                 
                 //System.out.println("chanceToGoOut: "+chanceToGoOut);
 
@@ -56,42 +56,47 @@ public class Wood extends Tile{
                 }
                 else
                 {
-                        int chanceToSpread = 15;
-                        if(grid[y][x-1] instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
-                        {
-                            ((Wood)grid[y][x-1]).onFire = true;
-                        }
-                        else if(grid[y][x-1] instanceof TNT)
-                        {   
-                            ((TNT)(grid[y][x-1])).isExploding = true;
-                        }
-                        
-                        if(grid[y][x+1] instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
-                        {
-                            ((Wood)grid[y][x+1]).onFire = true;
-                        }
-                        else if(grid[y][x+1] instanceof TNT)
-                        {   
-                            ((TNT)(grid[y][x+1])).isExploding = true;
-                        }
-                        
-                        if(grid[y+1][x] instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
-                        {
-                            ((Wood)grid[y+1][x]).onFire = true;
-                        }
-                        else if(grid[y+1][x] instanceof TNT)
-                        {   
-                            ((TNT)(grid[y+1][x])).isExploding = true;
-                        }
+                    Tile leftTile = matrix.getTile(x-1,y);
+                    Tile topTile = matrix.getTile(x, y-1);
+                    Tile rightTile = matrix.getTile(x+1, y);
+                    Tile bottomTile = matrix.getTile(x, y+1);
 
-                        if(grid[y-1][x] instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
-                        {
-                            ((Wood)grid[y-1][x]).onFire = true;
-                        }
-                        else if(grid[y-1][x] instanceof TNT)
-                        {   
-                            ((TNT)(grid[y-1][x])).isExploding = true;
-                        }
+                    int chanceToSpread = 15;
+                    if(leftTile instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
+                    {
+                        ((Wood)leftTile).onFire = true;
+                    }
+                    else if(leftTile instanceof TNT)
+                    {   
+                        ((TNT)(leftTile)).isExploding = true;
+                    }
+                    
+                    if(rightTile instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
+                    {
+                        ((Wood)rightTile).onFire = true;
+                    }
+                    else if(rightTile instanceof TNT)
+                    {   
+                        ((TNT)(rightTile)).isExploding = true;
+                    }
+                    
+                    if(bottomTile instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
+                    {
+                        ((Wood)bottomTile).onFire = true;
+                    }
+                    else if(bottomTile instanceof TNT)
+                    {   
+                        ((TNT)(bottomTile)).isExploding = true;
+                    }
+
+                    if(topTile instanceof Wood && (int)(Math.random() *100) + 1 <= chanceToSpread)
+                    {
+                        ((Wood)topTile).onFire = true;
+                    }
+                    else if(topTile instanceof TNT)
+                    {   
+                        ((TNT)(topTile)).isExploding = true;
+                    }
             
 
 
@@ -106,16 +111,13 @@ public class Wood extends Tile{
                             //System.out.println(chanceToSpawnAsh);
                             if(chanceToSpawnAsh <= 25)
                             {
-                                grid[y][x] = new Ash(x, y);
+                                matrix.setTile(x, y, new Ash(x, y));
                             }
                             else 
                             {
-                                grid[y][x] = null;
+                                matrix.setTile(x, y, null);
                             }
                         }
-
-
-
                     }
                 }
                 framesSinceLastUpdate = 0;

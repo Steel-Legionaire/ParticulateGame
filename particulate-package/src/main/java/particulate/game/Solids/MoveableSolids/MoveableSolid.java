@@ -1,5 +1,5 @@
 package particulate.game.Solids.MoveableSolids;
 
-public class MoveableSolid {
+public class MoveableSolid{
     
 }

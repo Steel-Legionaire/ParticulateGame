@@ -1,15 +1,12 @@
 package particulate.game;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.*;
 
 public abstract class Tile 
 {
 
     public int x;
     public int y;
-    
-    private int tileSize = ParticulateGame.tileSize;
 
     public boolean updatedThisFrame = false;
 
