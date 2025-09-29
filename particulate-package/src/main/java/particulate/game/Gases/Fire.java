@@ -22,7 +22,7 @@ public class Fire extends Tile{
     @Override
     public void move() 
     {
-        Tile[][] grid = ParticulateGame.grid;
+        /*Tile[][] grid = ParticulateGame.grid;
 
 
 
@@ -125,7 +125,7 @@ public class Fire extends Tile{
         else
         {
             framesSinceLastUpdate++;
-        }
+        }*/
 
 
     }
