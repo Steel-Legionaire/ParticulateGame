@@ -138,7 +138,7 @@ public class ParticulateGame extends Game  {
                         }      
                 }
 
-                if(mouseHeld && outlinedTileX < matrix.getRowBounds())
+                if(mouseHeld && outlinedTileX < menu.getX())
                 {
                         matrix.createTile(outlinedTileX, outlinedTileY, currentTile, drawSize);
                 }
