@@ -153,6 +153,16 @@ public class ParticulateGame extends Game  {
                 pen.drawRect((outlinedTileX - ((int)(drawSize / 2))) * tileSize, (outlinedTileY - ((int)(drawSize / 2))) * tileSize, tileSize * drawSize, tileSize * drawSize );
 
                 menu.draw(pen);
+
+                /*pen.setColor(Color.MAGENTA);
+                if(matrix.withinBounds(outlinedTileX, outlinedTileY))
+                {
+                        pen.drawString(matrix.getTile(outlinedTileX, outlinedTileY)+"", 100, 50);
+                }
+                else
+                {
+                        pen.drawString("null", 100, 50);
+                }*/
         }       
 
         public ArrayList<int[]> traceThroughGrid(int startX, int startY, int endX, int endY)
