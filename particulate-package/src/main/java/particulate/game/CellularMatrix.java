@@ -240,4 +240,26 @@ public class CellularMatrix {
     {
         matrix = ta;
     }
+
+    public void swapPositions(Tile toSwap, int toSwapX, int toSwapY, Tile swapTile)
+    {
+        // Ask for the x and y values in order to avoid null cases for toSwap
+
+        int swapX = swapTile.x;
+        int swapY = swapTile.y;
+
+        this.setTile(swapX, swapY, toSwap);
+        
+        this.setTile(toSwapX, toSwapY, swapTile);
+        
+        swapTile.x = toSwapX;
+        swapTile.y = toSwapY;
+
+        if(toSwap != null)
+        {
+            toSwap.x = swapX;
+            toSwap.y = swapY;
+        }
+
+    }
 }

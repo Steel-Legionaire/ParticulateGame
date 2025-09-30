@@ -35,9 +35,9 @@ public abstract class Tile
         
     }
 
-    public abstract void move();
+    public void move(){}
 
-    public abstract void action();
+    public void action(){}
 
     public void draw(Graphics pen)
     {
@@ -72,11 +72,15 @@ public abstract class Tile
 
     }
 
-    public void swapPositions(CellularMatrix matrix, Tile toSwap, int toSwapX, int toSwapY)
-    {
-        if(this.x == toSwapX && this.y == toSwapY){ return ;}
+    
 
-        matrix.setTile(this.x, this.y, toSwap);
-        matrix.setTile(toSwapX, toSwapY, this);
+    public void darkenTile()
+    {
+        // darken the color 
+    }
+
+    public void recieveHeat()
+    {
+        // increase temp 
     }
 }
