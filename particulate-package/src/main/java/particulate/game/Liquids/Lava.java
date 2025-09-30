@@ -9,10 +9,7 @@ import particulate.game.Solids.StaticSolids.Obsidian;
 import particulate.game.Solids.StaticSolids.TNT;
 import particulate.game.Solids.StaticSolids.Wood;
 
-public class Lava extends Tile{
-
-    int direction = (int)(Math.random() * 2);
-
+public class Lava extends Liquid{
     private static final Color[] COLORS = new Color[]{ new Color(255, 185, 0), new Color(255, 192, 0), new Color(255, 200, 0), new Color(255, 208, 0), new Color(255, 215, 0) };
     
     public Lava(int x, int y) {
@@ -20,67 +17,6 @@ public class Lava extends Tile{
 
         setAllPossibleColors(COLORS);
         setColor();
-    }
-
-    @Override
-    public void move() {
-        CellularMatrix matrix = ParticulateGame.getMatrix();
-
-        if(!matrix.yWithinBounds(y))
-        {
-            matrix.setTile(x, y, null);
-        }
-        else
-        {
-            Tile bottomTile = matrix.getTile(x,y+1);
-            Tile rightTile = matrix.getTile(x+1, y);
-            Tile leftTile = matrix.getTile(x-1, y);
-
-            if(framesSinceLastUpdate == speed)
-            {
-
-                if(bottomTile == null)
-                {
-                    matrix.setTile(x, y, null);
-                    this.y++;
-                    matrix.setTile(x, y, this);
-                }
-                else
-                {
-                    if(direction == 1)
-                    {
-                        if(rightTile == null)
-                        {
-                            matrix.setTile(x, y, null);
-                            this.x++;
-                            matrix.setTile(x, y, this);
-                        }
-                        else
-                        {
-                            direction = 0;
-                        }
-                    }
-                    else
-                    {
-                        if(leftTile == null)
-                        {
-                            matrix.setTile(x, y, null);
-                            this.x--;
-                            matrix.setTile(x, y, this);
-                        }
-                        else
-                        {
-                            direction = 1;
-                        }
-                    }
-                }
-                framesSinceLastUpdate = 0;
-            }
-            else
-            {
-                framesSinceLastUpdate++;
-            }
-        }
     }
 
     @Override
