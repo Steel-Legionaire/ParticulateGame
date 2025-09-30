@@ -6,7 +6,7 @@ import particulate.game.ParticulateGame;
 import particulate.game.Tile;
 import particulate.game.Solids.MoveableSolids.Ash;
 
-public class Wood extends Tile{
+public class Wood extends StaticSolid{
 
 
     public boolean onFire = false;
@@ -27,9 +27,6 @@ public class Wood extends Tile{
         setColor();
         normalColor = super.color;
     }
-
-    @Override
-    public void move() {}
 
     @Override
     public void action() 

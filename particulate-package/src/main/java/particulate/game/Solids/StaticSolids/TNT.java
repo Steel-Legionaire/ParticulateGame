@@ -5,7 +5,7 @@ import particulate.game.CellularMatrix;
 import particulate.game.ParticulateGame;
 import particulate.game.Tile;
 
-public class TNT extends Tile{
+public class TNT extends StaticSolid{
 
     private static final Color[] COLORS = new Color[]{new Color(200, 0, 0), new Color(220, 0, 0), new Color(255, 0, 0), new Color(255, 30, 30), new Color(255, 60, 60)};
     
@@ -38,11 +38,6 @@ public class TNT extends Tile{
         {
                 isStatic = true;
         }
-    }
-
-    @Override
-    public void move() {
-
     }
 
     @Override

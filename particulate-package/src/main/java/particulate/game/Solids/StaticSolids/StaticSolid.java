@@ -10,9 +10,6 @@ public class StaticSolid extends Solid
     }
 
     @Override
-    public void move()
-    {
-
-    }
+    public void move(){ }
     
 }

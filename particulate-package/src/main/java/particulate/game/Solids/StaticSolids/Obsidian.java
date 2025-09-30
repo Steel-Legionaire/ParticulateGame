@@ -1,9 +1,7 @@
 package particulate.game.Solids.StaticSolids;
 import java.awt.Color;
 
-import particulate.game.Tile;
-
-public class Obsidian extends Tile{
+public class Obsidian extends StaticSolid{
 
     private static final Color[] COLORS = new Color[]{ new Color(26, 26, 26), new Color(24, 24, 24), new Color(22, 22, 22) };
 
@@ -12,15 +10,4 @@ public class Obsidian extends Tile{
         setAllPossibleColors(COLORS);
         setColor();
     }
-
-    @Override
-    public void move() {
-
-    }
-
-    @Override
-    public void action() {
-
-    }
-    
 }
