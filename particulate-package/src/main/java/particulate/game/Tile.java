@@ -71,4 +71,12 @@ public abstract class Tile
 
 
     }
+
+    public void swapPositions(CellularMatrix matrix, Tile toSwap, int toSwapX, int toSwapY)
+    {
+        if(this.x == toSwapX && this.y == toSwapY){ return ;}
+
+        matrix.setTile(this.x, this.y, toSwap);
+        matrix.setTile(toSwapX, toSwapY, this);
+    }
 }
