@@ -3,7 +3,6 @@ package particulate.game.Solids.MoveableSolids;
 import particulate.game.CellularMatrix;
 import particulate.game.ParticulateGame;
 import particulate.game.Tile;
-import particulate.game.Liquids.Liquid;
 import particulate.game.Liquids.Water;
 import particulate.game.Solids.Solid;
 
