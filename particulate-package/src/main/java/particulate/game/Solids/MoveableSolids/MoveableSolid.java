@@ -47,7 +47,7 @@ public abstract class MoveableSolid extends Solid
                     {
                         matrix.swapPositions(bottomLeftTile, x-1, y+1, this);
                     }
-                    else if(bottomCenterTile instanceof Water && leftTile instanceof Water)
+                    else if(bottomLeftTile instanceof Water)
                     {
                         matrix.swapPositions(bottomLeftTile, this);
                     }
@@ -67,7 +67,7 @@ public abstract class MoveableSolid extends Solid
                     {
                         matrix.swapPositions(bottomRightTile, x+1, y+1, this);
                     }
-                    else if(bottomCenterTile instanceof Water && rightTile instanceof Water)
+                    else if(bottomRightTile instanceof Water)
                     {
                         matrix.swapPositions(bottomRightTile, this);
                     }
