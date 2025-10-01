@@ -67,11 +67,11 @@ public class Menu
     Button fallingTntButton = new Button(buttonX + smallXSeperation*6, buttonY, smallButtonWidth, buttonHeight, "Falling TNT");
 
     // Define Spawner Buttons
-    Button sandSpawner = new Button(buttonX + mediumXSeperation, buttonY, mediumButtonWidth, buttonHeight, "Sand Spawner");
-    Button waterSpawner = new Button(buttonX + mediumXSeperation*2, buttonY, mediumButtonWidth, buttonHeight, "Water Spawner");
-    Button lavaSpawner = new Button(buttonX + mediumXSeperation*3, buttonY, mediumButtonWidth, buttonHeight, "Lava Spawner");
-    Button fireSpawner = new Button(buttonX + mediumXSeperation*4, buttonY, mediumButtonWidth, buttonHeight, "Fire Spawner");
-    Button ashSpawner = new Button(buttonX + mediumXSeperation*5, buttonY, mediumButtonWidth, buttonHeight, "Ash Spawner");
+    Button sandSpawner = new Button(buttonX + largeXSeperation, buttonY, largeButtonWidth, buttonHeight, "Sand Spawner");
+    Button waterSpawner = new Button(buttonX + (largeXSeperation * 2), buttonY, largeButtonWidth, buttonHeight, "Water Spawner");
+    Button lavaSpawner = new Button(buttonX + largeXSeperation*3, buttonY, largeButtonWidth, buttonHeight, "Lava Spawner");
+    Button fireSpawner = new Button(buttonX + largeXSeperation*4, buttonY, largeButtonWidth, buttonHeight, "Fire Spawner");
+    Button ashSpawner = new Button(buttonX + largeXSeperation*5, buttonY, largeButtonWidth, buttonHeight, "Ash Spawner");
 
     // Define Options buttons
     Button exitGameButton = new Button(buttonX, buttonY, smallButtonWidth, buttonHeight, "Exit");
