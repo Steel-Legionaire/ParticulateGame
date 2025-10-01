@@ -6,10 +6,15 @@ import java.awt.dnd.DropTargetListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.dnd.DropTarget;
 import java.awt.event.MouseWheelListener;
+import java.io.IOException;
+import java.awt.*;
+
 
 public abstract class Game implements KeyListener, MouseListener, MouseMotionListener, DropTargetListener, MouseWheelListener
 {
@@ -36,6 +41,15 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
         frame.setBackground(new Color(40,40,40));
         frame.addMouseMotionListener(this);
         frame.addMouseWheelListener(game);
+
+        try {
+            Image icon = ImageIO.read(getClass().getResourceAsStream("/icon.png")); // Assuming icon.png is in src/main/resources
+            frame.setIconImage(icon); // Set the icon image
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading icon image.");
+        }
+
         new DropTarget(frame.getContentPane(), this);
         run();
     }
