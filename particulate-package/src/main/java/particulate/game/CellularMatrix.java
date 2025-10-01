@@ -16,6 +16,10 @@ public class CellularMatrix {
     private Tile[][] matrix;
     private int rowBounds;
     private int collumnBounds;
+    
+    private boolean floorDropped = false;
+    private Tile[] fullFloor;
+    private Tile[] emptyFloor;
 
     public CellularMatrix(int width, int height) 
     {
@@ -24,6 +28,16 @@ public class CellularMatrix {
         // subtract 1 from each because we do not want the player to interact with the outer layer of bedrock
         rowBounds = height - 1;
         collumnBounds = width - 1;
+
+        emptyFloor = new Tile[width];
+            
+        fullFloor = new Tile[width];
+
+        for(int c=0; c<fullFloor.length; c++)
+        {
+            fullFloor[c] = new Bedrock(c, this.getRowBounds());
+        }
+    
     }
 
     public Tile getTileAtLocation(int x, int y)
@@ -221,26 +235,6 @@ public class CellularMatrix {
         }
     }
 
-    public int getRowBounds(){ return rowBounds; }
-    public int getCollumnBounds(){ return collumnBounds; }
-
-    public void setTile(int x, int y, Tile t)
-    {
-        matrix[y][x] = t;
-    }
-
-    public Tile getTile(int x, int y){ return matrix[y][x]; }
-
-    public void setRow(int r, Tile[] ta)
-    {
-        matrix[r] = ta;
-    }
-
-    public void setMatrix(Tile[][] ta)
-    {
-        matrix = ta;
-    }
-
     public void swapPositions(Tile toSwap, int toSwapX, int toSwapY, Tile swapTile)
     {
         // Ask for the x and y values in order to avoid null cases for toSwap
@@ -277,5 +271,71 @@ public class CellularMatrix {
         toSwap.y = swapY;
 
     }
+    
+    public ArrayList<int[]> traceThroughGrid(int startX, int startY, int endX, int endY)
+    {
+        // slope = y2 - y2 / x2 - x1
+        ArrayList<int[]> allCoords = new ArrayList<int[]>(); 
+
+        int y;
+        double slope = (double)(endY - startY)  / (double)(endX - startX);
+
+        if(startX > endX)
+        {
+            // endX is behind startX
+            for( int x = startX; x >= endX; x--)
+            {
+                y = Math.abs((int) Math.round(slope * x));
+                allCoords.add(new int[]{x, y});
+            }
+        }
+        else if(startX < endX)
+        {
+            // endX is in front of startX
+            for( int x = startX; x <= endX; x++)
+            {
+                y = Math.abs((int) Math.round(slope * x));
+                allCoords.add(new int[]{x, y});
+            }
+        }
+        return allCoords;
+    }
+    
+    public void dropFloor()
+    {
+        if(floorDropped)
+        {
+            this.setRow(this.getRowBounds(), fullFloor);
+            floorDropped = false;
+        }
+        else
+        {
+            this.setRow(this.getRowBounds(), emptyFloor);
+            floorDropped = true;
+        }
+            
+    }
+
+    public int getRowBounds(){ return rowBounds; }
+    public int getCollumnBounds(){ return collumnBounds; }
+
+    public void setTile(int x, int y, Tile t)
+    {
+        matrix[y][x] = t;
+    }
+
+    public Tile getTile(int x, int y){ return matrix[y][x]; }
+
+    public void setRow(int r, Tile[] ta)
+    {
+        matrix[r] = ta;
+    }
+
+    public void setMatrix(Tile[][] ta)
+    {
+        matrix = ta;
+    }
+
 
 }
+

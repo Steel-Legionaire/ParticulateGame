@@ -65,8 +65,7 @@ public class ParticulateGame extends Game  {
         boolean dropMenuActive = true;
         boolean floorDropped = false;
 
-        Tile[] fullFloor;
-        Tile[] emptyFloor;
+        
         
         boolean eraseMode = false;
         
@@ -88,15 +87,6 @@ public class ParticulateGame extends Game  {
         {
                 matrix = new CellularMatrix(playAreaWidth / tileSize, playAreaHeight / tileSize);
                 matrix.setGridBoundsWalls();
-
-                emptyFloor = new Tile[playAreaWidth/tileSize];
-                
-                fullFloor = new Tile[playAreaWidth/tileSize];
-
-                for(int c=0; c<fullFloor.length; c++)
-                {
-                        fullFloor[c] = new Bedrock(c, matrix.getRowBounds());
-                }
 
                 // Leftover code to create a large square of walls
                 //for(int i=0; i<50; i++)
@@ -164,58 +154,6 @@ public class ParticulateGame extends Game  {
                         pen.drawString("null", 100, 50);
                 }*/
         }       
-
-        public ArrayList<int[]> traceThroughGrid(int startX, int startY, int endX, int endY)
-        {
-                // slope = y2 - y2 / x2 - x1
-                ArrayList<int[]> allCoords = new ArrayList<int[]>(); 
-
-                int y;
-                double slope = (double)(endY - startY)  / (double)(endX - startX);
-
-                if(startX > endX)
-                {
-                        // endX is behind startX
-                        for( int x = startX; x >= endX; x--)
-                        {
-                                y = Math.abs((int) Math.round(slope * x));
-                                allCoords.add(new int[]{x, y});
-                        }
-                }
-                else if(startX < endX)
-                {
-                        // endX is in front of startX
-                        for( int x = startX; x <= endX; x++)
-                        {
-                                y = Math.abs((int) Math.round(slope * x));
-                                allCoords.add(new int[]{x, y});
-                        }
-                }
-                else
-                {
-                        // in same spot
-                        
-                }
-
-                
-                return allCoords;
-        }
-
-        public void dropFloor()
-        {
-                if(floorDropped)
-                {
-                        matrix.setRow(matrix.getRowBounds(), fullFloor);
-                        floorDropped = false;
-                }
-                else
-                {
-                        matrix.setRow(matrix.getRowBounds(), emptyFloor);
-                        floorDropped = true;
-
-                }
-                
-        }
 
         /*public static void saveGridToTextFile()
         {
@@ -294,209 +232,209 @@ public class ParticulateGame extends Game  {
                 }).start();
         }
 
-    public static String getUniqueFileName(String baseName, String extension) {
-        String userHome = System.getProperty("user.home");
-        String desktopPath = Paths.get(userHome, "Desktop").toString();
+        public static String getUniqueFileName(String baseName, String extension) {
+                String userHome = System.getProperty("user.home");
+                String desktopPath = Paths.get(userHome, "Desktop").toString();
 
-        String fileName = baseName + "." + extension;
-        File file = new File(desktopPath, fileName);
+                String fileName = baseName + "." + extension;
+                File file = new File(desktopPath, fileName);
 
-        int counter = 1;
-        while (file.exists()) {
-            fileName = baseName + "(" + counter + ")." + extension;
-            file = new File(desktopPath, fileName);
-            counter++;
+                int counter = 1;
+                while (file.exists()) {
+                        fileName = baseName + "(" + counter + ")." + extension;
+                        file = new File(desktopPath, fileName);
+                        counter++;
+                }
+
+                return file.getAbsolutePath();
         }
-
-        return file.getAbsolutePath();
-    }
     
-    
-    @Override
-    public void keyTyped(KeyEvent ke) {}
+        public static void setOutlineColor(Color c){ outlineColor = c; }
+        public static Color getOutlineColor(){ return outlineColor; }
 
-    @Override
-    public void keyPressed(KeyEvent ke) 
-    {
-        //if(ke.getKeyChar() == 's') {saveGridToTextFile(); }
-        if(ke.getKeyChar() == '1') { currentTile = Sand.class; }
-        else if (ke.getKeyChar() == '2'){ currentTile = Water.class; }
-        else if (ke.getKeyChar() == '3'){ currentTile = Lava.class; }
-        else if (ke.getKeyChar() == '4'){ currentTile = Fire.class; }
-        else if (ke.getKeyChar() == '5'){ currentTile = Stone.class; }
-        else if (ke.getKeyChar() == '6'){ currentTile = Wood.class; }
-        else if (ke.getKeyChar() == '7'){ currentTile = TNT.class; }
-        else if (ke.getKeyChar() == '8'){ currentTile = SandSpawner.class; }
-        else if (ke.getKeyChar() == '9'){ currentTile = WaterSpawner.class; }
-        else if (ke.getKeyChar() == '0'){ currentTile = LavaSpawner.class; }
+        public static void setCurrentTile(Class<?> t){ currentTile = t; }
+        public static Class<?> getCurrentTile(){ return currentTile; }
 
-        else if(ke.getKeyChar() == 'r'){ matrix.resetGrid(); }
-        else if(ke.getKeyChar() == ' '){ isPaused = !isPaused; }
-        else if(ke.getKeyCode() == 10){ dropFloor(); }
+        public static void setDrawSize(int ds){ drawSize = ds;}
 
-        else if(ke.getKeyChar() == 'e'){  currentTile = Eraser.class;}
-
-    }
-
-    public static void setOutlineColor(Color c){ outlineColor = c; }
-    public static Color getOutlineColor(){ return outlineColor; }
-
-    public static void setCurrentTile(Class<?> t){ currentTile = t; }
-    public static Class<?> getCurrentTile(){ return currentTile; }
-
-    public static void setDrawSize(int ds){ drawSize = ds;}
-
-    public static CellularMatrix getMatrix(){ return matrix;}
-
-    @Override
-    public void keyReleased(KeyEvent ke) {}
-
-    @Override
-    public void mouseClicked(MouseEvent me) 
-    { 
-        int mx = me.getX();
-        int my = me.getY();
-
-        if(mx >= menu.getX())
+        public static CellularMatrix getMatrix(){ return matrix;}
+        
+        @Override
+        public void keyPressed(KeyEvent ke) 
         {
-                menu.clicked(mx, my);
+                //if(ke.getKeyChar() == 's') {saveGridToTextFile(); }
+                if(ke.getKeyChar() == '1') { currentTile = Sand.class; }
+                else if (ke.getKeyChar() == '2'){ currentTile = Water.class; }
+                else if (ke.getKeyChar() == '3'){ currentTile = Lava.class; }
+                else if (ke.getKeyChar() == '4'){ currentTile = Fire.class; }
+                else if (ke.getKeyChar() == '5'){ currentTile = Stone.class; }
+                else if (ke.getKeyChar() == '6'){ currentTile = Wood.class; }
+                else if (ke.getKeyChar() == '7'){ currentTile = TNT.class; }
+                else if (ke.getKeyChar() == '8'){ currentTile = SandSpawner.class; }
+                else if (ke.getKeyChar() == '9'){ currentTile = WaterSpawner.class; }
+                else if (ke.getKeyChar() == '0'){ currentTile = LavaSpawner.class; }
+
+                else if(ke.getKeyChar() == 'r'){ matrix.resetGrid(); }
+                else if(ke.getKeyChar() == ' '){ isPaused = !isPaused; }
+                else if(ke.getKeyCode() == 10){ matrix.dropFloor(); }
+
+                else if(ke.getKeyChar() == 'e'){  currentTile = Eraser.class;}
+
         }
-    }
-    
-    @Override
-    public void mouseWheelMoved(MouseWheelEvent mwe) {
-        int notches = mwe.getWheelRotation(); // Positive for down, negative for up
-            if (notches < 0) {
-                drawSize++;
-            } else {
-                if(drawSize > 1)
+
+        
+        @Override
+        public void mouseClicked(MouseEvent me) 
+        { 
+                int mx = me.getX();
+                int my = me.getY();
+
+                if(mx >= menu.getX())
                 {
-                        drawSize--;
-                }
-            }
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent me) 
-    {
-        int mxg = (me.getX() / tileSize )- 2;
-        int myg = (me.getY() / tileSize )- 7;
-        outlinedTileX = mxg;
-        outlinedTileY = myg;
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent me) 
-    {
-        mouseHeld = true;
-        
-        int mxg = (me.getX() / tileSize )- 2;
-        int myg = (me.getY() / tileSize )- 7;
-
-        outlinedTileX = mxg;
-        outlinedTileY = myg;
-
-        //ArrayList<int[]> path = traceThroughGrid(mxLastFrame, myLastFrame, mx, my);
-        if(!(me.isShiftDown()))
-        {
-                
-                try {
-                        
-                        if(mxg < matrix.getCollumnBounds())
-                        {
-                                matrix.createTile(mxg, myg, currentTile, drawSize); 
-                                //for(int[] pos : path)
-                                //{
-                                //        createTile((pos[0] / tileSize) - 2, (pos[1] / tileSize) - 2, currentTile); 
-                                //}
-                                    
-                        }
-                           
-                        
-                } catch (ArrayIndexOutOfBoundsException e) {
-
-                }
-        }
-        else
-        {
-                try {
-                        if(matrix.getTile(mxg, myg) instanceof TNT)
-                        {
-                                ((TNT)matrix.getTile(mxg, myg)).explode();  
-                        }
-                } catch (ArrayIndexOutOfBoundsException e) {
-
+                        menu.clicked(mx, my);
                 }
         }
         
-    }
-    @Override
-    public void mouseReleased(MouseEvent me) 
-    {
-        mouseHeld = false;
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent me) {}
-
-    @Override
-    public void mouseExited(MouseEvent me) {}
-
-    @Override
-    public void mouseMoved(MouseEvent me) 
-    {
-        outlinedTileX = (me.getX() / tileSize) - 2;
-        outlinedTileY = (me.getY() / tileSize) - 7;
-    }
-
-    @Override
-    public void drop(DropTargetDropEvent event) 
-    {
-        if(!dropMenuActive) { return; }
-        try {
-                event.acceptDrop(DnDConstants.ACTION_COPY);
-                Transferable t = event.getTransferable();
-                List<File> droppedFiles = (List<File>) t.getTransferData(DataFlavor.javaFileListFlavor);
-
-
-                        StringBuilder sb = new StringBuilder();
-
-                        try (BufferedReader reader = new BufferedReader(new FileReader(droppedFiles.get(0)))) {
-
-                        String line;
-                        
-                        while ((line = reader.readLine()) != null) {
-                                sb.append(line+"\n");
+        @Override
+        public void mouseWheelMoved(MouseWheelEvent mwe) {
+                int notches = mwe.getWheelRotation(); // Positive for down, negative for up
+                if (notches < 0) {
+                        drawSize++;
+                } else {
+                        if(drawSize > 1)
+                        {
+                                drawSize--;
                         }
-                        }
-
-                        String fileContent = sb.toString();
-                        //System.out.println("File content:\n\n" + fileContent);
-                
-                        setGridToReadInTextFile(fileContent);
-                
-
-        } catch (Exception ex) {
-                ex.printStackTrace();
+                }
         }
-    }
 
-    // Unused but required
-    @Override
-    public void dragEnter(DropTargetDragEvent arg0) {}
+        @Override
+        public void mouseDragged(MouseEvent me) 
+        {
+                int mxg = (me.getX() / tileSize )- 2;
+                int myg = (me.getY() / tileSize )- 7;
+                outlinedTileX = mxg;
+                outlinedTileY = myg;
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent me) 
+        {
+                mouseHeld = true;
+                
+                int mxg = (me.getX() / tileSize )- 2;
+                int myg = (me.getY() / tileSize )- 7;
+
+                outlinedTileX = mxg;
+                outlinedTileY = myg;
+
+                //ArrayList<int[]> path = traceThroughGrid(mxLastFrame, myLastFrame, mx, my);
+                if(!(me.isShiftDown()))
+                {
+                        
+                        try {
+                                
+                                if(mxg < matrix.getCollumnBounds())
+                                {
+                                        matrix.createTile(mxg, myg, currentTile, drawSize); 
+                                        //for(int[] pos : path)
+                                        //{
+                                        //        createTile((pos[0] / tileSize) - 2, (pos[1] / tileSize) - 2, currentTile); 
+                                        //}
+                                        
+                                }
+                                
+                                
+                        } catch (ArrayIndexOutOfBoundsException e) {
+
+                        }
+                }
+                else
+                {
+                        try {
+                                if(matrix.getTile(mxg, myg) instanceof TNT)
+                                {
+                                        ((TNT)matrix.getTile(mxg, myg)).explode();  
+                                }
+                        } catch (ArrayIndexOutOfBoundsException e) {
+
+                        }
+                }
+                
+        }
+        
+        @Override
+        public void mouseReleased(MouseEvent me) 
+        {
+                mouseHeld = false;
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent me) 
+        {
+                outlinedTileX = (me.getX() / tileSize) - 2;
+                outlinedTileY = (me.getY() / tileSize) - 7;
+        }
+
+        @Override
+        public void drop(DropTargetDropEvent event) 
+        {
+                if(!dropMenuActive) { return; }
+                try {
+                        event.acceptDrop(DnDConstants.ACTION_COPY);
+                        Transferable t = event.getTransferable();
+                        List<File> droppedFiles = (List<File>) t.getTransferData(DataFlavor.javaFileListFlavor);
 
 
-    @Override
-    public void dragExit(DropTargetEvent arg0) {}
+                                StringBuilder sb = new StringBuilder();
 
+                                try (BufferedReader reader = new BufferedReader(new FileReader(droppedFiles.get(0)))) {
 
-    @Override
-    public void dragOver(DropTargetDragEvent arg0) {}
+                                String line;
+                                
+                                while ((line = reader.readLine()) != null) {
+                                        sb.append(line+"\n");
+                                }
+                                }
 
-    @Override
-    public void dropActionChanged(DropTargetDragEvent arg0) {}
+                                String fileContent = sb.toString();
+                                //System.out.println("File content:\n\n" + fileContent);
+                        
+                                setGridToReadInTextFile(fileContent);
+                        
 
-    //Launches the Game
-    public static void main(String[] args) { new ParticulateGame().start(TITLE, SCREEN_WIDTH,SCREEN_HEIGHT); }
+                } catch (Exception ex) {
+                        ex.printStackTrace();
+                }
+        }
+
+        // Unused but required
+
+        @Override
+        public void keyTyped(KeyEvent ke) {}
+
+        @Override
+        public void mouseEntered(MouseEvent me) {}
+
+        @Override
+        public void mouseExited(MouseEvent me) {}
+
+        @Override
+        public void keyReleased(KeyEvent ke) {}
+
+        @Override
+        public void dragEnter(DropTargetDragEvent arg0) {}
+
+        @Override
+        public void dragExit(DropTargetEvent arg0) {}
+
+        @Override
+        public void dragOver(DropTargetDragEvent arg0) {}
+
+        @Override
+        public void dropActionChanged(DropTargetDragEvent arg0) {}
+
+        //Launches the Game
+        public static void main(String[] args) { new ParticulateGame().start(TITLE, SCREEN_WIDTH,SCREEN_HEIGHT); }
 }
