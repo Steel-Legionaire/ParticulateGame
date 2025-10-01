@@ -15,8 +15,11 @@ import java.awt.event.MouseWheelEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -153,20 +156,22 @@ public class ParticulateGame extends Game  {
                 }*/
         }       
 
-        /*public static void saveGridToTextFile()
+        public static void saveGridToTextFile()
         {
                 String filePath = getUniqueFileName("savedPlayArea", "txt");
 
                 StringBuilder sb = new StringBuilder();
 
-                for(int r=0; r<grid.length; r++)
+                for(int r=0; r < matrix.getRowBounds()+1; r++)
                 {
-                        for(int c=0; c<grid[r].length; c++)
-                        {
+                        for(int c=0; c < matrix.getCollumnBounds()+1; c++)
+                        { 
                                 // get the class at the curret position and chop off the @segf98shg at the end
-                                if(grid[r][c] == null){ continue; }
+                                Tile t = matrix.getTile(c,r);
 
-                                String classStr = (grid[r][c].toString().split("@"))[0];
+                                if(t == null){ continue; }
+
+                                String classStr = (t.toString().split("@"))[0];
 
                                 sb.append(classStr+","+r+","+c+"\n");
                                 
@@ -181,26 +186,36 @@ public class ParticulateGame extends Game  {
                         showTemporaryMessage(Game.frame, "Error LoadingGrid!", tempMsgX, tempMsgY, tempMsgDurationMilis);
                 }
                 
-        }*/
+        }
     
-        public void setGridToReadInTextFile(String filecontent) throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
+        public void setGridToReadInTextFile(String filecontent)
         {
-                Tile[][] importedGrid = new Tile[playAreaHeight / tileSize][playAreaWidth / tileSize];
+                Tile[][] importedGrid = new Tile[matrix.getRowBounds()+1][matrix.getCollumnBounds()+1];
 
                 String[] listOfEveryTile = filecontent.split("\n");
                 for(String s : listOfEveryTile)
                 {
                         String[] classAndPositions = s.split(",");
 
-                        Class<?> clazz = Class.forName(classAndPositions[0]);
+                        Class<?> clazz;
+                        try 
+                        {
+                                clazz = Class.forName(classAndPositions[0]);
+                                Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
 
-                        Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
+                                int y = Integer.parseInt(classAndPositions[1]);
+                                int x = Integer.parseInt(classAndPositions[2]);
+                
+                                Tile t = (Tile) argConstructor.newInstance(x, y);
+                                importedGrid[y][x] = t;
 
-                        int y = Integer.parseInt(classAndPositions[1]);
-                        int x = Integer.parseInt(classAndPositions[2]);
-        
-                        Tile t = (Tile) argConstructor.newInstance(x, y);
-                        importedGrid[y][x] = t;
+                        } 
+                        catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) 
+                        {
+                                e.printStackTrace();
+                        }
+
+
                 }       
 
                 matrix.setMatrix(importedGrid);
@@ -260,8 +275,8 @@ public class ParticulateGame extends Game  {
         @Override
         public void keyPressed(KeyEvent ke) 
         {
-                //if(ke.getKeyChar() == 's') {saveGridToTextFile(); }
-                if(ke.getKeyChar() == '1') { currentTile = Sand.class; }
+                if(ke.getKeyChar() == 's') {saveGridToTextFile(); }
+                else if(ke.getKeyChar() == '1') { currentTile = Sand.class; }
                 else if (ke.getKeyChar() == '2'){ currentTile = Water.class; }
                 else if (ke.getKeyChar() == '3'){ currentTile = Lava.class; }
                 else if (ke.getKeyChar() == '4'){ currentTile = Fire.class; }
@@ -280,7 +295,6 @@ public class ParticulateGame extends Game  {
 
         }
 
-        
         @Override
         public void mouseClicked(MouseEvent me) 
         { 
