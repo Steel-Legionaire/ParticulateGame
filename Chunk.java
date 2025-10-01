@@ -5,7 +5,7 @@ public class Chunk
     // where he also uses a chunk based system in his FallingSandGame
     // Github link: https://github.com/DavidMcLaughlin208/FallingSandJava/blob/master/core/src/com/gdx/cellular/util/Chunk.java
 
-    public static int size = 32;
+    /*public static int size = 32;
     
     private boolean shouldStep = true;
     private boolean shouldStepNextFrame = true;
@@ -56,6 +56,6 @@ public class Chunk
     public void shiftShouldStepAndReset() {
         this.shouldStep = this.shouldStepNextFrame;
         this.shouldStepNextFrame = false;
-    }
+    }*/
 
 }

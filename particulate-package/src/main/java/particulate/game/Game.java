@@ -42,13 +42,13 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
         frame.addMouseMotionListener(this);
         frame.addMouseWheelListener(game);
 
-        try {
+        /*try {
             Image icon = ImageIO.read(getClass().getResourceAsStream("/icon.png")); // Assuming icon.png is in src/main/resources
             frame.setIconImage(icon); // Set the icon image
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error loading icon image.");
-        }
+        }*/
 
         new DropTarget(frame.getContentPane(), this);
         run();
