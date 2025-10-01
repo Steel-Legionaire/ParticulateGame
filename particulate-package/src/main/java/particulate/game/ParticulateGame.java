@@ -82,6 +82,8 @@ public class ParticulateGame extends Game  {
 
         static Color outlineColor = Color.YELLOW;
 
+        boolean frameEven = false;
+
         Menu menu = new Menu();
 
         public ParticulateGame() 
@@ -114,6 +116,7 @@ public class ParticulateGame extends Game  {
         { 
                 if(!isPaused)
                 { 
+                        if
                         for(int r = matrix.getRowBounds(); r >= 0; r--)
                         {
                                 for(int c = 0; c < matrix.getCollumnBounds(); c++)
@@ -133,6 +136,8 @@ public class ParticulateGame extends Game  {
                 {
                         matrix.createTile(outlinedTileX, outlinedTileY, currentTile, drawSize);
                 }
+
+                frameEven = !frameEven;
         }
         
         public void draw(Graphics pen)
