@@ -30,7 +30,7 @@ public abstract class MoveableSolid extends Solid
             }
             else if(bottomCenterTile instanceof Water)
             {
-               matrix.swapPositions(bottomCenterTile, x, y+1, this);
+               matrix.swapPositions(bottomCenterTile, this);
             }
             else
             {
@@ -42,9 +42,13 @@ public abstract class MoveableSolid extends Solid
                     // Go left.
                     Tile bottomLeftTile = matrix.getTile(x-1, y+1);
 
-                    if(bottomLeftTile == null || bottomLeftTile instanceof Water)
+                    if(bottomLeftTile == null)
                     {
                         matrix.swapPositions(bottomLeftTile, x-1, y+1, this);
+                    }
+                    else if(bottomCenterTile instanceof Water)
+                    {
+                        matrix.swapPositions(bottomLeftTile, this);
                     }
                     else if(bottomLeftTile.y > matrix.getRowBounds())
                     {
@@ -57,13 +61,13 @@ public abstract class MoveableSolid extends Solid
                 {
                     Tile bottomRightTile = matrix.getTile(x+1, y+1);
 
-                    if(bottomRightTile == null || bottomRightTile instanceof Water)
+                    if(bottomRightTile == null)
                     {
                         matrix.swapPositions(bottomRightTile, x+1, y+1, this);
                     }
-                    else if(bottomRightTile.y > matrix.getRowBounds())
+                    else if(bottomCenterTile instanceof Water)
                     {
-                        matrix.setTile(x,y,null);
+                        matrix.swapPositions(bottomRightTile, this);
                     }
                     
                 }
