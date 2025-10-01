@@ -20,7 +20,7 @@ public class Spawner extends StaticSolid{
     {
         CellularMatrix matrix = ParticulateGame.getMatrix();
 
-        if(matrix.getTile(x,y+1) == null)
+        if(matrix.getTile(x,y+(1*spawnDir)) == null)
         {
 
             matrix.createTile(x, y+(1*spawnDir), spawnTile, 1);
