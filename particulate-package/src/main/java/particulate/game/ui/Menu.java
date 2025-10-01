@@ -24,60 +24,71 @@ import particulate.game.Solids.StaticSolids.Spawners.WaterSpawner;
 public class Menu 
 {
 
-    int buttonWidth = 200;
-    int buttonHeight = 50;
-    int sideMenuX = 1500;
+    int buttonWidth = 75;
+    int buttonHeight = 25;
+    int sideMenuX = 0;
+    int sideMenuY = 800;
 
     int buttonX = sideMenuX + 60;
+    int buttonY = sideMenuY + 60;
 
-    // Define Block Buttons
-    Button stoneButton = new Button(buttonX, 75, buttonWidth, buttonHeight, "Stone");
-    Button bedrockButton = new Button(buttonX, 150, buttonWidth, buttonHeight, "Bedrock");
-    Button obsidianButton = new Button(buttonX, 225, buttonWidth, buttonHeight, "Obsidian");
-    Button woodButton = new Button(buttonX, 300, buttonWidth, buttonHeight, "Wood");
-    Button staticTntButton = new Button(buttonX, 375, buttonWidth, buttonHeight, "Satic TNT");
-    Button fallingTntButton = new Button(buttonX, 450, buttonWidth, buttonHeight, "Falling TNT");
+    int xSeperation = buttonWidth + 10;
+    int ySeperation = buttonHeight + 10;
 
-    // Define particle buttons
-    Button sandButton = new Button(buttonX, 75, buttonWidth, buttonHeight, "Sand");
-    Button waterButton = new Button(buttonX, 150, buttonWidth, buttonHeight, "Water");
-    Button lavaButton = new Button(buttonX, 225, buttonWidth, buttonHeight, "Lava");
-    Button fireButton = new Button(buttonX, 300, buttonWidth, buttonHeight, "Fire");
-    Button ashButton = new Button(buttonX, 375, buttonWidth, buttonHeight, "Ash");
+    
 
-    // Define Spawner Buttons
-    Button sandSpawner = new Button(buttonX, 75, buttonWidth, buttonHeight, "Sand Spawner");
-    Button waterSpawner = new Button(buttonX, 150, buttonWidth, buttonHeight, "Water Spawner");
-    Button lavaSpawner = new Button(buttonX, 225, buttonWidth, buttonHeight, "Lava Spawner");
-    Button fireSpawner = new Button(buttonX, 300, buttonWidth, buttonHeight, "Fire Spawner");
-    Button ashSpawner = new Button(buttonX, 375, buttonWidth, buttonHeight, "Ash Spawner");
-
-    // Define Options button and menu buttons
-    Button optionsButton = new Button(sideMenuX + 135, 930, 50, buttonHeight, "\u2699" );
-    Button exitGameButton = new Button(buttonX, 75, buttonWidth, buttonHeight, "Exit Game");
-
-    // Define page switcher buttons
-    Button pageLeftButton = new Button(sideMenuX + 60, 930, 50, buttonHeight, "\u2190");
-    Button pageRightButton = new Button(sideMenuX + 210, 930, 50, buttonHeight, "\u2192");
+    // Define Menu Swap Buttons
+    Button selectParticlesButton = new Button(buttonX, sideMenuY+10, 200, 30, "Particles");
+    Button selectBlocksButton = new Button(buttonX + (200+20), sideMenuY+10, 200, 30, "Blocks");
+    Button selectSpawnersButton = new Button(buttonX + (420 + 20), sideMenuY+10, 200, 30, "Spawners");
+    Button selectOptionsButton = new Button(buttonX + (640 + 20), sideMenuY+10, 200, 30, "Options");
     
     // Define eraser button
-    Button eraserButton = new Button(buttonX, 855, buttonWidth, buttonHeight, "Eraser"); 
+    Button eraserButton = new Button(buttonX, buttonY, buttonWidth, buttonHeight, "Eraser"); 
+    
+    // Define particle buttons
+    Button sandButton = new Button(buttonX + xSeperation, buttonY, buttonWidth, buttonHeight, "Sand");
+    Button waterButton = new Button(buttonX + xSeperation*2, buttonY, buttonWidth, buttonHeight, "Water");
+    Button lavaButton = new Button(buttonX  + xSeperation*3, buttonY, buttonWidth, buttonHeight, "Lava");
+    Button fireButton = new Button(buttonX + xSeperation*4, buttonY, buttonWidth, buttonHeight, "Fire");
+    Button ashButton = new Button(buttonX + xSeperation*5, buttonY, buttonWidth, buttonHeight, "Ash");
 
+    // Define Block Buttons
+    Button stoneButton = new Button(buttonX + xSeperation, buttonY, buttonWidth, buttonHeight, "Stone");
+    Button bedrockButton = new Button(buttonX + xSeperation*2, buttonY, buttonWidth, buttonHeight, "Bedrock");
+    Button obsidianButton = new Button(buttonX + xSeperation*3, buttonY, buttonWidth, buttonHeight, "Obsidian");
+    Button woodButton = new Button(buttonX + xSeperation*4, buttonY, buttonWidth, buttonHeight, "Wood");
+    Button staticTntButton = new Button(buttonX + xSeperation*5, buttonY, buttonWidth, buttonHeight, "Satic TNT");
+    Button fallingTntButton = new Button(buttonX + xSeperation*6, buttonY, buttonWidth, buttonHeight, "Falling TNT");
+
+    // Define Spawner Buttons
+    Button sandSpawner = new Button(buttonX + xSeperation, buttonY, buttonWidth, buttonHeight, "Sand");
+    Button waterSpawner = new Button(buttonX + xSeperation*2, buttonY, buttonWidth, buttonHeight, "Water");
+    Button lavaSpawner = new Button(buttonX + xSeperation*3, buttonY, buttonWidth, buttonHeight, "Lava");
+    Button fireSpawner = new Button(buttonX + xSeperation*4, buttonY, buttonWidth, buttonHeight, "Fire");
+    Button ashSpawner = new Button(buttonX + xSeperation*5, buttonY, buttonWidth, buttonHeight, "Ash");
+
+    // Define Options buttons
+    Button exitGameButton = new Button(buttonX, buttonY, buttonWidth, buttonHeight, "Exit");
+    Button savePlayAreaButton = new Button(buttonX + xSeperation, buttonY, buttonWidth, buttonHeight, "Save");
+    
     // Define square draw size buttons
-    Button smallSquareDrawSize = new Button(buttonX, 515, buttonWidth, buttonHeight, "Small");
-    Button mediumSquareDrawSize = new Button(buttonX, 575, buttonWidth, buttonHeight, "Medium");
-    Button largeSquareDrawSize = new Button(buttonX, 635, buttonWidth, buttonHeight, "Large");
-    Button massiveSquareDrawSize = new Button(buttonX, 695, buttonWidth, buttonHeight, "Massive");
+    Button smallSquareDrawSize = new Button(buttonX + xSeperation, buttonY + ySeperation, buttonWidth, buttonHeight, "Small");
+    Button mediumSquareDrawSize = new Button(buttonX + xSeperation*2, buttonY + ySeperation, buttonWidth, buttonHeight, "Medium");
+    Button largeSquareDrawSize = new Button(buttonX + xSeperation*3, buttonY + ySeperation, buttonWidth, buttonHeight, "Large");
+    Button massiveSquareDrawSize = new Button(buttonX + xSeperation*4, buttonY + ySeperation, buttonWidth, buttonHeight, "Massive");
+    
 
-    // Define save play area button
-    Button savePlayAreaButton = new Button(buttonX, 775, buttonWidth, buttonHeight, "Save Play Area");
 
     Button[] particlesMenu = new Button[]{ sandButton, waterButton, lavaButton, fireButton, ashButton};
     Button[] blockMenu = new Button[]{ stoneButton, bedrockButton, obsidianButton, woodButton, staticTntButton};
-    Button[] optionsMenu = new Button[]{ exitGameButton, savePlayAreaButton};
+    Button[] optionsMenu = new Button[]{ exitGameButton, savePlayAreaButton, smallSquareDrawSize, mediumSquareDrawSize, largeSquareDrawSize, massiveSquareDrawSize};
     Button[] spawnerMenu = new Button[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner, ashSpawner };
 
-    Button[][] menus = new Button[4][10];
+
+    Button[] selectionMenu = new Button[]{selectParticlesButton, selectBlocksButton, selectSpawnersButton, selectOptionsButton};
+
+    Button[][] typeMenus = new Button[4][10];
 
     Button[] squareDrawSizeButtons = new Button[]{smallSquareDrawSize, mediumSquareDrawSize, largeSquareDrawSize, massiveSquareDrawSize};
 
@@ -87,82 +98,52 @@ public class Menu
 
     private Button selectedButton = sandButton;
     
+    Button selectedSelectionButton = selectParticlesButton;
 
     public Menu()
     {
         sandButton.swapColors();
-        menus[0] = particlesMenu;
-        menus[1] = blockMenu;
-        menus[2] = spawnerMenu;
-        menus[3] = optionsMenu;
+        selectParticlesButton.swapColors();
+
+        typeMenus[0] = particlesMenu;
+        typeMenus[1] = blockMenu;
+        typeMenus[2] = spawnerMenu;
+        typeMenus[3] = optionsMenu;
     }
 
     public void draw(Graphics pen) 
     {
-        int playAreaWidth = ParticulateGame.playAreaWidth;
+        int playAreaHeight= ParticulateGame.playAreaHeight;
         int SCREEN_WIDTH = ParticulateGame.SCREEN_WIDTH;
         int SCREEN_HEIGHT = ParticulateGame.SCREEN_HEIGHT;
         int tileSize = ParticulateGame.tileSize;
 
         // Draw side menu background
         pen.setColor(Color.DARK_GRAY);
-        pen.fillRect(playAreaWidth, 0, SCREEN_WIDTH - playAreaWidth + tileSize, SCREEN_HEIGHT);
-        
-        // Side menu buttons 
-        pageLeftButton.draw(pen);
-        pageRightButton.draw(pen);
-        optionsButton.draw(pen);
-        eraserButton.draw(pen);
-        
-        if(menus[selectedMenu] != null)
+        pen.fillRect(0, sideMenuY, SCREEN_WIDTH, SCREEN_HEIGHT- playAreaHeight + tileSize);
+
+        for(Button b : selectionMenu){ b.draw(pen); }
+
+        for(Button b : typeMenus[selectedMenu])
         {
-                for(int c=0;c<menus[selectedMenu].length;c++)
-                {
-                        if(menus[selectedMenu][c] != null)
-                        {
-                                menus[selectedMenu][c].draw(pen);
-
-                                pen.setColor(Color.WHITE);      
-                                //System.out.println(selectedMenu);
-
-                                if(selectedMenu == 0)
-                                {
-                                        pen.drawString("Particles", sideMenuX + 115, 50);
-                                }
-                                else if(selectedMenu == 1)
-                                {
-                                        pen.drawString("Blocks", sideMenuX + 130, 50);
-                                }
-                                else if(selectedMenu == 2)
-                                {
-                                        pen.drawString("Spawners", sideMenuX + 115, 50);
-                                }
-                                else if(selectedMenu == 3)
-                                {
-                                        //System.out.println("IN OPTIONS MENU");
-                                        pen.drawString("Options", sideMenuX + 115, 50);
-
-                                        // Draw all controls strings
-
-                                        for(int i=0; i<controlsList.length; i++)
-                                        {
-                                                pen.drawString(controlsList[i], sideMenuX + 60, 150 + (i * 25));
-                                        }
-
-                                        pen.drawString("Square Draw Sizes", sideMenuX + 70, 500);
-
-                                        for(Button b : squareDrawSizeButtons)
-                                        {
-                                                b.draw(pen);
-                                        }
-
-
-                                }
-
-                        }
-
-                }
+                b.draw(pen);
         }
+
+        if(selectedMenu != 3)
+        {
+                eraserButton.draw(pen);
+        }
+        else
+        {
+                pen.setColor(Color.WHITE);
+                pen.drawString("BrushSizes", buttonX, buttonY+(ySeperation+18));       
+        }
+
+        /*pen.setColor(Color.WHITE);
+        for(int i=0; i<controlsList.length; i++)
+        {
+                pen.drawString(controlsList[i], sideMenuX + 60, 150 + (i * 25));
+        }*/
     }
 
     public void clicked(int mx, int my)
@@ -170,53 +151,61 @@ public class Menu
         Class<?> currentTile = ParticulateGame.getCurrentTile();
         Color outlineColor = ParticulateGame.getOutlineColor(); 
         
-        if(pageLeftButton.clickedButton(mx, my))
-            { 
-                    if(selectedMenu > 0)
-                    {
-                        selectedMenu--;
-                    }
-                    else if(selectedMenu == 0)
-                    {
-                        selectedMenu = 2;
-                    }
-            }
-            else if(pageRightButton.clickedButton(mx, my))
-            { 
-                    if(selectedMenu < 2)
-                    {
-                            selectedMenu++;
-                    }
-                    else if(selectedMenu == 2)
-                    { 
-                            selectedMenu = 0;
-                    }
+        if(selectParticlesButton.clickedButton(mx, my))
+        {
+                selectedMenu = 0;
+                
+                if(!selectParticlesButton.equals(selectedSelectionButton))
+                {
+                        selectedSelectionButton.swapColors();
+                        selectParticlesButton.swapColors();
+                        selectedSelectionButton = selectParticlesButton;
+                }
+                
+        }
+        else if(selectBlocksButton.clickedButton(mx, my))
+        {
+                selectedMenu = 1;
 
-            }
-            else if(optionsButton.clickedButton(mx, my))
-            { 
-                    if(selectedMenu == 3)
-                    {
-                            selectedMenu = 0;
-                    }
-                    else
-                    {
-                            selectedMenu = 3;
-                    }       
-                        
-            }
-            else if(eraserButton.clickedButton(mx, my)) 
-            { 
-                    currentTile = Eraser.class; 
-                    if(!eraserButton.equals(selectedButton))
-                    {
-                            selectedButton.swapColors();
-                            eraserButton.swapColors();
-                            selectedButton = eraserButton;
-                            outlineColor = Color.PINK;
-                    }
-            }
-
+                if(!selectBlocksButton.equals(selectedSelectionButton))
+                {
+                        selectedSelectionButton.swapColors();
+                        selectBlocksButton.swapColors();
+                        selectedSelectionButton = selectBlocksButton;
+                }
+        }
+        else if(selectSpawnersButton.clickedButton(mx, my))
+        {
+                selectedMenu = 2;
+                if(!selectSpawnersButton.equals(selectedSelectionButton))
+                {
+                        selectedSelectionButton.swapColors();
+                        selectSpawnersButton.swapColors();
+                        selectedSelectionButton = selectSpawnersButton;
+                }
+        }
+        else if(selectOptionsButton.clickedButton(mx, my))
+        {
+                selectedMenu = 3;
+                if(!selectOptionsButton.equals(selectedSelectionButton))
+                {
+                        selectedSelectionButton.swapColors();
+                        selectOptionsButton.swapColors();
+                        selectedSelectionButton = selectOptionsButton;
+                }
+        }
+        
+        if(eraserButton.clickedButton(mx, my))
+        {
+                currentTile = Eraser.class; 
+                if(!eraserButton.equals(selectedButton))
+                {
+                        selectedButton.swapColors();
+                        eraserButton.swapColors();
+                        selectedButton = eraserButton;
+                        outlineColor = Color.PINK;
+                }       
+        }
             if(selectedMenu == 0)
             {
                     if(sandButton.clickedButton(mx, my))
@@ -409,7 +398,7 @@ public class Menu
                 else if(mediumSquareDrawSize.clickedButton(mx, my)){ParticulateGame.setDrawSize(10); }
                 else if(largeSquareDrawSize.clickedButton(mx, my)){ ParticulateGame.setDrawSize(50); }
                 else if(massiveSquareDrawSize.clickedButton(mx, my)){ ParticulateGame.setDrawSize(100); }
-                //else if(savePlayAreaButton.clickedButton(mx, my)) { ParticulateGame.saveGridToTextFile(); }
+                else if(savePlayAreaButton.clickedButton(mx, my)) { ParticulateGame.saveGridToTextFile(); }
 
             }
 
@@ -421,4 +410,9 @@ public class Menu
     {
         return sideMenuX;
     }
+
+        public int getY()
+        {
+                return sideMenuY;
+        }
 }

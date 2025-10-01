@@ -47,8 +47,8 @@ public class ParticulateGame extends Game  {
         public static final int SCREEN_WIDTH = 1815;
         public static final int SCREEN_HEIGHT = 1040;
 
-        public static int playAreaWidth = 1500;
-        public int playAreaHeight = 1000;
+        public static int playAreaWidth = 1800;
+        public static int playAreaHeight = 800;
         
         int outlinedTileX = 0;
         int outlinedTileY = 0;
@@ -129,7 +129,7 @@ public class ParticulateGame extends Game  {
                         }      
                 }
 
-                if(mouseHeld && outlinedTileX < menu.getX())
+                if(mouseHeld && outlinedTileY < menu.getY())
                 {
                         matrix.createTile(outlinedTileX, outlinedTileY, currentTile, drawSize);
                 }
