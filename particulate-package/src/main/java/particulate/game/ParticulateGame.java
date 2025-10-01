@@ -116,20 +116,39 @@ public class ParticulateGame extends Game  {
         { 
                 if(!isPaused)
                 { 
-                        if
-                        for(int r = matrix.getRowBounds(); r >= 0; r--)
+                        if(frameEven)
                         {
-                                for(int c = 0; c < matrix.getCollumnBounds(); c++)
+                                for(int r = matrix.getRowBounds(); r >= 0; r--)
                                 {
-                                        Tile t = matrix.getTile(c, r);
-
-                                        if(t != null)
+                                        for(int c = 0; c < matrix.getCollumnBounds(); c++)
                                         {
-                                                t.action();
-                                                t.move();
+                                                Tile t = matrix.getTile(c, r);
+        
+                                                if(t != null)
+                                                {
+                                                        t.action();
+                                                        t.move();
+                                                }
                                         }
-                                }
-                        }      
+                                }   
+                        }
+                        else
+                        {
+                                for(int r = matrix.getRowBounds(); r >= 0; r--)
+                                {
+                                        for(int c = matrix.getCollumnBounds(); c >0; c--)
+                                        {
+                                                Tile t = matrix.getTile(c, r);
+        
+                                                if(t != null)
+                                                {
+                                                        t.action();
+                                                        t.move();
+                                                }
+                                        }
+                                }   
+                        }
+   
                 }
 
                 if(mouseHeld && outlinedTileY < menu.getY())
