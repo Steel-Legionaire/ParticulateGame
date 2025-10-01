@@ -31,12 +31,14 @@ public class Menu
     int buttonX = sideMenuX + 60;
     int buttonY = sideMenuY + 60;
 
-    int xSeperation = buttonWidth + 10;
-    int ySeperation = buttonHeight + 10;
-
     int smallButtonWidth = 75;
     int mediumButtonWidth = 100;
     int largeButtonWidth = 125;
+
+    int smallXSeperation = smallButtonWidth + 10;
+    int mediumXSeperation = mediumButtonWidth + 10;
+    int largeXSeperation = largeButtonWidth + 10;
+    int ySeperation = buttonHeight + 10;
 
     
 
@@ -50,36 +52,36 @@ public class Menu
     Button eraserButton = new Button(buttonX, buttonY, smallButtonWidth, buttonHeight, "Eraser"); 
     
     // Define particle buttons
-    Button sandButton = new Button(buttonX + xSeperation, buttonY, smallButtonWidth, buttonHeight, "Sand");
-    Button waterButton = new Button(buttonX + xSeperation*2, buttonY, smallButtonWidth, buttonHeight, "Water");
-    Button lavaButton = new Button(buttonX  + xSeperation*3, buttonY, smallButtonWidth, buttonHeight, "Lava");
-    Button fireButton = new Button(buttonX + xSeperation*4, buttonY, smallButtonWidth, buttonHeight, "Fire");
-    Button ashButton = new Button(buttonX + xSeperation*5, buttonY, smallButtonWidth, buttonHeight, "Ash");
+    Button sandButton = new Button(buttonX + smallXSeperation, buttonY, smallButtonWidth, buttonHeight, "Sand");
+    Button waterButton = new Button(buttonX + smallXSeperation*2, buttonY, smallButtonWidth, buttonHeight, "Water");
+    Button lavaButton = new Button(buttonX  + smallXSeperation*3, buttonY, smallButtonWidth, buttonHeight, "Lava");
+    Button fireButton = new Button(buttonX + smallXSeperation*4, buttonY, smallButtonWidth, buttonHeight, "Fire");
+    Button ashButton = new Button(buttonX + smallXSeperation*5, buttonY, smallButtonWidth, buttonHeight, "Ash");
 
     // Define Block Buttons
-    Button stoneButton = new Button(buttonX + xSeperation, buttonY, smallButtonWidth, buttonHeight, "Stone");
-    Button bedrockButton = new Button(buttonX + xSeperation*2, buttonY, smallButtonWidth, buttonHeight, "Bedrock");
-    Button obsidianButton = new Button(buttonX + xSeperation*3, buttonY, smallButtonWidth, buttonHeight, "Obsidian");
-    Button woodButton = new Button(buttonX + xSeperation*4, buttonY, smallButtonWidth, buttonHeight, "Wood");
-    Button staticTntButton = new Button(buttonX + xSeperation*5, buttonY, mediumButtonWidth, buttonHeight, "Satic TNT");
-    Button fallingTntButton = new Button(buttonX + xSeperation*6, buttonY, smallButtonWidth, buttonHeight, "Falling TNT");
+    Button stoneButton = new Button(buttonX + smallXSeperation, buttonY, smallButtonWidth, buttonHeight, "Stone");
+    Button bedrockButton = new Button(buttonX + smallXSeperation*2, buttonY, smallButtonWidth, buttonHeight, "Bedrock");
+    Button obsidianButton = new Button(buttonX + smallXSeperation*3, buttonY, smallButtonWidth, buttonHeight, "Obsidian");
+    Button woodButton = new Button(buttonX + smallXSeperation*4, buttonY, smallButtonWidth, buttonHeight, "Wood");
+    Button staticTntButton = new Button(buttonX + smallXSeperation*5, buttonY, mediumButtonWidth, buttonHeight, "Satic TNT");
+    Button fallingTntButton = new Button(buttonX + smallXSeperation*6, buttonY, smallButtonWidth, buttonHeight, "Falling TNT");
 
     // Define Spawner Buttons
-    Button sandSpawner = new Button(buttonX + xSeperation, buttonY, mediumButtonWidth, buttonHeight, "Sand Spawner");
-    Button waterSpawner = new Button(buttonX + xSeperation*2, buttonY, mediumButtonWidth, buttonHeight, "Water Spawner");
-    Button lavaSpawner = new Button(buttonX + xSeperation*3, buttonY, mediumButtonWidth, buttonHeight, "Lava Spawner");
-    Button fireSpawner = new Button(buttonX + xSeperation*4, buttonY, mediumButtonWidth, buttonHeight, "Fire Spawner");
-    Button ashSpawner = new Button(buttonX + xSeperation*5, buttonY, mediumButtonWidth, buttonHeight, "Ash Spawner");
+    Button sandSpawner = new Button(buttonX + mediumXSeperation, buttonY, mediumButtonWidth, buttonHeight, "Sand Spawner");
+    Button waterSpawner = new Button(buttonX + mediumXSeperation*2, buttonY, mediumButtonWidth, buttonHeight, "Water Spawner");
+    Button lavaSpawner = new Button(buttonX + mediumXSeperation*3, buttonY, mediumButtonWidth, buttonHeight, "Lava Spawner");
+    Button fireSpawner = new Button(buttonX + mediumXSeperation*4, buttonY, mediumButtonWidth, buttonHeight, "Fire Spawner");
+    Button ashSpawner = new Button(buttonX + mediumXSeperation*5, buttonY, mediumButtonWidth, buttonHeight, "Ash Spawner");
 
     // Define Options buttons
-    Button exitGameButton = new Button(buttonX, buttonY, buttonWidth, buttonHeight, "Exit");
-    Button savePlayAreaButton = new Button(buttonX + xSeperation, buttonY, buttonWidth, buttonHeight, "Save");
+    Button exitGameButton = new Button(buttonX, buttonY, smallButtonWidth, buttonHeight, "Exit");
+    Button savePlayAreaButton = new Button(buttonX + smallXSeperation, buttonY, smallButtonWidth, buttonHeight, "Save");
     
     // Define square draw size buttons
-    Button smallSquareDrawSize = new Button(buttonX + xSeperation, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Small");
-    Button mediumSquareDrawSize = new Button(buttonX + xSeperation*2, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Medium");
-    Button largeSquareDrawSize = new Button(buttonX + xSeperation*3, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Large");
-    Button massiveSquareDrawSize = new Button(buttonX + xSeperation*4, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Massive");
+    Button smallSquareDrawSize = new Button(buttonX + smallXSeperation, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Small");
+    Button mediumSquareDrawSize = new Button(buttonX + smallXSeperation*2, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Medium");
+    Button largeSquareDrawSize = new Button(buttonX + smallXSeperation*3, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Large");
+    Button massiveSquareDrawSize = new Button(buttonX + smallXSeperation*4, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Massive");
     
 
 
