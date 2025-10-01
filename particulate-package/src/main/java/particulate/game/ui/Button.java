@@ -11,7 +11,7 @@ public class Button {
     public String txt;
     public Color bgColor;
     public Color txtColor;
-    public Font font = new Font("Arial",1,20);
+    public Font font = new Font("Arial",1,15);
 
     int strtVal = 10;
     int counter = strtVal;
@@ -76,12 +76,15 @@ public class Button {
 
 
     public boolean clickedButton(int mX, int mY){
-            if((mY >= y+h/2 && mY <= y+h+h/2)   &&  (mX >= x && mX <= x+w)){
-                    //System.out.println("mX: "+mX+"\nbX: "+bX+"\nw: "+w+"\nbX+w: "+(bX+w));
-                    turnGrey = true;
-                    return true;
-            }
-            return false;
+        //System.out.println("mX: "+mX+"\nbX: "+x+"\nw: "+w+"\nbX+w: "+(x+w));
+        //System.out.println("mY: "+mY+"\nbY: "+((y+h*2))+"\nh: "+h+"\ny+h: "+(y+(h*2)));
+        //System.out.println("\n\n\n\n");
+        if((mY >= (y+h+(h/2))-5 && mY <= y+(h*2)+5)   &&  (mX >= x && mX <= x+w)){
+                
+            turnGrey = true;
+            return true;
+        }
+        return false;
     }
 
     public void swapColors()
