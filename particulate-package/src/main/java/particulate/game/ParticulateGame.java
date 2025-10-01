@@ -18,7 +18,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -31,7 +30,6 @@ import particulate.game.Gases.Fire;
 import particulate.game.Liquids.Lava;
 import particulate.game.Liquids.Water;
 import particulate.game.Solids.MoveableSolids.Sand;
-import particulate.game.Solids.StaticSolids.Bedrock;
 import particulate.game.Solids.StaticSolids.Stone;
 import particulate.game.Solids.StaticSolids.TNT;
 import particulate.game.Solids.StaticSolids.Wood;
