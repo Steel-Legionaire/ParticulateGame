@@ -1,7 +1,4 @@
 package particulate.game;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
@@ -46,7 +43,7 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
         try {
             Image icon = ImageIO.read(getClass().getResourceAsStream("/icon.png")); // Assuming icon.png is in src/main/resources
             frame.setIconImage(icon); // Set the icon image
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
             System.err.println("Error loading icon image.");
         }
