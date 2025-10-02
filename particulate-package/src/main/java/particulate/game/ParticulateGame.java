@@ -176,15 +176,9 @@ public class ParticulateGame extends Game  {
 
                 if(matrix.withinBounds(outlinedTileX, outlinedTileY) && hoveredTile != null)
                 {
-                        String hoveredTileName = hoveredTile.getClass()+"";
-                        String[] splitString = hoveredTileName.split(".");
-                        System.out.println(hoveredTileName);
-                        for(String s : splitString)
-                        {
-                                System.out.println(s);
-                        }
+                        String[] splitString = hoveredTile.getClass().getName().split("\\.");
 
-                        //menu.drawMatrixInfo(pen, splitString[splitString.length], outlinedTileX, outlinedTileY, drawSize);
+                        menu.drawMatrixInfo(pen, splitString[splitString.length-1], outlinedTileX, outlinedTileY, drawSize);
                 }
                 else
                 {
