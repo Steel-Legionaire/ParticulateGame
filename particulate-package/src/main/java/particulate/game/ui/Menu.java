@@ -105,6 +105,9 @@ public class Menu
     
     Button selectedSelectionButton = selectParticlesButton;
 
+    private int debugInfoX = 1000;
+    private int debugInfoY = sideMenuY+15;
+
     public Menu()
     {
         sandButton.swapColors();
@@ -409,6 +412,15 @@ public class Menu
 
         ParticulateGame.setCurrentTile(currentTile);
         ParticulateGame.setOutlineColor(outlineColor); 
+    }
+
+    public void drawMatrixInfo(Graphics pen, String tileName, int mX, int mY, int drawSize)
+    {
+        pen.setColor(Color.WHITE);
+        
+        pen.drawString(tileName, debugInfoX, debugInfoY);
+        pen.drawString("X: "+mX+" Y: "+mY, debugInfoX, debugInfoY+15);
+
     }
 
     public int getX()

@@ -44,7 +44,7 @@ import particulate.game.ui.Menu;
 public class ParticulateGame extends Game  {
     
         public static final String TITLE = "Particulate Refreshed";
-        public static final int SCREEN_WIDTH = 1815;
+        public static final int SCREEN_WIDTH = 1817;
         public static final int SCREEN_HEIGHT = 1040;
 
         public static int playAreaWidth = 1800;
@@ -161,13 +161,36 @@ public class ParticulateGame extends Game  {
         
         public void draw(Graphics pen)
         {    
+                menu.draw(pen);
+
                 matrix.drawAllTiles(pen, tileSize);
 
                 // Draw in outline for the brush
                 pen.setColor(outlineColor);
                 pen.drawRect((outlinedTileX - ((int)(drawSize / 2))) * tileSize, (outlinedTileY - ((int)(drawSize / 2))) * tileSize, tileSize * drawSize, tileSize * drawSize );
 
-                menu.draw(pen);
+                
+
+                // Draw info on position and tile
+                Tile hoveredTile = matrix.withinBounds(outlinedTileX, outlinedTileY) ? matrix.getTileAtLocation(outlinedTileX, outlinedTileY) : null;
+
+                if(matrix.withinBounds(outlinedTileX, outlinedTileY) && hoveredTile != null)
+                {
+                        String hoveredTileName = hoveredTile.getClass()+"";
+                        String[] splitString = hoveredTileName.split(".");
+                        System.out.println(hoveredTileName);
+                        for(String s : splitString)
+                        {
+                                System.out.println(s);
+                        }
+
+                        //menu.drawMatrixInfo(pen, splitString[splitString.length], outlinedTileX, outlinedTileY, drawSize);
+                }
+                else
+                {
+                        menu.drawMatrixInfo(pen,"", outlinedTileX, outlinedTileY, drawSize);
+                }
+                
 
                 /*pen.setColor(Color.MAGENTA);
                 if(matrix.withinBounds(outlinedTileX, outlinedTileY))
