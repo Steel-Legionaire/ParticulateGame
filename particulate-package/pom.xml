@@ -5,9 +5,9 @@
                              
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
+    <groupId>particulate.game</groupId>
     <artifactId>particulate-game</artifactId>
-    <version>2.0</version>
+    <version>3.0</version>
     <packaging>jar</packaging>
 
     <name>Particulate Game</name>
@@ -28,7 +28,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.example.ParticulateGame</mainClass>
+                            <mainClass>particulate.game.ParticulateGame</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
