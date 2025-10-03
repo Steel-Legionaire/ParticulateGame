@@ -327,13 +327,7 @@ public class ParticulateGame extends Game  {
         @Override
         public void mouseClicked(MouseEvent me) 
         { 
-                int mx = me.getX();
-                int my = me.getY();
 
-                if(mx >= menu.getX())
-                {
-                        menu.clicked(mx, my);
-                }
         }
         
         @Override

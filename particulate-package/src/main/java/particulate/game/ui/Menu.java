@@ -3,9 +3,11 @@ package particulate.game.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Wrapper;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,92 +35,94 @@ public class Menu
 {
 
     JLayeredPane layeredPane = new JLayeredPane();
+    
+    private int sideMenuX = 1300;
 
-    int buttonHeight = 25;
-    int sideMenuX = 0;
-    int sideMenuY = 800;
+    private int menuY = 800;
+    private int menuX = 0;
 
-    int buttonX = sideMenuX + 60;
-    int buttonY = sideMenuY + 60;
+    private int buttonIndent = menuX + 60;
 
-    int smallButtonWidth = 75;
-    int mediumButtonWidth = 100;
-    int largeButtonWidth = 125;
+    private int buttonHeight = 30;
 
-    int smallXSeperation = smallButtonWidth + 10;
-    int mediumXSeperation = mediumButtonWidth + 10;
-    int largeXSeperation = largeButtonWidth + 10;
-    int ySeperation = buttonHeight + 10;
+    private int sideMenuIndent = sideMenuX + 10;
+    private int debugInfoY = menuY+15;
 
-    private int seperatorX = 1300;
-    private int debugInfoX = seperatorX+10;
-    private int debugInfoY = sideMenuY+15;
+    private int ySeperation = 20;
+    private int smallButtonWidth = 75;
+    private int mediumButtonWidth = 100;
+    private int largeButtonWidth = 125;
+
+    private int selectionButtonsY = menuY+5;
+    private int firstRowY = selectionButtonsY + buttonHeight + ySeperation;
+    private int secondRowY = selectionButtonsY + buttonHeight + ySeperation*2;
+    
 
     // Define Menu Swap Buttons
-    Button selectParticlesButton = new Button(buttonX, sideMenuY+10, 200, 30, "Particles");
-    Button selectBlocksButton = new Button(buttonX + (200+20), sideMenuY+10, 200, 30, "Blocks");
-    Button selectSpawnersButton = new Button(buttonX + (420 + 20), sideMenuY+10, 200, 30, "Spawners");
-    Button selectOptionsButton = new Button(buttonX + (640 + 20), sideMenuY+10, 200, 30, "Options");
+    private JButton selectParticlesButton = new JButton("Particles");
+    private JButton selectBlocksButton = new JButton("Blocks");
+    private JButton selectSpawnersButton = new JButton("Spawners");
+    private JButton selectOptionsButton = new JButton("Options");
     
     // Define eraser button
-    Button eraserButton = new Button(buttonX, buttonY, smallButtonWidth, buttonHeight, "Eraser"); 
+    private JButton eraserButton = new JButton("Eraser");
     
     // Define particle buttons
-    Button sandButton = new Button(buttonX + smallXSeperation, buttonY, smallButtonWidth, buttonHeight, "Sand");
-    Button waterButton = new Button(buttonX + smallXSeperation*2, buttonY, smallButtonWidth, buttonHeight, "Water");
-    Button lavaButton = new Button(buttonX  + smallXSeperation*3, buttonY, smallButtonWidth, buttonHeight, "Lava");
-    Button fireButton = new Button(buttonX + smallXSeperation*4, buttonY, smallButtonWidth, buttonHeight, "Fire");
-    Button ashButton = new Button(buttonX + smallXSeperation*5, buttonY, smallButtonWidth, buttonHeight, "Ash");
+    private JButton sandButton = new JButton("Sand");
+    private JButton waterButton = new JButton("Water");
+    private JButton lavaButton = new JButton("Lava");
+    private JButton fireButton = new JButton("Fire");
+    private JButton ashButton = new JButton("Ash");
 
     // Define Block Buttons
-    Button stoneButton = new Button(buttonX + smallXSeperation, buttonY, smallButtonWidth, buttonHeight, "Stone");
-    Button bedrockButton = new Button(buttonX + smallXSeperation*2, buttonY, smallButtonWidth, buttonHeight, "Bedrock");
-    Button obsidianButton = new Button(buttonX + smallXSeperation*3, buttonY, smallButtonWidth, buttonHeight, "Obsidian");
-    Button woodButton = new Button(buttonX + smallXSeperation*4, buttonY, smallButtonWidth, buttonHeight, "Wood");
-    Button staticTntButton = new Button(buttonX + smallXSeperation*5, buttonY, mediumButtonWidth, buttonHeight, "Satic TNT");
-    Button fallingTntButton = new Button(buttonX + smallXSeperation*6, buttonY, smallButtonWidth, buttonHeight, "Falling TNT");
+    private JButton stoneButton = new JButton("Stone");
+    private JButton bedrockButton = new JButton("Bedrock");
+    private JButton obsidianButton = new JButton("Obsidian");
+    private JButton woodButton = new JButton("Wood");
+    private JButton staticTntButton = new JButton("Satic TNT");
+    private JButton fallingTntButton = new JButton("Falling TNT");
 
     // Define Spawner Buttons
-    Button sandSpawner = new Button(buttonX + largeXSeperation, buttonY, largeButtonWidth, buttonHeight, "Sand Spawner");
-    Button waterSpawner = new Button(buttonX + (largeXSeperation * 2), buttonY, largeButtonWidth, buttonHeight, "Water Spawner");
-    Button lavaSpawner = new Button(buttonX + largeXSeperation*3, buttonY, largeButtonWidth, buttonHeight, "Lava Spawner");
-    Button fireSpawner = new Button(buttonX + largeXSeperation*4, buttonY, largeButtonWidth, buttonHeight, "Fire Spawner");
-    Button ashSpawner = new Button(buttonX + largeXSeperation*5, buttonY, largeButtonWidth, buttonHeight, "Ash Spawner");
+    private JButton sandSpawner = new JButton("Sand Spawner");
+    private JButton waterSpawner = new JButton("Water Spawner");
+    private JButton lavaSpawner = new JButton("Lava Spawner");
+    private JButton fireSpawner = new JButton("Fire Spawner");
+    private JButton ashSpawner = new JButton("Ash Spawner");
 
     // Define Options buttons
-    Button exitGameButton = new Button(buttonX, buttonY, smallButtonWidth, buttonHeight, "Exit");
-    Button savePlayAreaButton = new Button(buttonX + smallXSeperation, buttonY, smallButtonWidth, buttonHeight, "Save");
+    private JButton exitGameButton = new JButton("Exit");
+    private JButton savePlayAreaButton = new JButton("Save");
     
     // Define square draw size buttons
-    Button smallSquareDrawSize = new Button(buttonX + smallXSeperation, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Small");
-    Button mediumSquareDrawSize = new Button(buttonX + smallXSeperation*2, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Medium");
-    Button largeSquareDrawSize = new Button(buttonX + smallXSeperation*3, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Large");
-    Button massiveSquareDrawSize = new Button(buttonX + smallXSeperation*4, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Massive");
+    private JButton smallSquareDrawSize = new JButton("Small");
+    private JButton mediumSquareDrawSize = new JButton("Medium");
+    private JButton largeSquareDrawSize = new JButton("Large");
+    private JButton massiveSquareDrawSize = new JButton("Massive");
     
     // Define toggle buttons
-    Button toggleOverrideButton = new Button(seperatorX+10, sideMenuY+75, smallButtonWidth, buttonHeight, "Override");
+    //Button toggleOverrideButton = new Button(seperatorX+10, sideMenuY+75, smallButtonWidth, buttonHeight, "Override");
+    private JButton toggleOverrideButton = new JButton("Override");
 
-    Button[] particlesMenu = new Button[]{ sandButton, waterButton, lavaButton, fireButton, ashButton};
-    Button[] blockMenu = new Button[]{ stoneButton, bedrockButton, obsidianButton, woodButton, staticTntButton};
-    Button[] optionsMenu = new Button[]{ exitGameButton, savePlayAreaButton, smallSquareDrawSize, mediumSquareDrawSize, largeSquareDrawSize, massiveSquareDrawSize};
-    Button[] spawnerMenu = new Button[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner, ashSpawner };
+    private JButton[] particlesMenu = new JButton[]{ sandButton, waterButton, lavaButton, fireButton, ashButton};
+    private JButton[] blockMenu = new JButton[]{ stoneButton, bedrockButton, obsidianButton, woodButton, staticTntButton};
+    private JButton[] optionsMenu = new JButton[]{ exitGameButton, savePlayAreaButton, smallSquareDrawSize, mediumSquareDrawSize, largeSquareDrawSize, massiveSquareDrawSize};
+    private JButton[] spawnerMenu = new JButton[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner, ashSpawner };
 
+    private JButton[] selectionMenu = new JButton[]{selectParticlesButton, selectBlocksButton, selectSpawnersButton, selectOptionsButton};
 
-    Button[] selectionMenu = new Button[]{selectParticlesButton, selectBlocksButton, selectSpawnersButton, selectOptionsButton};
+    private JButton[] squareDrawSizeButtons = new JButton[]{smallSquareDrawSize, mediumSquareDrawSize, largeSquareDrawSize, massiveSquareDrawSize};
 
-    Button[][] typeMenus = new Button[4][10];
+    private JButton[] toggleButtons = new JButton[]{toggleOverrideButton};
 
-    Button[] squareDrawSizeButtons = new Button[]{smallSquareDrawSize, mediumSquareDrawSize, largeSquareDrawSize, massiveSquareDrawSize};
-
-    Button[] toggleButtons = new Button[]{toggleOverrideButton};
+    private JButton[][] typeMenu = new JButton[4][10];
 
     String controls = "R: Reset Play Area    Space: Pause Simulation    S: Save play area    Drag file on screen to load it    Enter: Drop Floor";
 
     private int selectedMenu = 0;
 
-    private Button selectedButton = sandButton;
+    private JButton selectedButton = sandButton;
     
-    Button selectedSelectionButton = selectParticlesButton;
+    JButton selectedSelectionButton = selectParticlesButton;
 
     JButton testJButton = new JButton("Test");
 
@@ -127,368 +131,482 @@ public class Menu
     int SCREEN_HEIGHT = ParticulateGame.SCREEN_HEIGHT;
     int tileSize = ParticulateGame.tileSize;
 
+    Class<?> currentTile = ParticulateGame.getCurrentTile();
+    Color outlineColor = ParticulateGame.getOutlineColor(); 
+
     public Menu(JFrame f)
     {
-        sandButton.swapColors();
-        selectParticlesButton.swapColors();
-
-        typeMenus[0] = particlesMenu;
-        typeMenus[1] = blockMenu;
-        typeMenus[2] = spawnerMenu;
-        typeMenus[3] = optionsMenu;
-
-        layeredPane.setPreferredSize(new Dimension(SCREEN_WIDTH , SCREEN_HEIGHT));
-
-        //layeredPane.setBackground(new Color(40,40,40));
-        layeredPane.setLayout(null);
-
-        testJButton.setBounds(buttonX, sideMenuY+50, 100, 50);
-        
-
-        layeredPane.add(testJButton);
-
-        f.getContentPane().add(layeredPane, BorderLayout.CENTER);
-        f.pack();
-        f.setBackground(new Color(40,40,40));
-        f.repaint();
+        defineButtonsPositionAndSize();
         defineButtonFunctions();
+        addAllButtonsToLayeredFrame(f);
 
+        typeMenu[0] = particlesMenu;
+        typeMenu[1] = blockMenu;
+        typeMenu[2] = spawnerMenu;
+        typeMenu[3] = optionsMenu;
     }
 
     public void draw(Graphics pen) 
     {
-        
+        pen.setFont(new Font("Arial",1,15));
 
         // Draw side menu background
         pen.setColor(Color.DARK_GRAY);
-        pen.fillRect(0, sideMenuY, SCREEN_WIDTH, SCREEN_HEIGHT- playAreaHeight + tileSize);
+        pen.fillRect(0, menuY, SCREEN_WIDTH, SCREEN_HEIGHT- playAreaHeight + tileSize);
 
         pen.setColor(Color.LIGHT_GRAY);
-        pen.fillRect(seperatorX, sideMenuY, SCREEN_WIDTH-seperatorX, SCREEN_HEIGHT-sideMenuY);
+        pen.fillRect(sideMenuX, menuY, SCREEN_WIDTH-sideMenuX, SCREEN_HEIGHT-menuY);
 
-        for(Button b : selectionMenu){ b.draw(pen); }
-
-        for(Button b : typeMenus[selectedMenu]){ b.draw(pen); }
-
-        for(Button b : toggleButtons){ b.draw(pen); }
-
-        if(selectedMenu != 3)
-        {
-                eraserButton.draw(pen);
-        }
-        else
+        if(selectedMenu == 3)
         {
                 pen.setColor(Color.WHITE);
-                pen.drawString("BrushSizes", buttonX, buttonY+(ySeperation+18));       
+                pen.drawString("BrushSizes", buttonIndent, secondRowY+(ySeperation+18));       
         }
 
 
 
         pen.setColor(Color.WHITE);
-        pen.drawString(controls, sideMenuX+60, 1000);
+        pen.drawString(controls, buttonIndent, 1000);
 
         
     }
 
     public void defineButtonFunctions()
     {
-        testJButton.addActionListener(new ActionListener() {
+
+        //Define actions for the navigation buttons
+        selectParticlesButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("Button 1 clicked!");
+                        if(!selectedSelectionButton.equals(selectParticlesButton))
+                        {
+                                swapColorsOfButton(selectedSelectionButton);
+                                selectedSelectionButton = selectParticlesButton;
+                                swapColorsOfButton(selectParticlesButton);
+                        }
+                        
+                        for(JButton b : particlesMenu)
+                        {
+                                b.setVisible(true);
+                        }
+
+                        for(JButton b : typeMenu[selectedMenu])
+                        {
+                                b.setVisible(false);
+                        }
+
+                        selectedMenu = 0;
+                }
+        });
+        selectBlocksButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedSelectionButton.equals(selectBlocksButton))
+                        {
+                                swapColorsOfButton(selectedSelectionButton);
+                                selectedSelectionButton = selectBlocksButton;
+                                swapColorsOfButton(selectBlocksButton);
+                        }
+                        for(JButton b : blockMenu)
+                        {
+                                b.setVisible(true);
+                        }
+
+                        for(JButton b : typeMenu[selectedMenu])
+                        {
+                                b.setVisible(false);
+                        }
+
+                        selectedMenu = 1;
+                }
+        });
+        selectSpawnersButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedSelectionButton.equals(selectSpawnersButton))
+                        {
+                                swapColorsOfButton(selectedSelectionButton);
+                                selectedSelectionButton = selectSpawnersButton;
+                                swapColorsOfButton(selectSpawnersButton);
+                        }
+                        for(JButton b : spawnerMenu)
+                        {
+                                b.setVisible(true);
+                        }
+
+                        for(JButton b : typeMenu[selectedMenu])
+                        {
+                                b.setVisible(false);
+                        }
+
+                        selectedMenu = 2;
+                }
+        });
+        selectOptionsButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedSelectionButton.equals(selectOptionsButton))
+                        {
+                                swapColorsOfButton(selectedSelectionButton);
+                                selectedSelectionButton = selectOptionsButton;
+                                swapColorsOfButton(selectOptionsButton);
+                        }
+                        for(JButton b : optionsMenu)
+                        {
+                                b.setVisible(true);
+                        }
+
+                        for(JButton b : typeMenu[selectedMenu])
+                        {
+                                b.setVisible(false);
+                        }
+
+                        selectedMenu = 3;
+                }
+        });
+        
+        //Define action for eraser button
+        eraserButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(eraserButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = eraserButton;
+                                swapColorsOfButton(eraserButton);
+                        }
+                        ParticulateGame.setCurrentTile(Eraser.class);
+                        ParticulateGame.setOutlineColor(Color.PINK); 
+                }
+        });
+
+        // Define toggle buttons
+        toggleOverrideButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(toggleOverrideButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = toggleOverrideButton;
+                                swapColorsOfButton(toggleOverrideButton);
+                        }
+                        ParticulateGame.flipOverride();
+                }
+        });
+
+        // Define actions for the particle buttons
+        sandButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(sandButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = sandButton;
+                                swapColorsOfButton(sandButton);
+                        }
+                        ParticulateGame.setCurrentTile(Sand.class);
+                        ParticulateGame.setOutlineColor(Color.YELLOW); 
+                }
+        });
+        waterButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(waterButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = waterButton;
+                                swapColorsOfButton(waterButton);
+                        }
+                        ParticulateGame.setCurrentTile(Water.class);
+                        ParticulateGame.setOutlineColor(Color.BLUE); 
+                }
+        });
+        lavaButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(lavaButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = lavaButton;
+                                swapColorsOfButton(lavaButton);
+                        }
+                        ParticulateGame.setCurrentTile(Lava.class);
+                        ParticulateGame.setOutlineColor(new Color(255, 185, 0)); 
+                }
+        });
+        fireButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(sandButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = fireButton;
+                                swapColorsOfButton(fireButton);
+                        }
+                        ParticulateGame.setCurrentTile(Fire.class);
+                        ParticulateGame.setOutlineColor( new Color(255,135,0)); 
+                }
+        });
+        ashButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(ashButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = ashButton;
+                                swapColorsOfButton(ashButton);
+                        }
+                        ParticulateGame.setCurrentTile(Ash.class);
+                        ParticulateGame.setOutlineColor(Color.LIGHT_GRAY); 
+                }
+        });
+
+        // Define Blocks menu buttons
+        stoneButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(stoneButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = stoneButton;
+                                swapColorsOfButton(stoneButton);
+                        }
+                        ParticulateGame.setCurrentTile(Stone.class);
+                        ParticulateGame.setOutlineColor(new Color(130, 130, 130)); 
+                }
+        });
+        bedrockButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(bedrockButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = bedrockButton;
+                                swapColorsOfButton(bedrockButton);
+                        }
+                        ParticulateGame.setCurrentTile(Bedrock.class);
+                        ParticulateGame.setOutlineColor(new Color(70, 70, 70)); 
+                }
+        });
+        obsidianButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(obsidianButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = obsidianButton;
+                                swapColorsOfButton(obsidianButton);
+                        }
+                        ParticulateGame.setCurrentTile(Obsidian.class);
+                        ParticulateGame.setOutlineColor( new Color(35, 35, 35)); 
+                }
+        });
+        woodButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(sandButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = woodButton;
+                                swapColorsOfButton(woodButton);
+                        }
+                        ParticulateGame.setCurrentTile(Wood.class);
+                        ParticulateGame.setOutlineColor( new Color(140, 80, 20)); 
+                }
+        });
+        staticTntButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(staticTntButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = staticTntButton;
+                                swapColorsOfButton(staticTntButton);
+                        }
+                        ParticulateGame.setCurrentTile(TNT.class);
+                        ParticulateGame.setOutlineColor(Color.RED); 
+                }
+        });
+        
+        // Define spawner buttons
+        sandSpawner.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(sandSpawner))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = sandSpawner;
+                                swapColorsOfButton(sandSpawner);
+                        }
+                        ParticulateGame.setCurrentTile(SandSpawner.class);
+                        ParticulateGame.setOutlineColor(Color.RED); 
+                }
+        });
+        waterSpawner.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(waterSpawner))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = waterSpawner;
+                                swapColorsOfButton(waterSpawner);
+                        }
+                        ParticulateGame.setCurrentTile(WaterSpawner.class);
+                        ParticulateGame.setOutlineColor(Color.CYAN); 
+                }
+        });
+        lavaSpawner.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(lavaSpawner))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = lavaSpawner;
+                                swapColorsOfButton(lavaSpawner);
+                        }
+                        ParticulateGame.setCurrentTile(LavaSpawner.class);
+                        ParticulateGame.setOutlineColor( new Color(80, 200, 80)); 
+                }
+        });
+        fireSpawner.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(fireSpawner))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = fireSpawner;
+                                swapColorsOfButton(fireSpawner);
+                        }
+                        ParticulateGame.setCurrentTile(FireSpawner.class);
+                        ParticulateGame.setOutlineColor( Color.MAGENTA); 
+                }
+        });
+        ashSpawner.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(ashSpawner))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = ashSpawner;
+                                swapColorsOfButton(ashSpawner);
+                        }
+                        ParticulateGame.setCurrentTile(AshSpawner.class);
+                        ParticulateGame.setOutlineColor(Color.GREEN); 
                 }
         });
     }
 
-    public void clicked(int mx, int my)
+    public void swapColorsOfButton(JButton b)
     {
-        Class<?> currentTile = ParticulateGame.getCurrentTile();
-        Color outlineColor = ParticulateGame.getOutlineColor(); 
         
-
-        
-
-        if(selectParticlesButton.clickedButton(mx, my))
-        {
-                selectedMenu = 0;
-                
-                if(!selectParticlesButton.equals(selectedSelectionButton))
-                {
-                        selectedSelectionButton.swapColors();
-                        selectParticlesButton.swapColors();
-                        selectedSelectionButton = selectParticlesButton;
-                }
-                
-        }
-        else if(selectBlocksButton.clickedButton(mx, my))
-        {
-                selectedMenu = 1;
-
-                if(!selectBlocksButton.equals(selectedSelectionButton))
-                {
-                        selectedSelectionButton.swapColors();
-                        selectBlocksButton.swapColors();
-                        selectedSelectionButton = selectBlocksButton;
-                }
-        }
-        else if(selectSpawnersButton.clickedButton(mx, my))
-        {
-                selectedMenu = 2;
-                if(!selectSpawnersButton.equals(selectedSelectionButton))
-                {
-                        selectedSelectionButton.swapColors();
-                        selectSpawnersButton.swapColors();
-                        selectedSelectionButton = selectSpawnersButton;
-                }
-        }
-        else if(selectOptionsButton.clickedButton(mx, my))
-        {
-                selectedMenu = 3;
-                if(!selectOptionsButton.equals(selectedSelectionButton))
-                {
-                        selectedSelectionButton.swapColors();
-                        selectOptionsButton.swapColors();
-                        selectedSelectionButton = selectOptionsButton;
-                }
-        }
-        
-        if(eraserButton.clickedButton(mx, my))
-        {
-                currentTile = Eraser.class; 
-                if(!eraserButton.equals(selectedButton))
-                {
-                        selectedButton.swapColors();
-                        eraserButton.swapColors();
-                        selectedButton = eraserButton;
-                        outlineColor = Color.PINK;
-                }       
-        }
-        else if(toggleOverrideButton.clickedButton(mx, my))
-        {
-                ParticulateGame.flipOverride();
-                toggleOverrideButton.swapColors();
-        }
-        else
-        {
-                if(selectedMenu == 0)
-                {
-                    if(sandButton.clickedButton(mx, my))
-                    { 
-                            currentTile = Sand.class; 
-                            if(!sandButton.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    sandButton.swapColors();
-                                    selectedButton = sandButton;
-                                    outlineColor = Color.YELLOW;
-                            }
-                    }
-                    else if(waterButton.clickedButton(mx, my)) 
-                    { 
-                            currentTile = Water.class; 
-                            if(!waterButton.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    waterButton.swapColors();
-                                    selectedButton = waterButton;
-                                    outlineColor = Color.BLUE;
-                            }
-                    }
-                    else if(lavaButton.clickedButton(mx, my)) 
-                    { 
-                            currentTile = Lava.class; 
-                            if(!lavaButton.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    lavaButton.swapColors();
-                                    selectedButton = lavaButton;
-                                    outlineColor = new Color(255, 185, 0);
-                            }
-                    }
-                    else if(fireButton.clickedButton(mx, my)) 
-                    { 
-                            currentTile = Fire.class; 
-                            if(!fireButton.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    fireButton.swapColors();
-                                    selectedButton = fireButton;
-                                    outlineColor = new Color(255,135,0);
-                            }
-                    }
-                    else if(ashButton.clickedButton(mx, my)) 
-                    { 
-                            currentTile = Ash.class; 
-                            if(!ashButton.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    ashButton.swapColors();
-                                    selectedButton = ashButton;
-                                    outlineColor = new Color(230,230,230);
-                            }
-                    }
-            }
-            else if(selectedMenu == 1)
-            {
-                    if( stoneButton.clickedButton(mx, my)) 
-                    { 
-                            currentTile = Stone.class; 
-                            if(!stoneButton.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    stoneButton.swapColors();
-                                    selectedButton = stoneButton;
-                                    outlineColor = new Color(140, 140, 140);
-                            }
-                    }
-                    else if(bedrockButton.clickedButton(mx, my)) 
-                    { 
-                            currentTile = Bedrock.class; 
-                            if(!bedrockButton.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    bedrockButton.swapColors();
-                                    selectedButton = bedrockButton;
-                                    outlineColor = Color.DARK_GRAY;
-                            }
-                    }
-                    else if(obsidianButton.clickedButton(mx, my)) 
-                    {
-                            currentTile = Obsidian.class; 
-                            if(!obsidianButton.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    obsidianButton.swapColors();
-                                    selectedButton = obsidianButton;
-                                    outlineColor = Color.BLACK;
-                            }
-                            }
-                    else if(woodButton.clickedButton(mx, my)) 
-                    { 
-                            currentTile = Wood.class; 
-                            if(!woodButton.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    woodButton.swapColors();
-                                    selectedButton = woodButton;
-                                    outlineColor = new Color(129, 64, 18);
-                            }
-                    }
-                    else if(staticTntButton.clickedButton(mx, my)) 
-                    {
-                            currentTile = TNT.class; 
-                            if(!staticTntButton.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    staticTntButton.swapColors();
-                                    selectedButton = staticTntButton;
-                                    outlineColor = Color.RED;
-                            }
-                    }
-                    else if(fallingTntButton.clickedButton(mx, my)) 
-                    {
-                            currentTile = TNT.class; 
-                            if(!fallingTntButton.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    fallingTntButton.swapColors();
-                                    selectedButton = fallingTntButton;
-                                    outlineColor = Color.RED;
-                            }
-                    }
-            }
-            else if(selectedMenu == 2)
-            {
-                    if(sandSpawner.clickedButton(mx, my)) 
-                    {
-                            currentTile = SandSpawner.class; 
-                            if(!sandSpawner.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    sandSpawner.swapColors();
-                                    selectedButton = sandSpawner;
-                                    outlineColor = Color.RED;
-                            }
-                    }
-                    else if(waterSpawner.clickedButton(mx, my)) 
-                    { 
-                            currentTile = WaterSpawner.class; 
-                            if(!waterSpawner.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    waterSpawner.swapColors();
-                                    selectedButton = waterSpawner;
-                                    outlineColor = Color.CYAN;
-                            }
-                    }
-                    else if(lavaSpawner.clickedButton(mx, my)) 
-                    { 
-                            currentTile = LavaSpawner.class;
-                            if(!lavaSpawner.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    lavaSpawner.swapColors();
-                                    selectedButton = lavaSpawner;
-                                    outlineColor = Color.GREEN;
-                            }
-                        }
-                    else if(fireSpawner.clickedButton(mx, my)) 
-                    { 
-                            currentTile = FireSpawner.class; 
-                            if(!fireSpawner.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    fireSpawner.swapColors();
-                                    selectedButton = fireSpawner;
-                                    outlineColor = Color.MAGENTA;
-                            }
-                    }
-                    else if(ashSpawner.clickedButton(mx, my)) 
-                    { 
-                            currentTile = AshSpawner.class; 
-                            if(!ashSpawner.equals(selectedButton))
-                            {
-                                    selectedButton.swapColors();
-                                    ashSpawner.swapColors();
-                                    selectedButton = ashSpawner;
-                                    outlineColor = Color.GRAY;
-                            }
-                    }
-            }
-            else if(selectedMenu == 3)
-            {
-                if(exitGameButton.clickedButton(mx, my)){ System.exit(0); }
-                else if(smallSquareDrawSize.clickedButton(mx, my)){ ParticulateGame.setDrawSize(1); }
-                else if(mediumSquareDrawSize.clickedButton(mx, my)){ParticulateGame.setDrawSize(10); }
-                else if(largeSquareDrawSize.clickedButton(mx, my)){ ParticulateGame.setDrawSize(50); }
-                else if(massiveSquareDrawSize.clickedButton(mx, my)){ ParticulateGame.setDrawSize(100); }
-                else if(savePlayAreaButton.clickedButton(mx, my)) { ParticulateGame.saveGridToTextFile(); }
-
-            }
-        }
-            
-
-        ParticulateGame.setCurrentTile(currentTile);
-        ParticulateGame.setOutlineColor(outlineColor); 
     }
 
     public void drawMatrixInfo(Graphics pen, String tileName, int mX, int mY, int drawSize)
     {
         pen.setColor(Color.BLACK);
         
-        pen.drawString("Hovered Over Tile: "+tileName, debugInfoX, debugInfoY+10);
-        pen.drawString("X: "+mX+" Y: "+mY, debugInfoX, debugInfoY+30);
-        pen.drawString("Brush Size: "+drawSize, debugInfoX, debugInfoY+50);
+        pen.drawString("Hovered Over Tile: "+tileName, sideMenuIndent, debugInfoY+10);
+        pen.drawString("X: "+mX+" Y: "+mY, sideMenuIndent, debugInfoY+30);
+        pen.drawString("Brush Size: "+drawSize, sideMenuIndent, debugInfoY+50);
 
+    }
+
+    public void defineButtonsPositionAndSize()
+    {
+        // Define navigation buttons
+        selectParticlesButton.setBounds(buttonIndent, selectionButtonsY, mediumButtonWidth, buttonHeight);
+        selectBlocksButton.setBounds(buttonIndent+mediumButtonWidth, selectionButtonsY, mediumButtonWidth, buttonHeight);
+        selectSpawnersButton.setBounds(buttonIndent+mediumButtonWidth*2, selectionButtonsY, mediumButtonWidth, buttonHeight);
+        selectOptionsButton.setBounds(buttonIndent+mediumButtonWidth*3, selectionButtonsY, mediumButtonWidth, buttonHeight);
+
+
+        // Define particle buttons
+        sandButton.setBounds(buttonIndent + smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);
+        waterButton.setBounds(buttonIndent + smallButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
+        lavaButton.setBounds(buttonIndent + smallButtonWidth*3, firstRowY, smallButtonWidth, buttonHeight);
+        fireButton.setBounds(buttonIndent + smallButtonWidth*4, firstRowY, smallButtonWidth, buttonHeight);
+        ashButton.setBounds(buttonIndent + smallButtonWidth*5, firstRowY, smallButtonWidth, buttonHeight);
+
+        // Define blocks
+        stoneButton.setBounds(buttonIndent + smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);
+        bedrockButton.setBounds(buttonIndent + smallButtonWidth*2, firstRowY, mediumButtonWidth, buttonHeight);
+        obsidianButton.setBounds(buttonIndent + smallButtonWidth*2+mediumButtonWidth, firstRowY, mediumButtonWidth, buttonHeight);
+        woodButton.setBounds(buttonIndent + smallButtonWidth*2+mediumButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
+        staticTntButton.setBounds(buttonIndent + smallButtonWidth*3+mediumButtonWidth*2, firstRowY, mediumButtonWidth, buttonHeight);
+
+        // Define spawners
+        sandSpawner.setBounds(buttonIndent + smallButtonWidth, firstRowY, largeButtonWidth, buttonHeight);
+        waterSpawner.setBounds(buttonIndent + smallButtonWidth + largeButtonWidth, firstRowY, largeButtonWidth, buttonHeight);
+        lavaSpawner.setBounds(buttonIndent +  + smallButtonWidth+ largeButtonWidth*2, firstRowY, largeButtonWidth, buttonHeight);
+        fireSpawner.setBounds(buttonIndent + smallButtonWidth + largeButtonWidth*3, firstRowY, largeButtonWidth, buttonHeight);
+        ashSpawner.setBounds(buttonIndent + smallButtonWidth + largeButtonWidth*4, firstRowY, largeButtonWidth, buttonHeight);
+
+        // Define toggle buttons
+        toggleOverrideButton.setBounds(sideMenuIndent, menuY+75, mediumButtonWidth, buttonHeight);
+
+        eraserButton.setBounds(buttonIndent, firstRowY, smallButtonWidth, buttonHeight);
+        
+        
+    }
+
+    public void addAllButtonsToLayeredFrame(JFrame f)
+    {
+        layeredPane.setLocation(0,menuY);
+        layeredPane.setPreferredSize(new Dimension(SCREEN_WIDTH , 1000));
+        layeredPane.setLayout(null);
+
+        eraserButton.setFocusable(false);
+        layeredPane.add(eraserButton);
+
+        for(JButton b : toggleButtons)
+        {
+                layeredPane.add(b);
+        }        
+
+        for(JButton b : selectionMenu)
+        {
+                b.setFocusable(false);
+                layeredPane.add(b);
+        }
+        
+        for(JButton b : particlesMenu)
+        {
+                b.setFocusable(false);
+                layeredPane.add(b);
+        }
+
+        for(JButton b : blockMenu)
+        {
+                b.setFocusable(false);
+                b.setVisible(false);
+                layeredPane.add(b);
+        }
+
+        for(JButton b : spawnerMenu)
+        {
+                b.setFocusable(false);
+                b.setVisible(false);
+                layeredPane.add(b);
+        }
+
+        for(JButton b : optionsMenu)
+        {
+                b.setFocusable(false);
+                b.setVisible(false);
+                layeredPane.add(b);
+        }
+
+        f.getContentPane().add(layeredPane, BorderLayout.CENTER);
+        f.pack();
     }
 
     public int getX()
     {
-        return sideMenuX;
+        return menuX;
     }
 
         public int getY()
         {
-                return sideMenuY;
+                return menuY;
         }
 }
