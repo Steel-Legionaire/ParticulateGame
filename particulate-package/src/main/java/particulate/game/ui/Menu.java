@@ -40,7 +40,9 @@ public class Menu
     int largeXSeperation = largeButtonWidth + 10;
     int ySeperation = buttonHeight + 10;
 
-    
+    private int seperatorX = 1300;
+    private int debugInfoX = seperatorX+10;
+    private int debugInfoY = sideMenuY+15;
 
     // Define Menu Swap Buttons
     Button selectParticlesButton = new Button(buttonX, sideMenuY+10, 200, 30, "Particles");
@@ -83,7 +85,8 @@ public class Menu
     Button largeSquareDrawSize = new Button(buttonX + smallXSeperation*3, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Large");
     Button massiveSquareDrawSize = new Button(buttonX + smallXSeperation*4, buttonY + ySeperation, smallButtonWidth, buttonHeight, "Massive");
     
-
+    // Define toggle buttons
+    Button toggleOverrideButton = new Button(seperatorX+10, sideMenuY+75, smallButtonWidth, buttonHeight, "Override");
 
     Button[] particlesMenu = new Button[]{ sandButton, waterButton, lavaButton, fireButton, ashButton};
     Button[] blockMenu = new Button[]{ stoneButton, bedrockButton, obsidianButton, woodButton, staticTntButton};
@@ -97,16 +100,15 @@ public class Menu
 
     Button[] squareDrawSizeButtons = new Button[]{smallSquareDrawSize, mediumSquareDrawSize, largeSquareDrawSize, massiveSquareDrawSize};
 
-    String[] controlsList = new String[]{ "r: Reset Play Area", "e: Select Eraser", "Space: Pause Simulation", "s: save play area", "Drag file on screen", " to load it", "Enter: Drop Floor", "1: Sand", "2: Water", "3: Lava", "4: Fire", "5: Wall", "6: Wood", "7: Tnt"};
+    Button[] toggleButtons = new Button[]{toggleOverrideButton};
+
+    String controls = "R: Reset Play Area    Space: Pause Simulation    S: Save play area    Drag file on screen to load it    Enter: Drop Floor";
 
     private int selectedMenu = 0;
 
     private Button selectedButton = sandButton;
     
     Button selectedSelectionButton = selectParticlesButton;
-
-    private int debugInfoX = 1000;
-    private int debugInfoY = sideMenuY+15;
 
     public Menu()
     {
@@ -130,12 +132,14 @@ public class Menu
         pen.setColor(Color.DARK_GRAY);
         pen.fillRect(0, sideMenuY, SCREEN_WIDTH, SCREEN_HEIGHT- playAreaHeight + tileSize);
 
+        pen.setColor(Color.LIGHT_GRAY);
+        pen.fillRect(seperatorX, sideMenuY, SCREEN_WIDTH-seperatorX, SCREEN_HEIGHT-sideMenuY);
+
         for(Button b : selectionMenu){ b.draw(pen); }
 
-        for(Button b : typeMenus[selectedMenu])
-        {
-                b.draw(pen);
-        }
+        for(Button b : typeMenus[selectedMenu]){ b.draw(pen); }
+
+        for(Button b : toggleButtons){ b.draw(pen); }
 
         if(selectedMenu != 3)
         {
@@ -147,11 +151,10 @@ public class Menu
                 pen.drawString("BrushSizes", buttonX, buttonY+(ySeperation+18));       
         }
 
-        /*pen.setColor(Color.WHITE);
-        for(int i=0; i<controlsList.length; i++)
-        {
-                pen.drawString(controlsList[i], sideMenuX + 60, 150 + (i * 25));
-        }*/
+
+
+        pen.setColor(Color.WHITE);
+        pen.drawString(controls, sideMenuX+60, 1000);
     }
 
     public void clicked(int mx, int my)
@@ -214,8 +217,15 @@ public class Menu
                         outlineColor = Color.PINK;
                 }       
         }
-            if(selectedMenu == 0)
-            {
+        else if(toggleOverrideButton.clickedButton(mx, my))
+        {
+                ParticulateGame.flipOverride();
+                toggleOverrideButton.swapColors();
+        }
+        else
+        {
+                if(selectedMenu == 0)
+                {
                     if(sandButton.clickedButton(mx, my))
                     { 
                             currentTile = Sand.class; 
@@ -409,6 +419,8 @@ public class Menu
                 else if(savePlayAreaButton.clickedButton(mx, my)) { ParticulateGame.saveGridToTextFile(); }
 
             }
+        }
+            
 
         ParticulateGame.setCurrentTile(currentTile);
         ParticulateGame.setOutlineColor(outlineColor); 
@@ -416,10 +428,11 @@ public class Menu
 
     public void drawMatrixInfo(Graphics pen, String tileName, int mX, int mY, int drawSize)
     {
-        pen.setColor(Color.WHITE);
+        pen.setColor(Color.BLACK);
         
-        pen.drawString(tileName, debugInfoX, debugInfoY);
-        pen.drawString("X: "+mX+" Y: "+mY, debugInfoX, debugInfoY+15);
+        pen.drawString("Hovered Over Tile: "+tileName, debugInfoX, debugInfoY+10);
+        pen.drawString("X: "+mX+" Y: "+mY, debugInfoX, debugInfoY+30);
+        pen.drawString("Brush Size: "+drawSize, debugInfoX, debugInfoY+50);
 
     }
 

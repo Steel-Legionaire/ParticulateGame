@@ -116,7 +116,7 @@ public class CellularMatrix {
         setGridBoundsWalls(); 
     }
 
-    public void createTile(int x, int y, Class<?> clazz, int drawSize)
+    public void createTile(int x, int y, Class<?> clazz, int drawSize, boolean override)
     {
         if(!withinBounds(x, y)){ return; }
 
@@ -124,7 +124,7 @@ public class CellularMatrix {
         {
             Tile tileAtLocation = getTileAtLocation(x, y);
 
-            if(clazz.equals(Eraser.class) && y>=1 && x>=1 && y <= rowBounds && x <= collumnBounds)
+            if(clazz.equals(Eraser.class))
             {
 
                 if(tileAtLocation != null && tileAtLocation.isDestructable)
@@ -132,11 +132,10 @@ public class CellularMatrix {
 
                     matrix[y][x] = null;
                 }
-
                 return;
             }
 
-            if(x >= 1 && y >= 1 && y <= rowBounds && x <= collumnBounds && tileAtLocation == null)
+            if(tileAtLocation == null || override)
             {
                 try {
                     Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
@@ -168,25 +167,22 @@ public class CellularMatrix {
                         
                         if(clazz.equals(Eraser.class))
                         {
-                            if( tileAtLocation != null && tileAtLocation.isDestructable )
+                            if(tileAtLocation != null && tileAtLocation.isDestructable)
                             {
-
                                 matrix[r][c] = null;
                             }
                         }
-                        else
+                        else if(tileAtLocation == null || override)
                         {
-                            if( tileAtLocation == null)
-                            {
-                                try {
-                                    Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
-    
-                                    Tile t = (Tile) argConstructor.newInstance(c, r);
-                                    matrix[r][c] = t;
+                            try {
+                                Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
 
-                                } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                                    System.out.println(e);
-                                }
+                                Tile t = (Tile) argConstructor.newInstance(c, r);
+
+                                matrix[r][c] = t;
+
+                            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                                System.out.println(e);
                             }
                         }
                     }
@@ -205,28 +201,25 @@ public class CellularMatrix {
                         else if(c >= collumnBounds ){ break; }
 
                         Tile tileAtLocation = getTileAtLocation(c, r);
-                
+                        
                         if(clazz.equals(Eraser.class))
                         {
-                            if( tileAtLocation != null && tileAtLocation.isDestructable )
+                            if(tileAtLocation != null && tileAtLocation.isDestructable)
                             {
-
                                 matrix[r][c] = null;
                             }
                         }
-                        else
+                        else if(tileAtLocation == null || override)
                         {
-                            if( tileAtLocation == null)
-                            {
-                                try {
-                                    Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
-    
-                                    Tile t = (Tile) argConstructor.newInstance(c, r);
-                                    matrix[r][c] = t;
+                            try {
+                                Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
 
-                                } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                                    System.out.println(e);
-                                }
+                                Tile t = (Tile) argConstructor.newInstance(c, r);
+
+                                matrix[r][c] = t;
+
+                            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                                System.out.println(e);
                             }
                         }
                     }

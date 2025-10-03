@@ -56,17 +56,14 @@ public class ParticulateGame extends Game  {
         public static int tileSize = 5;
 
         public static CellularMatrix matrix;
-        //public int matrixHeight;
-        //public int matrixWidth;
-        
+
+        public static boolean override = false;
 
         public static Class<?> currentTile = Sand.class;    
         
         boolean isPaused = false;
         boolean dropMenuActive = true;
         boolean floorDropped = false;
-
-        
         
         boolean eraseMode = false;
         
@@ -153,7 +150,7 @@ public class ParticulateGame extends Game  {
 
                 if(mouseHeld && outlinedTileY < menu.getY())
                 {
-                        matrix.createTile(outlinedTileX, outlinedTileY, currentTile, drawSize);
+                        matrix.createTile(outlinedTileX, outlinedTileY, currentTile, drawSize, override);
                 }
 
                 frameEven = !frameEven;
@@ -161,7 +158,7 @@ public class ParticulateGame extends Game  {
         
         public void draw(Graphics pen)
         {    
-                menu.draw(pen);
+                
 
                 matrix.drawAllTiles(pen, tileSize);
 
@@ -169,7 +166,7 @@ public class ParticulateGame extends Game  {
                 pen.setColor(outlineColor);
                 pen.drawRect((outlinedTileX - ((int)(drawSize / 2))) * tileSize, (outlinedTileY - ((int)(drawSize / 2))) * tileSize, tileSize * drawSize, tileSize * drawSize );
 
-                
+                menu.draw(pen);
 
                 // Draw info on position and tile
                 Tile hoveredTile = matrix.withinBounds(outlinedTileX, outlinedTileY) ? matrix.getTileAtLocation(outlinedTileX, outlinedTileY) : null;
@@ -184,17 +181,6 @@ public class ParticulateGame extends Game  {
                 {
                         menu.drawMatrixInfo(pen,"", outlinedTileX, outlinedTileY, drawSize);
                 }
-                
-
-                /*pen.setColor(Color.MAGENTA);
-                if(matrix.withinBounds(outlinedTileX, outlinedTileY))
-                {
-                        pen.drawString(matrix.getTile(outlinedTileX, outlinedTileY)+"", 100, 50);
-                }
-                else
-                {
-                        pen.drawString("null", 100, 50);
-                }*/
         }       
 
         public static void saveGridToTextFile()
@@ -313,6 +299,8 @@ public class ParticulateGame extends Game  {
 
         public static CellularMatrix getMatrix(){ return matrix;}
         
+        public static void flipOverride(){ override = !override; }
+
         @Override
         public void keyPressed(KeyEvent ke) 
         {
@@ -390,7 +378,7 @@ public class ParticulateGame extends Game  {
                                 
                                 if(mxg < matrix.getCollumnBounds())
                                 {
-                                        matrix.createTile(mxg, myg, currentTile, drawSize); 
+                                        matrix.createTile(mxg, myg, currentTile, drawSize, override); 
                                         //for(int[] pos : path)
                                         //{
                                         //        createTile((pos[0] / tileSize) - 2, (pos[1] / tileSize) - 2, currentTile); 

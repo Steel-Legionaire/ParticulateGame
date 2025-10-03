@@ -23,7 +23,7 @@ public class Spawner extends StaticSolid{
         if(matrix.getTile(x,y+(1*spawnDir)) == null)
         {
 
-            matrix.createTile(x, y+(1*spawnDir), spawnTile, 1);
+            matrix.createTile(x, y+(1*spawnDir), spawnTile, 1, false);
         }
     }
 
