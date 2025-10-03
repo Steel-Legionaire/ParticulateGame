@@ -20,12 +20,16 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
     boolean running;
     private ParticulateGame game;    
 
+    public Game()
+    {
+        frame = new JFrame("Particulate");
+    }
 
     protected void start(String title, int width, int height)
     {
         this.game = (ParticulateGame)this;
     	running = true;
-        frame = new JFrame(title);
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gamePanel = new GamePanel();
         frame.getContentPane().add(BorderLayout.CENTER, gamePanel);

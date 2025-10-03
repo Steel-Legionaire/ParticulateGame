@@ -1,7 +1,15 @@
 package particulate.game.ui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 
 import particulate.game.Eraser;
 import particulate.game.ParticulateGame;
@@ -23,6 +31,8 @@ import particulate.game.Solids.StaticSolids.Spawners.WaterSpawner;
 
 public class Menu 
 {
+
+    JLayeredPane layeredPane = new JLayeredPane();
 
     int buttonHeight = 25;
     int sideMenuX = 0;
@@ -110,7 +120,14 @@ public class Menu
     
     Button selectedSelectionButton = selectParticlesButton;
 
-    public Menu()
+    JButton testJButton = new JButton("Test");
+
+    int playAreaHeight= ParticulateGame.playAreaHeight;
+    int SCREEN_WIDTH = ParticulateGame.SCREEN_WIDTH;
+    int SCREEN_HEIGHT = ParticulateGame.SCREEN_HEIGHT;
+    int tileSize = ParticulateGame.tileSize;
+
+    public Menu(JFrame f)
     {
         sandButton.swapColors();
         selectParticlesButton.swapColors();
@@ -119,14 +136,28 @@ public class Menu
         typeMenus[1] = blockMenu;
         typeMenus[2] = spawnerMenu;
         typeMenus[3] = optionsMenu;
+
+        layeredPane.setPreferredSize(new Dimension(SCREEN_WIDTH , SCREEN_HEIGHT));
+
+        //layeredPane.setBackground(new Color(40,40,40));
+        layeredPane.setLayout(null);
+
+        testJButton.setBounds(buttonX, sideMenuY+50, 100, 50);
+        
+
+        layeredPane.add(testJButton);
+
+        f.getContentPane().add(layeredPane, BorderLayout.CENTER);
+        f.pack();
+        f.setBackground(new Color(40,40,40));
+        f.repaint();
+        defineButtonFunctions();
+
     }
 
     public void draw(Graphics pen) 
     {
-        int playAreaHeight= ParticulateGame.playAreaHeight;
-        int SCREEN_WIDTH = ParticulateGame.SCREEN_WIDTH;
-        int SCREEN_HEIGHT = ParticulateGame.SCREEN_HEIGHT;
-        int tileSize = ParticulateGame.tileSize;
+        
 
         // Draw side menu background
         pen.setColor(Color.DARK_GRAY);
@@ -155,6 +186,18 @@ public class Menu
 
         pen.setColor(Color.WHITE);
         pen.drawString(controls, sideMenuX+60, 1000);
+
+        
+    }
+
+    public void defineButtonFunctions()
+    {
+        testJButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Button 1 clicked!");
+                }
+        });
     }
 
     public void clicked(int mx, int my)
@@ -162,6 +205,9 @@ public class Menu
         Class<?> currentTile = ParticulateGame.getCurrentTile();
         Color outlineColor = ParticulateGame.getOutlineColor(); 
         
+
+        
+
         if(selectParticlesButton.clickedButton(mx, my))
         {
                 selectedMenu = 0;

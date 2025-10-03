@@ -81,7 +81,7 @@ public class ParticulateGame extends Game  {
 
         boolean frameEven = false;
 
-        Menu menu = new Menu();
+        Menu menu = new Menu(frame);
 
         public ParticulateGame() 
         {
