@@ -12,6 +12,7 @@ import java.sql.Wrapper;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.JToggleButton;
 
 import particulate.game.Eraser;
 import particulate.game.ParticulateGame;
@@ -134,6 +135,8 @@ public class Menu
     Class<?> currentTile = ParticulateGame.getCurrentTile();
     Color outlineColor = ParticulateGame.getOutlineColor(); 
 
+    private JButton selectedToggleButton = new JButton();
+
     public Menu(JFrame f)
     {
         defineButtonsPositionAndSize();
@@ -144,6 +147,8 @@ public class Menu
         typeMenu[1] = blockMenu;
         typeMenu[2] = spawnerMenu;
         typeMenu[3] = optionsMenu;
+        swapColorsOfButton(sandButton);
+        swapColorsOfButton(selectParticlesButton);
     }
 
     public void draw(Graphics pen) 
@@ -163,17 +168,13 @@ public class Menu
                 pen.drawString("BrushSizes", buttonIndent, secondRowY+(ySeperation+18));       
         }
 
-
-
         pen.setColor(Color.WHITE);
         pen.drawString(controls, buttonIndent, 1000);
 
-        
     }
 
     public void defineButtonFunctions()
     {
-
         //Define actions for the navigation buttons
         selectParticlesButton.addActionListener(new ActionListener() {
                 @Override
@@ -284,12 +285,18 @@ public class Menu
         toggleOverrideButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                        if(!selectedButton.equals(toggleOverrideButton))
+                        if(!selectedToggleButton.equals(toggleOverrideButton))
                         {
-                                swapColorsOfButton(selectedButton);
-                                selectedButton = toggleOverrideButton;
+                                swapColorsOfButton(selectedToggleButton);
+                                selectedToggleButton = toggleOverrideButton;
                                 swapColorsOfButton(toggleOverrideButton);
                         }
+                        else
+                        {
+                                swapColorsOfButton(toggleOverrideButton);
+                                selectedToggleButton = new JButton();
+                        }
+                        
                         ParticulateGame.flipOverride();
                 }
         });
@@ -337,7 +344,7 @@ public class Menu
         fireButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                        if(!selectedButton.equals(sandButton))
+                        if(!selectedButton.equals(fireButton))
                         {
                                 swapColorsOfButton(selectedButton);
                                 selectedButton = fireButton;
@@ -404,7 +411,7 @@ public class Menu
         woodButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                        if(!selectedButton.equals(sandButton))
+                        if(!selectedButton.equals(woodButton))
                         {
                                 swapColorsOfButton(selectedButton);
                                 selectedButton = woodButton;
@@ -498,7 +505,13 @@ public class Menu
 
     public void swapColorsOfButton(JButton b)
     {
-        
+        Color bg = b.getBackground();
+        Color fg = b.getForeground();
+
+        b.setBackground(fg);
+        b.setForeground(bg);
+
+
     }
 
     public void drawMatrixInfo(Graphics pen, String tileName, int mX, int mY, int drawSize)
@@ -544,8 +557,6 @@ public class Menu
         toggleOverrideButton.setBounds(sideMenuIndent, menuY+75, mediumButtonWidth, buttonHeight);
 
         eraserButton.setBounds(buttonIndent, firstRowY, smallButtonWidth, buttonHeight);
-        
-        
     }
 
     public void addAllButtonsToLayeredFrame(JFrame f)
@@ -555,25 +566,34 @@ public class Menu
         layeredPane.setLayout(null);
 
         eraserButton.setFocusable(false);
+        eraserButton.setBackground(Color.WHITE);
+        eraserButton.setForeground(Color.BLACK);
 
         layeredPane.add(eraserButton);
+        //layeredPane.add(testButton);
 
         for(JButton b : toggleButtons)
         {
                 b.setFocusable(false);
                 layeredPane.add(b);
+                b.setBackground(Color.WHITE);
+                b.setForeground(Color.BLACK);
         }        
 
         for(JButton b : selectionMenu)
         {
                 b.setFocusable(false);
                 layeredPane.add(b);
+                b.setBackground(Color.WHITE);
+                b.setForeground(Color.BLACK);
         }
         
         for(JButton b : particlesMenu)
         {
                 b.setFocusable(false);
                 layeredPane.add(b);
+                b.setBackground(Color.WHITE);
+                b.setForeground(Color.BLACK);
         }
 
         for(JButton b : blockMenu)
@@ -581,6 +601,8 @@ public class Menu
                 b.setFocusable(false);
                 b.setVisible(false);
                 layeredPane.add(b);
+                b.setBackground(Color.WHITE);
+                b.setForeground(Color.BLACK);
         }
 
         for(JButton b : spawnerMenu)
@@ -588,6 +610,8 @@ public class Menu
                 b.setFocusable(false);
                 b.setVisible(false);
                 layeredPane.add(b);
+                b.setBackground(Color.WHITE);
+                b.setForeground(Color.BLACK);
         }
 
         for(JButton b : optionsMenu)
@@ -595,6 +619,8 @@ public class Menu
                 b.setFocusable(false);
                 b.setVisible(false);
                 layeredPane.add(b);
+                b.setBackground(Color.WHITE);
+                b.setForeground(Color.BLACK);
         }
 
         f.getContentPane().add(layeredPane, BorderLayout.CENTER);
