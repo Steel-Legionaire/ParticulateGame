@@ -35,7 +35,7 @@ public class Menu
 {
 
     JLayeredPane layeredPane = new JLayeredPane();
-    
+
     private int sideMenuX = 1300;
 
     private int menuY = 800;
@@ -519,7 +519,6 @@ public class Menu
         selectSpawnersButton.setBounds(buttonIndent+mediumButtonWidth*2, selectionButtonsY, mediumButtonWidth, buttonHeight);
         selectOptionsButton.setBounds(buttonIndent+mediumButtonWidth*3, selectionButtonsY, mediumButtonWidth, buttonHeight);
 
-
         // Define particle buttons
         sandButton.setBounds(buttonIndent + smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);
         waterButton.setBounds(buttonIndent + smallButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
@@ -556,10 +555,12 @@ public class Menu
         layeredPane.setLayout(null);
 
         eraserButton.setFocusable(false);
+
         layeredPane.add(eraserButton);
 
         for(JButton b : toggleButtons)
         {
+                b.setFocusable(false);
                 layeredPane.add(b);
         }        
 
