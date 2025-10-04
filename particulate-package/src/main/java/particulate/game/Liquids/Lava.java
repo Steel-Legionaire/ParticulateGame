@@ -24,8 +24,8 @@ public class Lava extends Liquid{
         CellularMatrix matrix = ParticulateGame.getMatrix();
 
         Tile topTile = matrix.getTile(x,y-1);
-        Tile rightTile = matrix.getTile(x,y-1);
-        Tile leftTile = matrix.getTile(x,y-1);
+        Tile rightTile = matrix.getTile(x+1,y);
+        Tile leftTile = matrix.getTile(x-1,y);
 
 
         Tile bottomTile = null;
