@@ -191,6 +191,8 @@ public class Menu
                                 b.setVisible(false);
                         }
 
+                        eraserButton.setVisible(true);
+
                         selectedMenu = 0;
                 }
         });
@@ -212,6 +214,8 @@ public class Menu
                         {
                                 b.setVisible(false);
                         }
+
+                        eraserButton.setVisible(true);
 
                         selectedMenu = 1;
                 }
@@ -235,6 +239,8 @@ public class Menu
                                 b.setVisible(false);
                         }
 
+                        eraserButton.setVisible(true);
+
                         selectedMenu = 2;
                 }
         });
@@ -256,6 +262,8 @@ public class Menu
                         {
                                 b.setVisible(false);
                         }
+
+                        eraserButton.setVisible(false);
 
                         selectedMenu = 3;
                 }
@@ -522,7 +530,23 @@ public class Menu
                         ParticulateGame.setDrawSize(100);
                 }
         });
-    }
+    
+        // Define options menu buttons
+        savePlayAreaButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        ParticulateGame.saveGridToTextFile();
+                }
+        });
+
+        exitGameButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        System.exit(0);
+                }
+        });
+        
+}
 
     public void swapColorsOfButton(JButton b)
     {
@@ -584,6 +608,11 @@ public class Menu
         massiveSquareDrawSize.setBounds(sideMenuIndent+mediumButtonWidth*3,menuY+buttonHeight+100, mediumButtonWidth, buttonHeight);
 
         eraserButton.setBounds(buttonIndent, firstRowY, smallButtonWidth, buttonHeight);
+
+
+        // Define options menu bounds
+        exitGameButton.setBounds(buttonIndent, firstRowY, smallButtonWidth, buttonHeight);
+        savePlayAreaButton.setBounds(buttonIndent+smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);
     }
 
     public void addAllButtonsToLayeredFrame(JFrame f)
