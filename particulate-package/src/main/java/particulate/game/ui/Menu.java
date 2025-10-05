@@ -7,12 +7,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Wrapper;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
-import javax.swing.JToggleButton;
 
 import particulate.game.Eraser;
 import particulate.game.ParticulateGame;
@@ -106,7 +104,7 @@ public class Menu
 
     private JButton[] particlesMenu = new JButton[]{ sandButton, waterButton, lavaButton, fireButton, ashButton};
     private JButton[] blockMenu = new JButton[]{ stoneButton, bedrockButton, obsidianButton, woodButton, staticTntButton};
-    private JButton[] optionsMenu = new JButton[]{ exitGameButton, savePlayAreaButton, smallSquareDrawSize, mediumSquareDrawSize, largeSquareDrawSize, massiveSquareDrawSize};
+    private JButton[] optionsMenu = new JButton[]{ exitGameButton, savePlayAreaButton};
     private JButton[] spawnerMenu = new JButton[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner, ashSpawner };
 
     private JButton[] selectionMenu = new JButton[]{selectParticlesButton, selectBlocksButton, selectSpawnersButton, selectOptionsButton};
@@ -162,11 +160,8 @@ public class Menu
         pen.setColor(Color.LIGHT_GRAY);
         pen.fillRect(sideMenuX, menuY, SCREEN_WIDTH-sideMenuX, SCREEN_HEIGHT-menuY);
 
-        if(selectedMenu == 3)
-        {
-                pen.setColor(Color.WHITE);
-                pen.drawString("BrushSizes", buttonIndent, secondRowY+(ySeperation+18));       
-        }
+        pen.setColor(Color.BLACK);
+        pen.drawString("Brush Sizes: ", sideMenuIndent, menuY+buttonHeight+95);       
 
         pen.setColor(Color.WHITE);
         pen.drawString(controls, buttonIndent, 1000);
@@ -501,6 +496,32 @@ public class Menu
                         ParticulateGame.setOutlineColor(Color.GREEN); 
                 }
         });
+
+        // Define brush size button functionality
+        smallSquareDrawSize.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        ParticulateGame.setDrawSize(1);
+                }
+        });
+        mediumSquareDrawSize.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        ParticulateGame.setDrawSize(10);
+                }
+        });
+        largeSquareDrawSize.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        ParticulateGame.setDrawSize(50);
+                }
+        });
+        massiveSquareDrawSize.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        ParticulateGame.setDrawSize(100);
+                }
+        });
     }
 
     public void swapColorsOfButton(JButton b)
@@ -555,6 +576,12 @@ public class Menu
 
         // Define toggle buttons
         toggleOverrideButton.setBounds(sideMenuIndent, menuY+75, mediumButtonWidth, buttonHeight);
+
+        // Define brush size buttons
+        smallSquareDrawSize.setBounds(sideMenuIndent,menuY+buttonHeight+100, mediumButtonWidth, buttonHeight);
+        mediumSquareDrawSize.setBounds(sideMenuIndent+mediumButtonWidth,menuY+buttonHeight+100, mediumButtonWidth, buttonHeight);
+        largeSquareDrawSize.setBounds(sideMenuIndent+mediumButtonWidth*2,menuY+buttonHeight+100, mediumButtonWidth, buttonHeight);
+        massiveSquareDrawSize.setBounds(sideMenuIndent+mediumButtonWidth*3,menuY+buttonHeight+100, mediumButtonWidth, buttonHeight);
 
         eraserButton.setBounds(buttonIndent, firstRowY, smallButtonWidth, buttonHeight);
     }
@@ -618,6 +645,14 @@ public class Menu
         {
                 b.setFocusable(false);
                 b.setVisible(false);
+                layeredPane.add(b);
+                b.setBackground(Color.WHITE);
+                b.setForeground(Color.BLACK);
+        }
+
+        for(JButton b : squareDrawSizeButtons)
+        {
+                b.setFocusable(false);
                 layeredPane.add(b);
                 b.setBackground(Color.WHITE);
                 b.setForeground(Color.BLACK);
