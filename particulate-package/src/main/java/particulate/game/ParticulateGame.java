@@ -374,7 +374,7 @@ public class ParticulateGame extends Game  {
                 int myg = (me.getY() / tileSize )- 1;
                 
                         
-                if(drawSize <= 50 && matrix.xWithinBounds(mxg) && matrix.yWithinBounds(myg))
+                if(drawSize <= 50)
                 {
                         ArrayList<int[]> oldLine = matrix.traceThroughGrid(previousOutlineX, previousOutlineY, mxg, myg);
 
@@ -390,12 +390,11 @@ public class ParticulateGame extends Game  {
                 previousOutlineX = outlinedTileX;
                 previousOutlineY = outlinedTileY;
 
-                if(matrix.xWithinBounds(mxg) && matrix.yWithinBounds(myg))
-                {
+
                         outlinedTileX = mxg;
                         outlinedTileY = myg;
-                }
                 
+        
 
         }
 
