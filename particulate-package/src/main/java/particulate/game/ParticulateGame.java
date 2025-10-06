@@ -374,14 +374,17 @@ public class ParticulateGame extends Game  {
                 int myg = (me.getY() / tileSize )- 1;
                 
                         
-                ArrayList<int[]> oldLine = matrix.traceThroughGrid(previousOutlineX, previousOutlineY, mxg, myg);
-
-                for(int[] i : oldLine)
+                if(drawSize <= 50)
                 {
+                        ArrayList<int[]> oldLine = matrix.traceThroughGrid(previousOutlineX, previousOutlineY, mxg, myg);
 
-                        //System.out.println("("+i[0]+","+i[1]+")");
-                        matrix.createTile(i[0], i[1], currentTile, drawSize, override);
-                        
+                        for(int[] i : oldLine)
+                        {
+
+                                //System.out.println("("+i[0]+","+i[1]+")");
+                                matrix.createTile(i[0], i[1], currentTile, drawSize, override);
+                                
+                        }
                 }
                         
                 previousOutlineX = outlinedTileX;
