@@ -21,6 +21,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -44,7 +45,7 @@ import particulate.game.ui.Menu;
 public class ParticulateGame extends Game  {
     
         public static final String TITLE = "Particulate Refreshed";
-        public static final int SCREEN_WIDTH = 1817;
+        public static final int SCREEN_WIDTH = 1800;
         public static final int SCREEN_HEIGHT = 1040;
 
         public static int playAreaWidth = 1800;
@@ -74,6 +75,15 @@ public class ParticulateGame extends Game  {
         boolean mouseLeftHeld = false;
         boolean mouseRightHeld = false;
 
+        // Line tool 
+        boolean lineToolActive = false;
+        int lineToolStartX = -1;
+        int lineToolStartY = -1;
+        boolean eraseLineThisFrame = false;
+
+        int previousOutlineX = -1;
+        int previousOutlineY = -1;
+
         int selectedMenu = 0;
 
         static int tempMsgX = (SCREEN_WIDTH/2) - 80;
@@ -100,20 +110,31 @@ public class ParticulateGame extends Game  {
                 //        }
                 //}
 
-                /*ArrayList<int[]> test = traceThroughGrid(299, 199, 0, 0);
-                System.out.println(test.size());
-                for(int[] i : test)
-                {
-
-                        System.out.println("("+i[0]+","+i[1]+")");
-                        createTile(i[0], i[1], Stone.class);
-                        
-                }*/
+                
 
         }
         
         public void update() 
         { 
+                if(lineToolActive && (lineToolStartX != outlinedTileX || lineToolStartY != outlinedTileY)){ 
+                        
+                        // Clear previous line                        
+                        
+
+                        // Create new one
+                        ArrayList<int[]> newLine = matrix.traceThroughGrid(lineToolStartX, lineToolStartY, outlinedTileX, outlinedTileY);
+                        //System.out.println(test.size());
+
+                        for(int[] i : newLine)
+                        {
+
+                                //System.out.println("("+i[0]+","+i[1]+")");
+                                matrix.createTile(i[0], i[1], currentTile, drawSize, override);
+                                
+                        }
+                }
+        
+
                 if(!isPaused)
                 { 
                         if(frameEven)
@@ -151,7 +172,7 @@ public class ParticulateGame extends Game  {
    
                 }
 
-                if((mouseLeftHeld || mouseRightHeld) && outlinedTileY < menu.getY())
+                if((mouseLeftHeld || mouseRightHeld))
                 {
                         matrix.createTile(outlinedTileX, outlinedTileY, currentTile, drawSize, override);
                 }
@@ -330,7 +351,7 @@ public class ParticulateGame extends Game  {
         @Override
         public void mouseClicked(MouseEvent me) 
         { 
-
+                
         }
         
         @Override
@@ -351,6 +372,21 @@ public class ParticulateGame extends Game  {
         {
                 int mxg = (me.getX() / tileSize )- 1;
                 int myg = (me.getY() / tileSize )- 1;
+                
+                        
+                ArrayList<int[]> oldLine = matrix.traceThroughGrid(previousOutlineX, previousOutlineY, mxg, myg);
+
+                for(int[] i : oldLine)
+                {
+
+                        //System.out.println("("+i[0]+","+i[1]+")");
+                        matrix.createTile(i[0], i[1], currentTile, drawSize, override);
+                        
+                }
+                        
+                previousOutlineX = outlinedTileX;
+                previousOutlineY = outlinedTileY;
+
                 outlinedTileX = mxg;
                 outlinedTileY = myg;
 
@@ -359,6 +395,12 @@ public class ParticulateGame extends Game  {
         @Override
         public void mousePressed(MouseEvent me) 
         {
+                if(me.isControlDown())
+                {
+                        lineToolActive = true;
+                        lineToolStartX = outlinedTileX;
+                        lineToolStartY = outlinedTileY;
+                }
                 if(me.getButton() == 1)
                 {
                         mouseLeftHeld = true;
@@ -419,6 +461,8 @@ public class ParticulateGame extends Game  {
         @Override
         public void mouseReleased(MouseEvent me) 
         {
+                lineToolActive = false;
+
                 if(me.getButton() == 1)
                 {
                         mouseLeftHeld = false;
@@ -434,8 +478,14 @@ public class ParticulateGame extends Game  {
         @Override
         public void mouseMoved(MouseEvent me) 
         {
+
+                previousOutlineX = outlinedTileX;
+                previousOutlineY = outlinedTileY;
+
                 outlinedTileX = (me.getX() / tileSize)-1;
                 outlinedTileY = (me.getY() / tileSize)-1;
+
+                
         }
 
         @Override
