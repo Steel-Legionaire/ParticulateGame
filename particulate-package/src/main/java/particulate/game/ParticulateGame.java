@@ -59,7 +59,9 @@ public class ParticulateGame extends Game  {
 
         public static boolean override = false;
 
-        public static Class<?> currentTile = Sand.class;    
+        public static Class<?> currentTile = Sand.class;  
+        private Class<?> previousTile = null; 
+        private Color previousColor = null; 
         
         boolean isPaused = false;
         boolean dropMenuActive = true;
@@ -69,7 +71,8 @@ public class ParticulateGame extends Game  {
         
         static int drawSize = 1;
 
-        boolean mouseHeld = false;
+        boolean mouseLeftHeld = false;
+        boolean mouseRightHeld = false;
 
         int selectedMenu = 0;
 
@@ -148,7 +151,7 @@ public class ParticulateGame extends Game  {
    
                 }
 
-                if(mouseHeld && outlinedTileY < menu.getY())
+                if((mouseLeftHeld || mouseRightHeld) && outlinedTileY < menu.getY())
                 {
                         matrix.createTile(outlinedTileX, outlinedTileY, currentTile, drawSize, override);
                 }
@@ -346,8 +349,8 @@ public class ParticulateGame extends Game  {
         @Override
         public void mouseDragged(MouseEvent me) 
         {
-                int mxg = (me.getX() / tileSize )- 2;
-                int myg = (me.getY() / tileSize )- 7;
+                int mxg = (me.getX() / tileSize )- 1;
+                int myg = (me.getY() / tileSize )- 1;
                 outlinedTileX = mxg;
                 outlinedTileY = myg;
 
@@ -356,10 +359,24 @@ public class ParticulateGame extends Game  {
         @Override
         public void mousePressed(MouseEvent me) 
         {
-                mouseHeld = true;
+                if(me.getButton() == 1)
+                {
+                        mouseLeftHeld = true;
+                }
+                else if(me.getButton() == 3)
+                {
+                        mouseRightHeld = true;
+
+                        previousTile = currentTile;
+                        currentTile = Eraser.class;
+
+                        previousColor = outlineColor;
+                        outlineColor = Color.PINK;
+                }
                 
-                int mxg = (me.getX() / tileSize )- 2;
-                int myg = (me.getY() / tileSize )- 7;
+                
+                int mxg = (me.getX() / tileSize )- 1;
+                int myg = (me.getY() / tileSize )- 1;
 
                 outlinedTileX = mxg;
                 outlinedTileY = myg;
@@ -370,7 +387,7 @@ public class ParticulateGame extends Game  {
                         
                         try {
                                 
-                                if(mxg < matrix.getCollumnBounds())
+                                if(mxg < matrix.getCollumnBounds() && me.getButton() != 2)
                                 {
                                         matrix.createTile(mxg, myg, currentTile, drawSize, override); 
                                         //for(int[] pos : path)
@@ -402,14 +419,23 @@ public class ParticulateGame extends Game  {
         @Override
         public void mouseReleased(MouseEvent me) 
         {
-                mouseHeld = false;
+                if(me.getButton() == 1)
+                {
+                        mouseLeftHeld = false;
+                }
+                else if(me.getButton() == 3)
+                {
+                        mouseRightHeld = false;
+                        currentTile = previousTile;
+                        outlineColor = previousColor;
+                }    
         }
 
         @Override
         public void mouseMoved(MouseEvent me) 
         {
-                outlinedTileX = (me.getX() / tileSize) - 2;
-                outlinedTileY = (me.getY() / tileSize) - 7;
+                outlinedTileX = (me.getX() / tileSize)-1;
+                outlinedTileY = (me.getY() / tileSize)-1;
         }
 
         @Override
