@@ -1,3 +1,5 @@
+package particulate.game;
+
 public class Chunk 
 {
 
