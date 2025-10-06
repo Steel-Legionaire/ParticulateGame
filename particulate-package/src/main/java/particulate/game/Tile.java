@@ -54,7 +54,7 @@ public abstract class Tile
             }
             catch(ArrayIndexOutOfBoundsException e)
             {
-                System.out.println("Error setting Tiles color: \n"+e);
+                //System.out.println(e);
             }
             
         }
@@ -63,7 +63,16 @@ public abstract class Tile
     public void setColor()
     {
         if (colors != null && colors.length > 0) {
-            color = colors[(int)(Math.random() * colors.length)];
+            try
+            {
+                color = colors[(int)(Math.random() * colors.length)];
+            }
+            catch(ArrayIndexOutOfBoundsException e)
+            {
+                //System.out.println(e);
+                color = colors[1];
+            }
+            
         } else {
             color = Color.MAGENTA; // fallback
         }
