@@ -115,7 +115,7 @@ public class Menu
 
     private JButton[][] typeMenu = new JButton[4][10];
 
-    String controls = "R: Reset Play Area    Space: Pause Simulation    S: Save play area    Drag file on screen to load it    Enter: Drop Floor";
+    String controls = "R: Reset Play Area    Space: Pause Simulation    S: Save play area    Drag file on screen to load it    Enter: Drop Floor    ctrl + left click: Activate Line Tool";
 
     private int selectedMenu = 0;
 
