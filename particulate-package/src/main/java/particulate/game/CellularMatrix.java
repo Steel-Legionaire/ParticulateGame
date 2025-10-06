@@ -266,33 +266,51 @@ public class CellularMatrix {
     }
     
     public ArrayList<int[]> traceThroughGrid(int startX, int startY, int endX, int endY)
-    {
-        // slope = y2 - y2 / x2 - x1
-        ArrayList<int[]> allCoords = new ArrayList<int[]>(); 
+{
+    ArrayList<int[]> allCoords = new ArrayList<>();
 
-        int y;
-        double slope = (double)(endY - startY)  / (double)(endX - startX);
+    int dx = endX - startX;
+    int dy = endY - startY;
 
-        if(startX > endX)
-        {
-            // endX is behind startX
-            for( int x = startX; x >= endX; x--)
-            {
-                y = Math.abs((int) Math.round(slope * x));
-                allCoords.add(new int[]{x, y});
-            }
+    if (Math.abs(dx) >= Math.abs(dy)) {
+        // Iterate over x
+        if (startX > endX) {
+            // Swap points to ensure increasing x
+            int tempX = startX, tempY = startY;
+            startX = endX; startY = endY;
+            endX = tempX; endY = tempY;
+            dx = endX - startX;
+            dy = endY - startY;
         }
-        else if(startX < endX)
-        {
-            // endX is in front of startX
-            for( int x = startX; x <= endX; x++)
-            {
-                y = Math.abs((int) Math.round(slope * x));
-                allCoords.add(new int[]{x, y});
-            }
+
+        double slope = (double) dy / dx;
+
+        for (int x = startX; x <= endX; x++) {
+            double y = startY + slope * (x - startX);
+            allCoords.add(new int[]{x, (int)Math.round(y)});
         }
-        return allCoords;
+    } else {
+        // Iterate over y
+        if (startY > endY) {
+            // Swap points to ensure increasing y
+            int tempX = startX, tempY = startY;
+            startX = endX; startY = endY;
+            endX = tempX; endY = tempY;
+            dx = endX - startX;
+            dy = endY - startY;
+        }
+
+        double invSlope = (double) dx / dy;
+
+        for (int y = startY; y <= endY; y++) {
+            double x = startX + invSlope * (y - startY);
+            allCoords.add(new int[]{(int)Math.round(x), y});
+        }
     }
+
+    return allCoords;
+}
+
     
     public void dropFloor()
     {
