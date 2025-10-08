@@ -6,6 +6,8 @@
 |Enter| Drop the floor|
 |Space| Pause Game|
 |Left Click| Spawn Particle|
+|Right Click| Erase|
+|CTRL + Left Click| Line Tool|
 |Middle Mouse Up| Increase Brush Size|
 |Middle Mouse Down| Decrease Brush Size|
 |S| Save Play Area To Desktop|
