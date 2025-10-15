@@ -58,22 +58,27 @@ public class Menu
     
 
     // Define Menu Swap Buttons
-    private JButton selectParticlesButton = new JButton("Particles");
-    private JButton selectBlocksButton = new JButton("Blocks");
+    private JButton selectLandMenuButton = new JButton("Land");
+    private JButton selectLiquidsMenuButton = new JButton("Liquids");
+    private JButton selectExplsivesMenuButton = new JButton("Explosives"); 
+    private JButton selectGasesMenuButton = new JButton("Gases");
     private JButton selectSpawnersButton = new JButton("Spawners");
     private JButton selectOptionsButton = new JButton("Options");
     
     // Define eraser button
     private JButton eraserButton = new JButton("Eraser");
     
-    // Define particle buttons
+    // Define Moveable Solids buttons
     private JButton sandButton = new JButton("Sand");
-    private JButton waterButton = new JButton("Water");
-    private JButton lavaButton = new JButton("Lava");
     private JButton fireButton = new JButton("Fire");
     private JButton ashButton = new JButton("Ash");
+    private JButton dirtButton = new JButton("Dirt");
 
-    // Define Block Buttons
+    // Define Liquid Buttons
+    private JButton waterButton = new JButton("Water");
+    private JButton lavaButton = new JButton("Lava");
+
+    // Define Solid Buttons
     private JButton stoneButton = new JButton("Stone");
     private JButton bedrockButton = new JButton("Bedrock");
     private JButton obsidianButton = new JButton("Obsidian");
@@ -99,21 +104,22 @@ public class Menu
     private JButton massiveSquareDrawSize = new JButton("Massive");
     
     // Define toggle buttons
-    //Button toggleOverrideButton = new Button(seperatorX+10, sideMenuY+75, smallButtonWidth, buttonHeight, "Override");
     private JButton toggleOverrideButton = new JButton("Override");
 
-    private JButton[] particlesMenu = new JButton[]{ sandButton, waterButton, lavaButton, fireButton, ashButton};
-    private JButton[] blockMenu = new JButton[]{ stoneButton, bedrockButton, obsidianButton, woodButton, staticTntButton};
-    private JButton[] optionsMenu = new JButton[]{ exitGameButton, savePlayAreaButton};
+    private JButton[] landMenuButtons = new JButton[]{ sandButton, stoneButton, bedrockButton, obsidianButton, woodButton, ashButton};
+    private JButton[] liquidsMenu = new JButton[]{waterButton, lavaButton};
+    private JButton[] explosivesMenu = new JButton[]{ staticTntButton };
+    private JButton[] gasesMenu = new JButton[]{ fireButton };
     private JButton[] spawnerMenu = new JButton[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner, ashSpawner };
+    private JButton[] optionsMenu = new JButton[]{ exitGameButton, savePlayAreaButton};
 
-    private JButton[] selectionMenu = new JButton[]{selectParticlesButton, selectBlocksButton, selectSpawnersButton, selectOptionsButton};
+    private JButton[] selectionMenu = new JButton[]{landMenuButtons, liquidsMenu, explosivesMenu, gasesMenu, spawnerMenu, optionsMenu};
 
     private JButton[] squareDrawSizeButtons = new JButton[]{smallSquareDrawSize, mediumSquareDrawSize, largeSquareDrawSize, massiveSquareDrawSize};
 
     private JButton[] toggleButtons = new JButton[]{toggleOverrideButton};
 
-    private JButton[][] typeMenu = new JButton[4][10];
+    private JButton[][] typeMenu = new JButton[6][20];
 
     String controls = "R: Reset Play Area    Space: Pause Simulation    S: Save play area    Drag file on screen to load it    Enter: Drop Floor    ctrl + left click: Activate Line Tool";
 
@@ -121,7 +127,7 @@ public class Menu
 
     private JButton selectedButton = sandButton;
     
-    JButton selectedSelectionButton = selectParticlesButton;
+    JButton selectedSelectionButton = selectMoveableSolidsButton;
 
     JButton testJButton = new JButton("Test");
 
@@ -141,12 +147,15 @@ public class Menu
         defineButtonFunctions();
         addAllButtonsToLayeredFrame(f);
 
-        typeMenu[0] = particlesMenu;
-        typeMenu[1] = blockMenu;
-        typeMenu[2] = spawnerMenu;
-        typeMenu[3] = optionsMenu;
+        typeMenu[0] = landMenuButtons;
+        typeMenu[1] = liquidsMenu;
+        typeMenu[2] = explosivesMenu;
+        typeMenu[3] = gasesMenu;
+        typeMenu[4] = spawnerMenu;
+        typeMenu[5] = optionsMenu;
+
         swapColorsOfButton(sandButton);
-        swapColorsOfButton(selectParticlesButton);
+        swapColorsOfButton(landMenuButtons);
     }
 
     public void draw(Graphics pen) 
@@ -171,14 +180,14 @@ public class Menu
     public void defineButtonFunctions()
     {
         //Define actions for the navigation buttons
-        selectParticlesButton.addActionListener(new ActionListener() {
+        landMenuButtons.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                        if(!selectedSelectionButton.equals(selectParticlesButton))
+                        if(!selectedSelectionButton.equals(landMenuButtons))
                         {
-                                swapColorsOfButton(selectedSelectionButton);
-                                selectedSelectionButton = selectParticlesButton;
-                                swapColorsOfButton(selectParticlesButton);
+                                swapColorsOfButton(landMenuButtons);
+                                selectedSelectionButton = landMenuButtons;
+                                swapColorsOfButton(landMenuButtons);
                         }
                         
                         for(JButton b : particlesMenu)
@@ -572,7 +581,7 @@ public class Menu
     public void defineButtonsPositionAndSize()
     {
         // Define navigation buttons
-        selectParticlesButton.setBounds(buttonIndent, selectionButtonsY, mediumButtonWidth, buttonHeight);
+        selectMoveableSolidsButton.setBounds(buttonIndent, selectionButtonsY, mediumButtonWidth, buttonHeight);
         selectBlocksButton.setBounds(buttonIndent+mediumButtonWidth, selectionButtonsY, mediumButtonWidth, buttonHeight);
         selectSpawnersButton.setBounds(buttonIndent+mediumButtonWidth*2, selectionButtonsY, mediumButtonWidth, buttonHeight);
         selectOptionsButton.setBounds(buttonIndent+mediumButtonWidth*3, selectionButtonsY, mediumButtonWidth, buttonHeight);
