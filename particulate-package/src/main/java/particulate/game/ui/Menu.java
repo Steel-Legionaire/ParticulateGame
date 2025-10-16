@@ -18,6 +18,7 @@ import particulate.game.Gases.Fire;
 import particulate.game.Liquids.Lava;
 import particulate.game.Liquids.Water;
 import particulate.game.Solids.MoveableSolids.Ash;
+import particulate.game.Solids.MoveableSolids.Dirt;
 import particulate.game.Solids.MoveableSolids.Sand;
 import particulate.game.Solids.StaticSolids.Bedrock;
 import particulate.game.Solids.StaticSolids.Obsidian;
@@ -60,7 +61,7 @@ public class Menu
     // Define Menu Swap Buttons
     private JButton selectLandMenuButton = new JButton("Land");
     private JButton selectLiquidsMenuButton = new JButton("Liquids");
-    private JButton selectExplsivesMenuButton = new JButton("Explosives"); 
+    private JButton selectExplosivesMenuButton = new JButton("Explosives"); 
     private JButton selectGasesMenuButton = new JButton("Gases");
     private JButton selectSpawnersButton = new JButton("Spawners");
     private JButton selectOptionsButton = new JButton("Options");
@@ -106,14 +107,14 @@ public class Menu
     // Define toggle buttons
     private JButton toggleOverrideButton = new JButton("Override");
 
-    private JButton[] landMenuButtons = new JButton[]{ sandButton, stoneButton, bedrockButton, obsidianButton, woodButton, ashButton};
+    private JButton[] landMenuButtons = new JButton[]{ sandButton, stoneButton, bedrockButton, obsidianButton, woodButton, ashButton, dirtButton};
     private JButton[] liquidsMenu = new JButton[]{waterButton, lavaButton};
     private JButton[] explosivesMenu = new JButton[]{ staticTntButton };
     private JButton[] gasesMenu = new JButton[]{ fireButton };
     private JButton[] spawnerMenu = new JButton[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner, ashSpawner };
     private JButton[] optionsMenu = new JButton[]{ exitGameButton, savePlayAreaButton};
 
-    private JButton[] selectionMenu = new JButton[]{landMenuButtons, liquidsMenu, explosivesMenu, gasesMenu, spawnerMenu, optionsMenu};
+    private JButton[] selectionMenu = new JButton[]{selectLandMenuButton, selectLiquidsMenuButton, selectExplosivesMenuButton, selectGasesMenuButton, selectSpawnersButton, selectOptionsButton};
 
     private JButton[] squareDrawSizeButtons = new JButton[]{smallSquareDrawSize, mediumSquareDrawSize, largeSquareDrawSize, massiveSquareDrawSize};
 
@@ -127,7 +128,7 @@ public class Menu
 
     private JButton selectedButton = sandButton;
     
-    JButton selectedSelectionButton = selectMoveableSolidsButton;
+    JButton selectedSelectionButton = selectLandMenuButton;
 
     JButton testJButton = new JButton("Test");
 
@@ -155,7 +156,7 @@ public class Menu
         typeMenu[5] = optionsMenu;
 
         swapColorsOfButton(sandButton);
-        swapColorsOfButton(landMenuButtons);
+        swapColorsOfButton(selectLandMenuButton);
     }
 
     public void draw(Graphics pen) 
@@ -180,17 +181,17 @@ public class Menu
     public void defineButtonFunctions()
     {
         //Define actions for the navigation buttons
-        landMenuButtons.addActionListener(new ActionListener() {
+        selectLandMenuButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                        if(!selectedSelectionButton.equals(landMenuButtons))
+                        if(!selectedSelectionButton.equals(selectLandMenuButton))
                         {
-                                swapColorsOfButton(landMenuButtons);
-                                selectedSelectionButton = landMenuButtons;
-                                swapColorsOfButton(landMenuButtons);
+                                swapColorsOfButton(selectedSelectionButton);
+                                selectedSelectionButton = selectLandMenuButton;
+                                swapColorsOfButton(selectLandMenuButton);
                         }
                         
-                        for(JButton b : particlesMenu)
+                        for(JButton b : landMenuButtons)
                         {
                                 b.setVisible(true);
                         }
@@ -205,16 +206,16 @@ public class Menu
                         selectedMenu = 0;
                 }
         });
-        selectBlocksButton.addActionListener(new ActionListener() {
+        selectLiquidsMenuButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                        if(!selectedSelectionButton.equals(selectBlocksButton))
+                        if(!selectedSelectionButton.equals(selectLiquidsMenuButton))
                         {
                                 swapColorsOfButton(selectedSelectionButton);
-                                selectedSelectionButton = selectBlocksButton;
-                                swapColorsOfButton(selectBlocksButton);
+                                selectedSelectionButton = selectLiquidsMenuButton;
+                                swapColorsOfButton(selectLiquidsMenuButton);
                         }
-                        for(JButton b : blockMenu)
+                        for(JButton b : liquidsMenu)
                         {
                                 b.setVisible(true);
                         }
@@ -227,6 +228,54 @@ public class Menu
                         eraserButton.setVisible(true);
 
                         selectedMenu = 1;
+                }
+        });
+        selectExplosivesMenuButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedSelectionButton.equals(selectExplosivesMenuButton))
+                        {
+                                swapColorsOfButton(selectedSelectionButton);
+                                selectedSelectionButton = selectExplosivesMenuButton;
+                                swapColorsOfButton(selectExplosivesMenuButton);
+                        }
+                        for(JButton b : explosivesMenu)
+                        {
+                                b.setVisible(true);
+                        }
+
+                        for(JButton b : typeMenu[selectedMenu])
+                        {
+                                b.setVisible(false);
+                        }
+
+                        eraserButton.setVisible(true);
+
+                        selectedMenu = 2;
+                }
+        });
+        selectGasesMenuButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedSelectionButton.equals(selectGasesMenuButton))
+                        {
+                                swapColorsOfButton(selectedSelectionButton);
+                                selectedSelectionButton = selectGasesMenuButton;
+                                swapColorsOfButton(selectGasesMenuButton);
+                        }
+                        for(JButton b : gasesMenu)
+                        {
+                                b.setVisible(true);
+                        }
+
+                        for(JButton b : typeMenu[selectedMenu])
+                        {
+                                b.setVisible(false);
+                        }
+
+                        eraserButton.setVisible(true);
+
+                        selectedMenu = 3;
                 }
         });
         selectSpawnersButton.addActionListener(new ActionListener() {
@@ -250,7 +299,7 @@ public class Menu
 
                         eraserButton.setVisible(true);
 
-                        selectedMenu = 2;
+                        selectedMenu = 4;
                 }
         });
         selectOptionsButton.addActionListener(new ActionListener() {
@@ -274,7 +323,7 @@ public class Menu
 
                         eraserButton.setVisible(false);
 
-                        selectedMenu = 3;
+                        selectedMenu = 5;
                 }
         });
         
@@ -313,7 +362,7 @@ public class Menu
                 }
         });
 
-        // Define actions for the particle buttons
+        // Define actions for the land buttons
         sandButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -325,45 +374,6 @@ public class Menu
                         }
                         ParticulateGame.setCurrentTile(Sand.class);
                         ParticulateGame.setOutlineColor(Color.YELLOW); 
-                }
-        });
-        waterButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                        if(!selectedButton.equals(waterButton))
-                        {
-                                swapColorsOfButton(selectedButton);
-                                selectedButton = waterButton;
-                                swapColorsOfButton(waterButton);
-                        }
-                        ParticulateGame.setCurrentTile(Water.class);
-                        ParticulateGame.setOutlineColor(Color.BLUE); 
-                }
-        });
-        lavaButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                        if(!selectedButton.equals(lavaButton))
-                        {
-                                swapColorsOfButton(selectedButton);
-                                selectedButton = lavaButton;
-                                swapColorsOfButton(lavaButton);
-                        }
-                        ParticulateGame.setCurrentTile(Lava.class);
-                        ParticulateGame.setOutlineColor(new Color(255, 185, 0)); 
-                }
-        });
-        fireButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                        if(!selectedButton.equals(fireButton))
-                        {
-                                swapColorsOfButton(selectedButton);
-                                selectedButton = fireButton;
-                                swapColorsOfButton(fireButton);
-                        }
-                        ParticulateGame.setCurrentTile(Fire.class);
-                        ParticulateGame.setOutlineColor( new Color(255,135,0)); 
                 }
         });
         ashButton.addActionListener(new ActionListener() {
@@ -379,8 +389,6 @@ public class Menu
                         ParticulateGame.setOutlineColor(Color.LIGHT_GRAY); 
                 }
         });
-
-        // Define Blocks menu buttons
         stoneButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -433,6 +441,21 @@ public class Menu
                         ParticulateGame.setOutlineColor( new Color(140, 80, 20)); 
                 }
         });
+        dirtButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(dirtButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = dirtButton;
+                                swapColorsOfButton(dirtButton);
+                        }
+                        ParticulateGame.setCurrentTile(Dirt.class);
+                        ParticulateGame.setOutlineColor( new Color(180, 80, 0)); 
+                }
+        });
+
+        // Define exlposives buttons
         staticTntButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -444,6 +467,49 @@ public class Menu
                         }
                         ParticulateGame.setCurrentTile(TNT.class);
                         ParticulateGame.setOutlineColor(Color.RED); 
+                }
+        });
+
+        // Define Gases buttons
+        fireButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(fireButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = fireButton;
+                                swapColorsOfButton(fireButton);
+                        }
+                        ParticulateGame.setCurrentTile(Fire.class);
+                        ParticulateGame.setOutlineColor( new Color(255,135,0)); 
+                }
+        });
+
+        // Define liquids buttons
+        waterButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(waterButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = waterButton;
+                                swapColorsOfButton(waterButton);
+                        }
+                        ParticulateGame.setCurrentTile(Water.class);
+                        ParticulateGame.setOutlineColor(Color.BLUE); 
+                }
+        });
+        lavaButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(lavaButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = lavaButton;
+                                swapColorsOfButton(lavaButton);
+                        }
+                        ParticulateGame.setCurrentTile(Lava.class);
+                        ParticulateGame.setOutlineColor(new Color(255, 185, 0)); 
                 }
         });
         
@@ -581,24 +647,31 @@ public class Menu
     public void defineButtonsPositionAndSize()
     {
         // Define navigation buttons
-        selectMoveableSolidsButton.setBounds(buttonIndent, selectionButtonsY, mediumButtonWidth, buttonHeight);
-        selectBlocksButton.setBounds(buttonIndent+mediumButtonWidth, selectionButtonsY, mediumButtonWidth, buttonHeight);
-        selectSpawnersButton.setBounds(buttonIndent+mediumButtonWidth*2, selectionButtonsY, mediumButtonWidth, buttonHeight);
-        selectOptionsButton.setBounds(buttonIndent+mediumButtonWidth*3, selectionButtonsY, mediumButtonWidth, buttonHeight);
+        selectLandMenuButton.setBounds(buttonIndent, selectionButtonsY, mediumButtonWidth, buttonHeight);
+        selectLiquidsMenuButton.setBounds(buttonIndent+mediumButtonWidth, selectionButtonsY, mediumButtonWidth, buttonHeight);
+        selectExplosivesMenuButton.setBounds(buttonIndent+mediumButtonWidth*2, selectionButtonsY, mediumButtonWidth, buttonHeight);
+        selectGasesMenuButton.setBounds(buttonIndent+mediumButtonWidth*3, selectionButtonsY, mediumButtonWidth, buttonHeight);
+        selectSpawnersButton.setBounds(buttonIndent+mediumButtonWidth*4, selectionButtonsY, mediumButtonWidth, buttonHeight);
+        selectOptionsButton.setBounds(buttonIndent+mediumButtonWidth*5, selectionButtonsY, mediumButtonWidth, buttonHeight);
 
-        // Define particle buttons
+        // Define land buttons
         sandButton.setBounds(buttonIndent + smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);
-        waterButton.setBounds(buttonIndent + smallButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
-        lavaButton.setBounds(buttonIndent + smallButtonWidth*3, firstRowY, smallButtonWidth, buttonHeight);
-        fireButton.setBounds(buttonIndent + smallButtonWidth*4, firstRowY, smallButtonWidth, buttonHeight);
-        ashButton.setBounds(buttonIndent + smallButtonWidth*5, firstRowY, smallButtonWidth, buttonHeight);
+        ashButton.setBounds(buttonIndent + smallButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
+        stoneButton.setBounds(buttonIndent + smallButtonWidth*3, firstRowY, smallButtonWidth, buttonHeight);
+        bedrockButton.setBounds(buttonIndent + smallButtonWidth*4, firstRowY, mediumButtonWidth, buttonHeight);
+        obsidianButton.setBounds(buttonIndent + smallButtonWidth*4+mediumButtonWidth, firstRowY, mediumButtonWidth, buttonHeight);
+        woodButton.setBounds(buttonIndent + smallButtonWidth*4 + mediumButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
+        dirtButton.setBounds(buttonIndent + smallButtonWidth*5 + mediumButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
 
-        // Define blocks
-        stoneButton.setBounds(buttonIndent + smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);
-        bedrockButton.setBounds(buttonIndent + smallButtonWidth*2, firstRowY, mediumButtonWidth, buttonHeight);
-        obsidianButton.setBounds(buttonIndent + smallButtonWidth*2+mediumButtonWidth, firstRowY, mediumButtonWidth, buttonHeight);
-        woodButton.setBounds(buttonIndent + smallButtonWidth*2+mediumButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
-        staticTntButton.setBounds(buttonIndent + smallButtonWidth*3+mediumButtonWidth*2, firstRowY, mediumButtonWidth, buttonHeight);
+        // Define liquids buttons
+        waterButton.setBounds(buttonIndent + smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);
+        lavaButton.setBounds(buttonIndent + smallButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
+
+        // Define gases buttons 
+        fireButton.setBounds(buttonIndent + smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);
+
+        // Define explosive buttons
+        staticTntButton.setBounds(buttonIndent + smallButtonWidth, firstRowY, mediumButtonWidth, buttonHeight);
 
         // Define spawners
         sandSpawner.setBounds(buttonIndent + smallButtonWidth, firstRowY, largeButtonWidth, buttonHeight);
@@ -653,7 +726,7 @@ public class Menu
                 b.setForeground(Color.BLACK);
         }
         
-        for(JButton b : particlesMenu)
+        for(JButton b : landMenuButtons)
         {
                 b.setFocusable(false);
                 layeredPane.add(b);
@@ -661,7 +734,25 @@ public class Menu
                 b.setForeground(Color.BLACK);
         }
 
-        for(JButton b : blockMenu)
+        for(JButton b : liquidsMenu)
+        {
+                b.setFocusable(false);
+                b.setVisible(false);
+                layeredPane.add(b);
+                b.setBackground(Color.WHITE);
+                b.setForeground(Color.BLACK);
+        }
+
+        for(JButton b : gasesMenu)
+        {
+                b.setFocusable(false);
+                b.setVisible(false);
+                layeredPane.add(b);
+                b.setBackground(Color.WHITE);
+                b.setForeground(Color.BLACK);
+        }
+
+        for(JButton b : explosivesMenu)
         {
                 b.setFocusable(false);
                 b.setVisible(false);
