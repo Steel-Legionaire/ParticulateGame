@@ -26,6 +26,7 @@ import particulate.game.Solids.StaticSolids.Stone;
 import particulate.game.Solids.StaticSolids.TNT;
 import particulate.game.Solids.StaticSolids.Wood;
 import particulate.game.Solids.StaticSolids.Spawners.AshSpawner;
+import particulate.game.Solids.StaticSolids.Spawners.DirtSpawner;
 import particulate.game.Solids.StaticSolids.Spawners.FireSpawner;
 import particulate.game.Solids.StaticSolids.Spawners.LavaSpawner;
 import particulate.game.Solids.StaticSolids.Spawners.SandSpawner;
@@ -93,6 +94,7 @@ public class Menu
     private JButton lavaSpawner = new JButton("Lava Spawner");
     private JButton fireSpawner = new JButton("Fire Spawner");
     private JButton ashSpawner = new JButton("Ash Spawner");
+    private JButton dirtSpawner = new JButton("Dirt Spawner");
 
     // Define Options buttons
     private JButton exitGameButton = new JButton("Exit");
@@ -111,7 +113,7 @@ public class Menu
     private JButton[] liquidsMenu = new JButton[]{waterButton, lavaButton};
     private JButton[] explosivesMenu = new JButton[]{ staticTntButton };
     private JButton[] gasesMenu = new JButton[]{ fireButton };
-    private JButton[] spawnerMenu = new JButton[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner, ashSpawner };
+    private JButton[] spawnerMenu = new JButton[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner, ashSpawner, dirtSpawner };
     private JButton[] optionsMenu = new JButton[]{ exitGameButton, savePlayAreaButton};
 
     private JButton[] selectionMenu = new JButton[]{selectLandMenuButton, selectLiquidsMenuButton, selectExplosivesMenuButton, selectGasesMenuButton, selectSpawnersButton, selectOptionsButton};
@@ -579,6 +581,19 @@ public class Menu
                         ParticulateGame.setOutlineColor(Color.GREEN); 
                 }
         });
+        dirtSpawner.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(dirtSpawner))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = dirtSpawner;
+                                swapColorsOfButton(dirtSpawner);
+                        }
+                        ParticulateGame.setCurrentTile(DirtSpawner.class);
+                        ParticulateGame.setOutlineColor(Color.YELLOW); 
+                }
+        });
 
         // Define brush size button functionality
         smallSquareDrawSize.addActionListener(new ActionListener() {
@@ -679,6 +694,7 @@ public class Menu
         lavaSpawner.setBounds(buttonIndent +  + smallButtonWidth+ largeButtonWidth*2, firstRowY, largeButtonWidth, buttonHeight);
         fireSpawner.setBounds(buttonIndent + smallButtonWidth + largeButtonWidth*3, firstRowY, largeButtonWidth, buttonHeight);
         ashSpawner.setBounds(buttonIndent + smallButtonWidth + largeButtonWidth*4, firstRowY, largeButtonWidth, buttonHeight);
+        dirtSpawner.setBounds(buttonIndent + smallButtonWidth + largeButtonWidth*5, firstRowY, largeButtonWidth, buttonHeight);
 
         // Define toggle buttons
         toggleOverrideButton.setBounds(sideMenuIndent, menuY+75, mediumButtonWidth, buttonHeight);
