@@ -17,7 +17,7 @@ public class Fire extends Gases{
         setAllPossibleColors(COLORS);
         setColor();
 
-        heat = (int)(Math.random()*20) + 100;
+        heat = (int)(Math.random()*30) + 400;
     }
 
     @Override

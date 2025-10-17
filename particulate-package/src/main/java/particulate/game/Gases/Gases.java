@@ -35,22 +35,20 @@ public class Gases extends Tile{
             }
             else if(randDir == 1)
             {
-                Tile topRightTile = matrix.getTile(x+1,y-1);
                 Tile rightTile = matrix.getTile(x+1, y);
 
-                if(topRightTile == null && rightTile == null)
+                if(rightTile == null)
                 {
-                    matrix.swapPositions(topRightTile, x+1, y-1, this);
+                    matrix.swapPositions(rightTile, x+1, y, this);
                 }
             }
             else if(randDir == 2)
             {
-                Tile topLeftTile = matrix.getTile(x-1,y-1);
                 Tile lefTile = matrix.getTile(x-1, y);
 
-                if(topLeftTile == null && lefTile == null)
+                if(lefTile == null)
                 {
-                    matrix.swapPositions(topLeftTile, x-1, y-1, this);
+                    matrix.swapPositions(lefTile, x-1, y, this);
                 }
             }
             framesSinceLastUpdate = 0; 
