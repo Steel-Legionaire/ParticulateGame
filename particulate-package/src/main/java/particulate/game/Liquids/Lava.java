@@ -4,8 +4,10 @@ import java.awt.Color;
 import particulate.game.CellularMatrix;
 import particulate.game.ParticulateGame;
 import particulate.game.Tile;
+import particulate.game.Gases.Steam;
 import particulate.game.Solids.MoveableSolids.Ash;
 import particulate.game.Solids.StaticSolids.Obsidian;
+import particulate.game.Solids.StaticSolids.Stone;
 import particulate.game.Solids.StaticSolids.TNT;
 import particulate.game.Solids.StaticSolids.Wood;
 
@@ -17,6 +19,8 @@ public class Lava extends Liquid{
 
         setAllPossibleColors(COLORS);
         setColor();
+
+        heat = 750;
     }
 
     @Override
@@ -102,4 +106,17 @@ public class Lava extends Liquid{
         }
     }
     
+    @Override
+    public void giveHeat() 
+    {
+        CellularMatrix matrix = ParticulateGame.getMatrix();
+
+        heat--;
+
+        if(heat <= 500)
+        {
+            matrix.setTile(x, y, new Stone(x,y));
+        }
+        
+    }
 }

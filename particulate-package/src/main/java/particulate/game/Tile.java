@@ -97,6 +97,11 @@ public abstract class Tile
          */
     }
 
+    public void giveHeat()
+    {
+
+    }
+
     public void recieveWater()
     {
         /*

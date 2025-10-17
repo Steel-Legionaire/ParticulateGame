@@ -5,6 +5,7 @@ import particulate.game.CellularMatrix;
 import particulate.game.ParticulateGame;
 import particulate.game.Tile;
 import particulate.game.Gases.Fire;
+import particulate.game.Gases.Steam;
 import particulate.game.Solids.StaticSolids.Wood;
 
 public class Water extends Liquid
@@ -69,4 +70,15 @@ public class Water extends Liquid
         }
     }
     
+    @Override
+    public void recieveHeat()
+    {
+        CellularMatrix matrix = ParticulateGame.getMatrix();
+
+        heat++;
+        if(heat >= 100)
+        {
+            matrix.setTile(x, y, new Steam(x,y));
+        }
+    }
 }
