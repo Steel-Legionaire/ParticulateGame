@@ -116,6 +116,49 @@ public class CellularMatrix {
         setGridBoundsWalls(); 
     }
 
+    public void createTileAtPos(int x, int y, Class<?> clazz, boolean override)
+    {
+        if(!(withinBounds(x, y))){ return; }
+
+        if(override)
+        {
+            if(clazz.equals(Eraser.class))
+            {
+                matrix[y][x] = null;
+            }
+            else
+            {
+                try {
+                    Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
+
+                    Tile t = (Tile) argConstructor.newInstance(x, y);
+
+                    matrix[y][x] = t;
+
+                } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                    System.out.println(e);
+                }
+            }
+        }
+        else if ( clazz.equals(Eraser.class))
+        {
+            matrix[y][x] = null;
+        }
+        else if( matrix[y][x] == null )
+        {
+            try {
+                Constructor<?> argConstructor = clazz.getConstructor(int.class, int.class);
+
+                Tile t = (Tile) argConstructor.newInstance(x, y);
+
+                matrix[y][x] = t;
+
+            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                System.out.println(e);
+            }
+        }
+    }
+
     public void createTile(int x, int y, Class<?> clazz, int drawSize, boolean override)
     {
         if(!withinBounds(x, y)){ return; }
