@@ -90,6 +90,17 @@ public abstract class Tile
 
     public void recieveHeat()
     {
-        // increase temp 
+        /*
+         * When tile recieves a certain amount of heat, do something. Example: Water turns to steam after recieving 100 heat
+         */
+    }
+
+    public void recieveWater()
+    {
+        /*
+         * After tile has recieved x amount of water do something like set a boolean wet
+         * wet tiles will start "leaking" water to nearby tiles if they can absorb water 
+         * Example: Dirt turns to mud after recieving 100 water and once a water tile 
+         */
     }
 }
