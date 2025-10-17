@@ -17,7 +17,7 @@ public class Fire extends Gases{
         setAllPossibleColors(COLORS);
         setColor();
 
-        setLifeTime((int)(Math.random()*20) + 50);
+        heat = (int)(Math.random()*20) + 100;
     }
 
     @Override
@@ -70,6 +70,13 @@ public class Fire extends Gases{
         else if(leftTile instanceof TNT)
         {
             ((TNT)leftTile).explode();
+        }
+
+        heat--;
+
+        if(heat <=0)
+        {
+            matrix.setTile(x,y,null);
         }
     }
     

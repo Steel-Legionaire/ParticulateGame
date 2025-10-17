@@ -6,8 +6,6 @@ import particulate.game.Tile;
 
 public class Gases extends Tile{
 
-    int lifeTime = 500;
-
     protected Gases(int x, int y, boolean isFlammable, boolean isDestructable, int toughness, int speed) {
         super(x, y, isFlammable, isDestructable, toughness, speed);
     }
@@ -22,11 +20,6 @@ public class Gases extends Tile{
             // 0 - up
             // 1 - right
             // 2 - left
-            if(lifeTime == 0)
-            {
-                matrix.setTile(x, y, null);
-                return;
-            }
 
             int randDir = (int)(Math.random() * 3);
             //System.out.println(randDir);
@@ -60,20 +53,11 @@ public class Gases extends Tile{
                     matrix.swapPositions(topLeftTile, x-1, y-1, this);
                 }
             }
-
-
-            lifeTime--;
             framesSinceLastUpdate = 0; 
         }
         else
         {
             framesSinceLastUpdate++;
         }
-    }
-
-
-    public void setLifeTime(int n)
-    {
-        lifeTime = n;
     }
 }

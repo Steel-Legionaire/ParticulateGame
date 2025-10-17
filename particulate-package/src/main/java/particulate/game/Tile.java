@@ -16,6 +16,8 @@ public abstract class Tile
     public int toughness;
     public int speed;
 
+    public int heat = 15; // Degrees in celcius (room temp of 15)
+
     public int framesSinceLastUpdate = 0;
 
     protected static Color[] colors;
