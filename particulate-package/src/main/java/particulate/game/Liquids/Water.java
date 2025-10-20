@@ -74,12 +74,9 @@ public class Water extends Liquid
         {
             if(heat > 15)
             {
-                heat--;
+                radiateHeat();
             }
-            else if( heat < 15)
-            {
-                heat++;
-            }
+            
             framesSinceHeatUpdate = 0;
         }
         else 

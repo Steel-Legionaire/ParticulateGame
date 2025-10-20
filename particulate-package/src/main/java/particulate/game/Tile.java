@@ -114,9 +114,23 @@ protected Tile(int x, int y, boolean isFlammable, boolean isDestructable, int to
         heat++;
     }
 
-    public void giveHeat()
+    public void radiateHeat()
     {
+        CellularMatrix matrix = ParticulateGame.getMatrix();
 
+        Tile[] neighbors = new Tile[]{matrix.getTile(x,y-1), matrix.getTile(x,y+1), matrix.getTile(x-1,y), matrix.getTile(x+1,y)};
+
+        for(Tile t : neighbors)
+        {
+            if((int)(Math.random() * 100) + 1 <= 30)
+            {
+                if(t != null)
+                {
+                    t.recieveHeat();
+                }
+                heat--;
+            }
+        }
     }
 
     public void recieveWater()

@@ -24,7 +24,8 @@ public class Steam extends Gases{
 
         if(framesSinceHeatUpdate == heatDispersalRate)
         {
-            heat--;
+            radiateHeat();
+            
             if( heat <= 75)
             {
                 Tile t = new Water(x,y);

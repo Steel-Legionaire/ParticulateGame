@@ -107,7 +107,7 @@ public class Lava extends Liquid{
     }
     
     @Override
-    public void giveHeat() 
+    public void radiateHeat() 
     {
         CellularMatrix matrix = ParticulateGame.getMatrix();
 
