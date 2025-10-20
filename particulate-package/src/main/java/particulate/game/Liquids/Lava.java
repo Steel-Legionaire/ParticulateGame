@@ -20,7 +20,8 @@ public class Lava extends Liquid{
         setAllPossibleColors(COLORS);
         setColor();
 
-        heat = 750;
+        heat = 1500;
+        heatDispersalRate = 15;
     }
 
     @Override
@@ -104,19 +105,48 @@ public class Lava extends Liquid{
         {
             matrix.setTile(x-1, y, null);
         }
-    }
-    
-    @Override
-    public void radiateHeat() 
-    {
-        CellularMatrix matrix = ParticulateGame.getMatrix();
 
-        heat--;
-
-        if(heat <= 500)
+        if(framesSinceHeatUpdate == heatDispersalRate)
         {
-            matrix.setTile(x, y, new Stone(x,y));
+            radiateHeat();
+            if(heat <= 200)
+            {
+                Tile t = new Stone(x, y);
+                t.setHeat(heat);
+                matrix.setTile(x, y, t);
+            }
+            framesSinceHeatUpdate = 0;
+        }
+        else
+        {
+            framesSinceHeatUpdate++;
         }
         
     }
+
+    @Override
+    public void radiateHeat()
+    {
+        CellularMatrix matrix = ParticulateGame.getMatrix();
+
+        Tile[] neighbors = new Tile[]{matrix.getTile(x,y-1), matrix.getTile(x,y+1), matrix.getTile(x-1,y), matrix.getTile(x+1,y)};
+
+        for(Tile t : neighbors)
+        {
+            if((int)(Math.random() * 100) + 1 <= 30)
+            {
+                if(t == null && (int)(Math.random() * 100) + 1 <= 20)
+                {
+                    heat--;
+                }
+                else if( t != null)
+                {
+                    t.recieveHeat();
+                    heat--;
+                }
+                
+            }
+        }
+    }
 }
+
