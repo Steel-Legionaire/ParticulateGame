@@ -17,6 +17,8 @@ public abstract class Tile
     public int speed;
 
     public int heat = 15; // Degrees in celcius (room temp of 15)
+    public int heatDispersalRate = 15; // How many frames until a tile emits heat to its neighbors
+    public int framesSinceHeatUpdate = 0;
 
     public int framesSinceLastUpdate = 0;
 
@@ -31,6 +33,20 @@ public abstract class Tile
         this.isFlammable = isFlammable;
         this.isDestructable = isDestructable;
         this.toughness = toughness;
+
+        this.speed = speed;
+        // Speed is in terms of how many frames until the objects moves again, this does not affect the actions
+        
+    }
+
+protected Tile(int x, int y, boolean isFlammable, boolean isDestructable, int toughness, int speed, int heat)
+    {
+        this.x = x;
+        this.y = y;
+        this.isFlammable = isFlammable;
+        this.isDestructable = isDestructable;
+        this.toughness = toughness;
+        this.heat = heat;
 
         this.speed = speed;
         // Speed is in terms of how many frames until the objects moves again, this does not affect the actions
@@ -95,6 +111,7 @@ public abstract class Tile
         /*
          * When tile recieves a certain amount of heat, do something. Example: Water turns to steam after recieving 100 heat
          */
+        heat++;
     }
 
     public void giveHeat()
@@ -110,4 +127,11 @@ public abstract class Tile
          * Example: Dirt turns to mud after recieving 100 water and once a water tile 
          */
     }
+
+    public void setHeat(int h)
+    {
+        this.heat = h;
+    }
+
+    public int getHeat(){ return heat; }
 }

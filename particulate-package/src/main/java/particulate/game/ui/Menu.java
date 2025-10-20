@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
+import particulate.game.CellularMatrix;
 import particulate.game.Eraser;
 import particulate.game.ParticulateGame;
 import particulate.game.Gases.Fire;
@@ -99,6 +100,7 @@ public class Menu
     // Define Options buttons
     private JButton exitGameButton = new JButton("Exit");
     private JButton savePlayAreaButton = new JButton("Save");
+    private JButton heatRay = new JButton("HeatRay");
     
     // Define square draw size buttons
     private JButton smallSquareDrawSize = new JButton("Small");
@@ -114,7 +116,7 @@ public class Menu
     private JButton[] explosivesMenu = new JButton[]{ staticTntButton };
     private JButton[] gasesMenu = new JButton[]{ fireButton };
     private JButton[] spawnerMenu = new JButton[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner, ashSpawner, dirtSpawner };
-    private JButton[] optionsMenu = new JButton[]{ exitGameButton, savePlayAreaButton};
+    private JButton[] optionsMenu = new JButton[]{ exitGameButton, savePlayAreaButton, heatRay};
 
     private JButton[] selectionMenu = new JButton[]{selectLandMenuButton, selectLiquidsMenuButton, selectExplosivesMenuButton, selectGasesMenuButton, selectSpawnersButton, selectOptionsButton};
 
@@ -635,6 +637,12 @@ public class Menu
                         System.exit(0);
                 }
         });
+        heatRay.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        ParticulateGame.heatRayActive = !ParticulateGame.heatRayActive;
+                }
+        });
         
 }
 
@@ -653,7 +661,12 @@ public class Menu
     {
         pen.setColor(Color.BLACK);
         
+        CellularMatrix matrix = ParticulateGame.getMatrix();
+
+        String heatVal = matrix.withinBounds(mX, mY) && matrix.getTile(mX, mY) != null ? matrix.getTile(mX, mY).getHeat()+"C" : "null";
+
         pen.drawString("Hovered Over Tile: "+tileName, sideMenuIndent, debugInfoY+10);
+        pen.drawString("Heat: "+heatVal, sideMenuIndent+200, debugInfoY+10);
         pen.drawString("X: "+mX+" Y: "+mY, sideMenuIndent, debugInfoY+30);
         pen.drawString("Brush Size: "+drawSize, sideMenuIndent, debugInfoY+50);
 
@@ -711,6 +724,7 @@ public class Menu
         // Define options menu bounds
         exitGameButton.setBounds(buttonIndent, firstRowY, smallButtonWidth, buttonHeight);
         savePlayAreaButton.setBounds(buttonIndent+smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);
+        heatRay.setBounds(buttonIndent+smallButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
     }
 
     public void addAllButtonsToLayeredFrame(JFrame f)

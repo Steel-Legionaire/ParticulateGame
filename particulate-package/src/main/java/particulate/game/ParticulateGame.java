@@ -96,6 +96,8 @@ public class ParticulateGame extends Game  {
 
         Menu menu = new Menu(frame);
 
+        public static boolean heatRayActive = false;
+
         public ParticulateGame() 
         {
                 matrix = new CellularMatrix(playAreaWidth / tileSize, playAreaHeight / tileSize);
@@ -174,7 +176,34 @@ public class ParticulateGame extends Game  {
 
                 if((mouseLeftHeld || mouseRightHeld))
                 {
-                        matrix.createTile(outlinedTileX, outlinedTileY, currentTile, drawSize, override);
+                        if(heatRayActive)
+                        {
+                                for(int r = outlinedTileY - ((int)(drawSize / 2)); r < outlinedTileY + ((int)(drawSize / 2)); r++)
+                                {
+                                        if(r<1){ continue; }
+                                        else if( r >= matrix.getRowBounds()){ break; }
+
+                                        for(int c = outlinedTileX - ((int)(drawSize / 2)); c < outlinedTileX+((int)(drawSize / 2)); c++)
+                                        {
+                                                if(c < 1){continue;} 
+                                                else if(c >= matrix.getCollumnBounds() ){ break; }
+
+                                                Tile tileAtLocation = matrix.getTileAtLocation(c, r);
+                                                
+                                                if(tileAtLocation != null)
+                                                {
+                                                        tileAtLocation.recieveHeat();
+                                                }
+                                                
+                                                
+                                        }
+                                }
+                        }
+                        else
+                        {
+                                matrix.createTile(outlinedTileX, outlinedTileY, currentTile, drawSize, override);
+                        }
+                        
                 }
 
                 frameEven = !frameEven;
@@ -382,7 +411,34 @@ public class ParticulateGame extends Game  {
                         {
 
                                 //System.out.println("("+i[0]+","+i[1]+")");
-                                matrix.createTile(i[0], i[1], currentTile, drawSize, override);
+                                if(heatRayActive)
+                                {
+                                        for(int r = outlinedTileY - ((int)(drawSize / 2)); r < outlinedTileY + ((int)(drawSize / 2)); r++)
+                                        {
+                                                if(r<1){ continue; }
+                                                else if( r >= matrix.getRowBounds()){ break; }
+
+                                                for(int c = outlinedTileX - ((int)(drawSize / 2)); c < outlinedTileX+((int)(drawSize / 2)); c++)
+                                                {
+                                                        if(c < 1){continue;} 
+                                                        else if(c >= matrix.getCollumnBounds() ){ break; }
+
+                                                        Tile tileAtLocation = matrix.getTileAtLocation(c, r);
+                                                        
+                                                        if(tileAtLocation != null)
+                                                        {
+                                                                tileAtLocation.recieveHeat();
+                                                        }
+                                                        
+                                                        
+                                                }
+                                        }
+                                }
+                                else
+                                {
+                                        matrix.createTile(i[0], i[1], currentTile, drawSize, override);
+                                }
+                                
                                 
                         }
                 }
@@ -437,7 +493,34 @@ public class ParticulateGame extends Game  {
                                 
                                 if(mxg < matrix.getCollumnBounds() && me.getButton() != 2)
                                 {
+                                if(heatRayActive)
+                                {
+                                        for(int r = outlinedTileY - ((int)(drawSize / 2)); r < outlinedTileY + ((int)(drawSize / 2)); r++)
+                                        {
+                                                if(r<1){ continue; }
+                                                else if( r >= matrix.getRowBounds()){ break; }
+
+                                                for(int c = outlinedTileX - ((int)(drawSize / 2)); c < outlinedTileX+((int)(drawSize / 2)); c++)
+                                                {
+                                                        if(c < 1){continue;} 
+                                                        else if(c >= matrix.getCollumnBounds() ){ break; }
+
+                                                        Tile tileAtLocation = matrix.getTileAtLocation(c, r);
+                                                        
+                                                        if(tileAtLocation != null)
+                                                        {
+                                                                tileAtLocation.recieveHeat();
+                                                        }
+                                                        
+                                                        
+                                                }
+                                        }
+                                }
+                                else
+                                {
                                         matrix.createTile(mxg, myg, currentTile, drawSize, override); 
+                                }
+                                        
                                         //for(int[] pos : path)
                                         //{
                                         //        createTile((pos[0] / tileSize) - 2, (pos[1] / tileSize) - 2, currentTile); 

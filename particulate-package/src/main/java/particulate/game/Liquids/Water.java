@@ -68,6 +68,25 @@ public class Water extends Liquid
         {
             matrix.setTile(x-1,y, null);
         }
+
+
+        if(framesSinceHeatUpdate == heatDispersalRate)
+        {
+            if(heat > 15)
+            {
+                heat--;
+            }
+            else if( heat < 15)
+            {
+                heat++;
+            }
+            framesSinceHeatUpdate = 0;
+        }
+        else 
+        {
+            framesSinceHeatUpdate++;
+        }
+        
     }
     
     @Override
@@ -78,7 +97,9 @@ public class Water extends Liquid
         heat++;
         if(heat >= 100)
         {
-            matrix.setTile(x, y, new Steam(x,y));
+            Tile t = new Steam(x,y);
+            t.setHeat(heat);
+            matrix.setTile(x, y, t);
         }
     }
 }
