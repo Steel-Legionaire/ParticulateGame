@@ -345,7 +345,11 @@ public class ParticulateGame extends Game  {
         public static void setOutlineColor(Color c){ outlineColor = c; }
         public static Color getOutlineColor(){ return outlineColor; }
 
-        public static void setCurrentTile(Class<?> t){ currentTile = t; }
+        public static void setCurrentTile(Class<?> t)
+        { 
+                currentTile = t; 
+                heatRayActive = false;
+        }
         public static Class<?> getCurrentTile(){ return currentTile; }
 
         public static void setDrawSize(int ds){ drawSize = ds;}

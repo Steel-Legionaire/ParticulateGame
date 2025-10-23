@@ -104,7 +104,7 @@ public class Menu
     // Define Options buttons
     private JButton exitGameButton = new JButton("Exit");
     private JButton savePlayAreaButton = new JButton("Save");
-    private JButton heatRay = new JButton("HeatRay");
+    private JButton heatRay = new JButton("Heat Ray");
     
     // Define square draw size buttons
     private JButton smallSquareDrawSize = new JButton("Small");
@@ -660,7 +660,16 @@ public class Menu
         heatRay.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                        ParticulateGame.heatRayActive = !ParticulateGame.heatRayActive;
+                        
+                        if(!selectedButton.equals(heatRay))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = heatRay;
+                                swapColorsOfButton(heatRay);
+
+                                ParticulateGame.heatRayActive = true;
+                                ParticulateGame.setOutlineColor(Color.RED);
+                        }
                 }
         });
         
@@ -745,7 +754,7 @@ public class Menu
         // Define options menu bounds
         exitGameButton.setBounds(buttonIndent, firstRowY, smallButtonWidth, buttonHeight);
         savePlayAreaButton.setBounds(buttonIndent+smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);
-        heatRay.setBounds(buttonIndent+smallButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
+        heatRay.setBounds(buttonIndent+smallButtonWidth*2, firstRowY, mediumButtonWidth, buttonHeight);
     }
 
     public void addAllButtonsToLayeredFrame(JFrame f)
