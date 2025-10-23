@@ -16,6 +16,7 @@ import particulate.game.CellularMatrix;
 import particulate.game.Eraser;
 import particulate.game.ParticulateGame;
 import particulate.game.Gases.Fire;
+import particulate.game.Gases.Steam;
 import particulate.game.Liquids.Lava;
 import particulate.game.Liquids.Water;
 import particulate.game.Solids.MoveableSolids.Ash;
@@ -73,9 +74,12 @@ public class Menu
     
     // Define Moveable Solids buttons
     private JButton sandButton = new JButton("Sand");
-    private JButton fireButton = new JButton("Fire");
     private JButton ashButton = new JButton("Ash");
     private JButton dirtButton = new JButton("Dirt");
+
+    // Define Gasses buttons
+    private JButton fireButton = new JButton("Fire");
+    private JButton steamButton = new JButton("Steam");
 
     // Define Liquid Buttons
     private JButton waterButton = new JButton("Water");
@@ -114,7 +118,7 @@ public class Menu
     private JButton[] landMenuButtons = new JButton[]{ sandButton, stoneButton, bedrockButton, obsidianButton, woodButton, ashButton, dirtButton};
     private JButton[] liquidsMenu = new JButton[]{waterButton, lavaButton};
     private JButton[] explosivesMenu = new JButton[]{ staticTntButton };
-    private JButton[] gasesMenu = new JButton[]{ fireButton };
+    private JButton[] gasesMenu = new JButton[]{ fireButton, steamButton };
     private JButton[] spawnerMenu = new JButton[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner, ashSpawner, dirtSpawner };
     private JButton[] optionsMenu = new JButton[]{ exitGameButton, savePlayAreaButton, heatRay};
 
@@ -489,6 +493,22 @@ public class Menu
                 }
         });
 
+
+        steamButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(steamButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = steamButton;
+                                swapColorsOfButton(steamButton);
+                        }
+                        ParticulateGame.setCurrentTile(Steam.class);
+                        ParticulateGame.setOutlineColor( Color.WHITE); 
+                }
+        });
+        
+
         // Define liquids buttons
         waterButton.addActionListener(new ActionListener() {
                 @Override
@@ -697,6 +717,7 @@ public class Menu
 
         // Define gases buttons 
         fireButton.setBounds(buttonIndent + smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);
+        steamButton.setBounds(buttonIndent + smallButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
 
         // Define explosive buttons
         staticTntButton.setBounds(buttonIndent + smallButtonWidth, firstRowY, mediumButtonWidth, buttonHeight);

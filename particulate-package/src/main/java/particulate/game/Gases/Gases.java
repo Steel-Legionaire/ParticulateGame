@@ -3,6 +3,7 @@ package particulate.game.Gases;
 import particulate.game.CellularMatrix;
 import particulate.game.ParticulateGame;
 import particulate.game.Tile;
+import particulate.game.Liquids.Liquid;
 
 public class Gases extends Tile{
 
