@@ -14,7 +14,7 @@ public class Steam extends Gases{
         super(x, y, false, true, 2, 1);
         setAllPossibleColors(new Color[]{Color.WHITE});
         setColor();
-        heat = 150;
+        heat = 175;
     }
 
 
