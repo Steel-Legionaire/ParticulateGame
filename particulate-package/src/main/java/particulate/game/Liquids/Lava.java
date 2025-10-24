@@ -141,7 +141,7 @@ public class Lava extends Liquid{
                 }
                 else if( t != null)
                 {
-                    t.recieveHeat();
+                    t.recieveHeat(1);
                     heat--;
                 }
                 

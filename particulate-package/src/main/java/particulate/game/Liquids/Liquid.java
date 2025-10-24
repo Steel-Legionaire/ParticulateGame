@@ -3,6 +3,7 @@ package particulate.game.Liquids;
 import particulate.game.CellularMatrix;
 import particulate.game.ParticulateGame;
 import particulate.game.Tile;
+import particulate.game.Gases.Gases;
 
 public class Liquid extends Tile{
 
@@ -38,6 +39,10 @@ public class Liquid extends Tile{
                     this.y++;
                     matrix.setTile(x, y, this);
                 }
+                else if(bottomTile instanceof Gases)
+                {
+                    matrix.swapPositions(bottomTile, this);
+                }
                 else
                 {
                     if(direction == 1)
@@ -47,6 +52,10 @@ public class Liquid extends Tile{
                             matrix.setTile(x, y, null);
                             this.x++;
                             matrix.setTile(x, y, this);
+                        }
+                        else if(rightTile instanceof Gases)
+                        {
+                            matrix.swapPositions(rightTile, this);
                         }
                         else
                         {
@@ -60,6 +69,10 @@ public class Liquid extends Tile{
                             matrix.setTile(x, y, null);
                             this.x--;
                             matrix.setTile(x, y, this);
+                        }
+                        else if(leftTile instanceof Gases)
+                        {
+                            matrix.swapPositions(leftTile, this);
                         }
                         else
                         {
@@ -79,9 +92,4 @@ public class Liquid extends Tile{
     @Override
     public void darkenTile() {}
 
-    @Override
-    public void recieveHeat()
-    {
-        // turn water to steam
-    }
 }

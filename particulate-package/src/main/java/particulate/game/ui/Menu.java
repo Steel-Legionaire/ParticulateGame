@@ -67,6 +67,7 @@ public class Menu
     private JButton selectExplosivesMenuButton = new JButton("Explosives"); 
     private JButton selectGasesMenuButton = new JButton("Gases");
     private JButton selectSpawnersButton = new JButton("Spawners");
+    private JButton miscSelectMenuButton = new JButton("Misc");
     private JButton selectOptionsButton = new JButton("Options");
     
     // Define eraser button
@@ -104,7 +105,10 @@ public class Menu
     // Define Options buttons
     private JButton exitGameButton = new JButton("Exit");
     private JButton savePlayAreaButton = new JButton("Save");
+
+    // Define misc menu buttons
     private JButton heatRay = new JButton("Heat Ray");
+    private JButton freezeRay = new JButton("Freeze Ray");
     
     // Define square draw size buttons
     private JButton smallSquareDrawSize = new JButton("Small");
@@ -120,15 +124,16 @@ public class Menu
     private JButton[] explosivesMenu = new JButton[]{ staticTntButton };
     private JButton[] gasesMenu = new JButton[]{ fireButton, steamButton };
     private JButton[] spawnerMenu = new JButton[]{ sandSpawner, waterSpawner, lavaSpawner, fireSpawner, ashSpawner, dirtSpawner };
-    private JButton[] optionsMenu = new JButton[]{ exitGameButton, savePlayAreaButton, heatRay};
+    private JButton[] miscMenu = new JButton[]{heatRay, freezeRay};
+    private JButton[] optionsMenu = new JButton[]{ exitGameButton, savePlayAreaButton};
 
-    private JButton[] selectionMenu = new JButton[]{selectLandMenuButton, selectLiquidsMenuButton, selectExplosivesMenuButton, selectGasesMenuButton, selectSpawnersButton, selectOptionsButton};
+    private JButton[] selectionMenu = new JButton[]{selectLandMenuButton, selectLiquidsMenuButton, selectExplosivesMenuButton, selectGasesMenuButton, selectSpawnersButton, miscSelectMenuButton, selectOptionsButton};
 
     private JButton[] squareDrawSizeButtons = new JButton[]{smallSquareDrawSize, mediumSquareDrawSize, largeSquareDrawSize, massiveSquareDrawSize};
 
     private JButton[] toggleButtons = new JButton[]{toggleOverrideButton};
 
-    private JButton[][] typeMenu = new JButton[6][20];
+    private JButton[][] typeMenu = new JButton[7][20];
 
     String controls = "R: Reset Play Area    Space: Pause Simulation    S: Save play area    Drag file on screen to load it    Enter: Drop Floor    ctrl + left click: Activate Line Tool";
 
@@ -161,7 +166,8 @@ public class Menu
         typeMenu[2] = explosivesMenu;
         typeMenu[3] = gasesMenu;
         typeMenu[4] = spawnerMenu;
-        typeMenu[5] = optionsMenu;
+        typeMenu[5] = miscMenu;
+        typeMenu[6] = optionsMenu;
 
         swapColorsOfButton(sandButton);
         swapColorsOfButton(selectLandMenuButton);
@@ -310,6 +316,30 @@ public class Menu
                         selectedMenu = 4;
                 }
         });
+        miscSelectMenuButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedSelectionButton.equals(miscSelectMenuButton))
+                        {
+                                swapColorsOfButton(selectedSelectionButton);
+                                selectedSelectionButton = miscSelectMenuButton;
+                                swapColorsOfButton(miscSelectMenuButton);
+                        }
+                        for(JButton b : miscMenu)
+                        {
+                                b.setVisible(true);
+                        }
+
+                        for(JButton b : typeMenu[selectedMenu])
+                        {
+                                b.setVisible(false);
+                        }
+
+                        eraserButton.setVisible(true);
+
+                        selectedMenu = 5;
+                }
+        });
         selectOptionsButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -331,7 +361,7 @@ public class Menu
 
                         eraserButton.setVisible(false);
 
-                        selectedMenu = 5;
+                        selectedMenu = 6;
                 }
         });
         
@@ -657,6 +687,9 @@ public class Menu
                         System.exit(0);
                 }
         });
+
+        // Define misc menu buttons
+
         heatRay.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -668,7 +701,25 @@ public class Menu
                                 swapColorsOfButton(heatRay);
 
                                 ParticulateGame.heatRayActive = true;
+                                ParticulateGame.freezeRayActive = false;
                                 ParticulateGame.setOutlineColor(Color.RED);
+                        }
+                }
+        });
+
+        freezeRay.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        
+                        if(!selectedButton.equals(freezeRay))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = freezeRay;
+                                swapColorsOfButton(freezeRay);
+
+                                ParticulateGame.freezeRayActive = true;
+                                ParticulateGame.heatRayActive = false;
+                                ParticulateGame.setOutlineColor(Color.BLUE);
                         }
                 }
         });
@@ -709,7 +760,8 @@ public class Menu
         selectExplosivesMenuButton.setBounds(buttonIndent+mediumButtonWidth*2, selectionButtonsY, mediumButtonWidth, buttonHeight);
         selectGasesMenuButton.setBounds(buttonIndent+mediumButtonWidth*3, selectionButtonsY, mediumButtonWidth, buttonHeight);
         selectSpawnersButton.setBounds(buttonIndent+mediumButtonWidth*4, selectionButtonsY, mediumButtonWidth, buttonHeight);
-        selectOptionsButton.setBounds(buttonIndent+mediumButtonWidth*5, selectionButtonsY, mediumButtonWidth, buttonHeight);
+        miscSelectMenuButton.setBounds(buttonIndent+mediumButtonWidth*5, selectionButtonsY, mediumButtonWidth, buttonHeight);
+        selectOptionsButton.setBounds(buttonIndent+mediumButtonWidth*6, selectionButtonsY, mediumButtonWidth, buttonHeight);
 
         // Define land buttons
         sandButton.setBounds(buttonIndent + smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);
@@ -750,11 +802,14 @@ public class Menu
 
         eraserButton.setBounds(buttonIndent, firstRowY, smallButtonWidth, buttonHeight);
 
+        // Define Misc menu bounds
+        heatRay.setBounds(buttonIndent+smallButtonWidth, firstRowY, mediumButtonWidth, buttonHeight);
+        freezeRay.setBounds(buttonIndent+smallButtonWidth+mediumButtonWidth, firstRowY, mediumButtonWidth, buttonHeight);
 
         // Define options menu bounds
         exitGameButton.setBounds(buttonIndent, firstRowY, smallButtonWidth, buttonHeight);
         savePlayAreaButton.setBounds(buttonIndent+smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);
-        heatRay.setBounds(buttonIndent+smallButtonWidth*2, firstRowY, mediumButtonWidth, buttonHeight);
+        
     }
 
     public void addAllButtonsToLayeredFrame(JFrame f)
@@ -822,6 +877,15 @@ public class Menu
         }
 
         for(JButton b : spawnerMenu)
+        {
+                b.setFocusable(false);
+                b.setVisible(false);
+                layeredPane.add(b);
+                b.setBackground(Color.WHITE);
+                b.setForeground(Color.BLACK);
+        }
+
+        for(JButton b : miscMenu)
         {
                 b.setFocusable(false);
                 b.setVisible(false);

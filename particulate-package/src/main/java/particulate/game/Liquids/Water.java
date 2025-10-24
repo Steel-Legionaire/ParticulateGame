@@ -87,11 +87,11 @@ public class Water extends Liquid
     }
     
     @Override
-    public void recieveHeat()
+    public void recieveHeat(int h)
     {
         CellularMatrix matrix = ParticulateGame.getMatrix();
 
-        heat++;
+        heat+=h;
         if(heat >= 100)
         {
             Tile t = new Steam(x,y);

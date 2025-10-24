@@ -106,12 +106,12 @@ protected Tile(int x, int y, boolean isFlammable, boolean isDestructable, int to
         // darken the color 
     }
 
-    public void recieveHeat()
+    public void recieveHeat(int h)
     {
         /*
          * When tile recieves a certain amount of heat, do something. Example: Water turns to steam after recieving 100 heat
          */
-        heat++;
+        heat+=h;
     }
 
     public void radiateHeat()
@@ -126,7 +126,7 @@ protected Tile(int x, int y, boolean isFlammable, boolean isDestructable, int to
             {
                 if(t != null)
                 {
-                    t.recieveHeat();
+                    t.recieveHeat(1);
                 }
                 heat--;
             }

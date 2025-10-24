@@ -97,6 +97,7 @@ public class ParticulateGame extends Game  {
         Menu menu = new Menu(frame);
 
         public static boolean heatRayActive = false;
+        public static boolean freezeRayActive = false;
 
         public ParticulateGame() 
         {
@@ -176,7 +177,7 @@ public class ParticulateGame extends Game  {
 
                 if((mouseLeftHeld || mouseRightHeld))
                 {
-                        if(heatRayActive)
+                        if(heatRayActive || freezeRayActive)
                         {
                                 for(int r = outlinedTileY - ((int)(drawSize / 2)); r < outlinedTileY + ((int)(drawSize / 2)); r++)
                                 {
@@ -192,7 +193,15 @@ public class ParticulateGame extends Game  {
                                                 
                                                 if(tileAtLocation != null)
                                                 {
-                                                        tileAtLocation.recieveHeat();
+                                                        if(heatRayActive)
+                                                        {
+                                                                tileAtLocation.recieveHeat(1);
+                                                        }
+                                                        else
+                                                        {
+                                                                tileAtLocation.recieveHeat(-1);
+                                                        }
+                                                        
                                                 }
                                                 
                                                 
@@ -349,6 +358,7 @@ public class ParticulateGame extends Game  {
         { 
                 currentTile = t; 
                 heatRayActive = false;
+                freezeRayActive = false;
         }
         public static Class<?> getCurrentTile(){ return currentTile; }
 
@@ -404,7 +414,7 @@ public class ParticulateGame extends Game  {
         public void mouseDragged(MouseEvent me) 
         {
                 int mxg = (me.getX() / tileSize )- 1;
-                int myg = (me.getY() / tileSize )- 1;
+                int myg = (me.getY() / tileSize )- 8;
                 
                         
                 if(drawSize <= 50)
@@ -415,7 +425,7 @@ public class ParticulateGame extends Game  {
                         {
 
                                 //System.out.println("("+i[0]+","+i[1]+")");
-                                if(heatRayActive)
+                                if(heatRayActive || freezeRayActive)
                                 {
                                         for(int r = outlinedTileY - ((int)(drawSize / 2)); r < outlinedTileY + ((int)(drawSize / 2)); r++)
                                         {
@@ -431,7 +441,14 @@ public class ParticulateGame extends Game  {
                                                         
                                                         if(tileAtLocation != null)
                                                         {
-                                                                tileAtLocation.recieveHeat();
+                                                                if(heatRayActive)
+                                                                {
+                                                                        tileAtLocation.recieveHeat(1);
+                                                                }
+                                                                else
+                                                                {
+                                                                        tileAtLocation.recieveHeat(-1);
+                                                                }
                                                         }
                                                         
                                                         
@@ -484,7 +501,7 @@ public class ParticulateGame extends Game  {
                 
                 
                 int mxg = (me.getX() / tileSize )- 1;
-                int myg = (me.getY() / tileSize )- 1;
+                int myg = (me.getY() / tileSize )- 8;
 
                 outlinedTileX = mxg;
                 outlinedTileY = myg;
@@ -497,7 +514,7 @@ public class ParticulateGame extends Game  {
                                 
                                 if(mxg < matrix.getCollumnBounds() && me.getButton() != 2)
                                 {
-                                if(heatRayActive)
+                                if(heatRayActive || freezeRayActive)
                                 {
                                         for(int r = outlinedTileY - ((int)(drawSize / 2)); r < outlinedTileY + ((int)(drawSize / 2)); r++)
                                         {
@@ -513,7 +530,14 @@ public class ParticulateGame extends Game  {
                                                         
                                                         if(tileAtLocation != null)
                                                         {
-                                                                tileAtLocation.recieveHeat();
+                                                                if(heatRayActive)
+                                                                {
+                                                                        tileAtLocation.recieveHeat(1);
+                                                                }
+                                                                else
+                                                                {
+                                                                        tileAtLocation.recieveHeat(-1);
+                                                                }
                                                         }
                                                         
                                                         
@@ -576,7 +600,7 @@ public class ParticulateGame extends Game  {
                 previousOutlineY = outlinedTileY;
 
                 outlinedTileX = (me.getX() / tileSize)-1;
-                outlinedTileY = (me.getY() / tileSize)-1;
+                outlinedTileY = (me.getY() / tileSize)-8;
 
                 
         }
