@@ -22,6 +22,8 @@ public abstract class Tile
 
     public int framesSinceLastUpdate = 0;
 
+    public int roomTemp = ParticulateGame.roomTemp;
+
     protected static Color[] colors;
 
     int counter = 0;
@@ -55,7 +57,15 @@ protected Tile(int x, int y, boolean isFlammable, boolean isDestructable, int to
 
     public void move(){}
 
-    public void action(){}
+    public void action()
+    {
+        CellularMatrix matrix = ParticulateGame.getMatrix();
+        if(x > 0 && x < matrix.getCollumnBounds() && y > 0 && y < matrix.getRowBounds())
+        {
+            radiateHeat();
+        }
+        framesSinceHeatUpdate++;
+    }
 
     public void draw(Graphics pen)
     {
@@ -122,13 +132,25 @@ protected Tile(int x, int y, boolean isFlammable, boolean isDestructable, int to
 
         for(Tile t : neighbors)
         {
-            if((int)(Math.random() * 100) + 1 <= 30)
+            if(framesSinceHeatUpdate == heatDispersalRate)
             {
                 if(t != null)
                 {
                     t.recieveHeat(1);
+                    
                 }
-                heat--;
+                
+                if(heat < roomTemp)
+                {
+                    heat++;
+                }
+                else if(heat > roomTemp)
+                {
+                    heat--;
+                }
+                
+                
+                framesSinceHeatUpdate = 0;
             }
         }
     }

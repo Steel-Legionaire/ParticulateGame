@@ -99,6 +99,9 @@ public class ParticulateGame extends Game  {
         public static boolean heatRayActive = false;
         public static boolean freezeRayActive = false;
 
+
+        public static int roomTemp = 15;
+
         public ParticulateGame() 
         {
                 matrix = new CellularMatrix(playAreaWidth / tileSize, playAreaHeight / tileSize);

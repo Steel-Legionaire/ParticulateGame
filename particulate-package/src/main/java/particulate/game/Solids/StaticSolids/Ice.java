@@ -17,7 +17,18 @@ public class Ice extends StaticSolid{
         setColor();
         heat=-15;
     }
-    
+
+    @Override
+    public void action()
+    {
+        CellularMatrix matrix = ParticulateGame.getMatrix();
+        if(heat > 0)
+        {
+            Tile t = new Water(x,y);
+            t.setHeat(heat);
+            matrix.setTile(x, y, t);
+        }
+    }
 
     @Override
     public void recieveHeat(int h)

@@ -23,6 +23,7 @@ import particulate.game.Solids.MoveableSolids.Ash;
 import particulate.game.Solids.MoveableSolids.Dirt;
 import particulate.game.Solids.MoveableSolids.Sand;
 import particulate.game.Solids.StaticSolids.Bedrock;
+import particulate.game.Solids.StaticSolids.Ice;
 import particulate.game.Solids.StaticSolids.Obsidian;
 import particulate.game.Solids.StaticSolids.Stone;
 import particulate.game.Solids.StaticSolids.TNT;
@@ -93,6 +94,7 @@ public class Menu
     private JButton woodButton = new JButton("Wood");
     private JButton staticTntButton = new JButton("Satic TNT");
     private JButton fallingTntButton = new JButton("Falling TNT");
+    private JButton iceButton = new JButton("Ice");
 
     // Define Spawner Buttons
     private JButton sandSpawner = new JButton("Sand Spawner");
@@ -119,7 +121,7 @@ public class Menu
     // Define toggle buttons
     private JButton toggleOverrideButton = new JButton("Override");
 
-    private JButton[] landMenuButtons = new JButton[]{ sandButton, stoneButton, bedrockButton, obsidianButton, woodButton, ashButton, dirtButton};
+    private JButton[] landMenuButtons = new JButton[]{ sandButton, stoneButton, bedrockButton, obsidianButton, woodButton, ashButton, dirtButton, iceButton};
     private JButton[] liquidsMenu = new JButton[]{waterButton, lavaButton};
     private JButton[] explosivesMenu = new JButton[]{ staticTntButton };
     private JButton[] gasesMenu = new JButton[]{ fireButton, steamButton };
@@ -492,6 +494,19 @@ public class Menu
                         ParticulateGame.setOutlineColor( new Color(180, 80, 0)); 
                 }
         });
+        iceButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        if(!selectedButton.equals(iceButton))
+                        {
+                                swapColorsOfButton(selectedButton);
+                                selectedButton = iceButton;
+                                swapColorsOfButton(iceButton);
+                        }
+                        ParticulateGame.setCurrentTile(Ice.class);
+                        ParticulateGame.setOutlineColor( new Color(140, 230, 255)); 
+                }
+        });
 
         // Define exlposives buttons
         staticTntButton.addActionListener(new ActionListener() {
@@ -771,6 +786,7 @@ public class Menu
         obsidianButton.setBounds(buttonIndent + smallButtonWidth*4+mediumButtonWidth, firstRowY, mediumButtonWidth, buttonHeight);
         woodButton.setBounds(buttonIndent + smallButtonWidth*4 + mediumButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
         dirtButton.setBounds(buttonIndent + smallButtonWidth*5 + mediumButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
+        iceButton.setBounds(buttonIndent + smallButtonWidth*6 + mediumButtonWidth*2, firstRowY, smallButtonWidth, buttonHeight);
 
         // Define liquids buttons
         waterButton.setBounds(buttonIndent + smallButtonWidth, firstRowY, smallButtonWidth, buttonHeight);

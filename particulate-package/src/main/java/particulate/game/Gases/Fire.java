@@ -72,9 +72,11 @@ public class Fire extends Gases{
             ((TNT)leftTile).explode();
         }
 
+        radiateHeat();
+
         heat--;
 
-        if(heat <=0)
+        if(heat <= 100)
         {
             matrix.setTile(x,y,null);
         }
