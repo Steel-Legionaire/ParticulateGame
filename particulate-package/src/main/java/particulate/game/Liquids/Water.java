@@ -6,6 +6,7 @@ import particulate.game.ParticulateGame;
 import particulate.game.Tile;
 import particulate.game.Gases.Fire;
 import particulate.game.Gases.Steam;
+import particulate.game.Solids.StaticSolids.Ice;
 import particulate.game.Solids.StaticSolids.Wood;
 
 public class Water extends Liquid
@@ -95,6 +96,12 @@ public class Water extends Liquid
         if(heat >= 100)
         {
             Tile t = new Steam(x,y);
+            t.setHeat(heat);
+            matrix.setTile(x, y, t);
+        }
+        else if(heat <= 0)
+        {
+            Tile t = new Ice(x,y);
             t.setHeat(heat);
             matrix.setTile(x, y, t);
         }
