@@ -2,6 +2,7 @@ package particulate.game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -108,13 +109,13 @@ public class ParticulateGame extends Game  {
                 matrix.setGridBoundsWalls();
 
                 // Leftover code to create a large square of walls
-                //for(int i=0; i<50; i++)
-                //{
-                //        for(int k=0; k<50; k++)
-                //        {
-                //                grid[50+i][50+k] = new Wall(50+k, 50+i);
-                //        }
-                //}
+                for(int i=0; i<50; i++)
+                {
+                        for(int k=0; k<50; k++)
+                        {
+                                matrix.setTile(50+k, 50+i,new Stone(50+k, 50+i) );
+                        }
+                }
 
                 
 
@@ -223,9 +224,22 @@ public class ParticulateGame extends Game  {
         
         public void draw(Graphics pen)
         {    
-                
+                Graphics2D g2 = buffer.createGraphics();
 
-                matrix.drawAllTiles(pen, tileSize);
+                g2.setColor(Color.BLACK);
+                g2.fillRect(0, 0, buffer.getWidth(), buffer.getHeight());
+
+                for (int y = 0; y < matrix.getRowBounds(); y++) {
+                        for (int x = 0; x < matrix.getCollumnBounds(); x++) {
+                            Tile cell = matrix.getTile(x, y);
+                            if (cell != null) {
+                                g2.setColor(cell.color);
+                                g2.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                            }
+                        }
+                    }
+                g2.dispose();
+                //matrix.drawAllTiles(pen, tileSize);
 
                 // Draw in outline for the brush
                 pen.setColor(outlineColor);

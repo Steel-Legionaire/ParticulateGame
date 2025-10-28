@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.dnd.DropTarget;
 import java.awt.event.MouseWheelListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.awt.*;
 
@@ -19,6 +20,7 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
     private GamePanel gamePanel;
     boolean running;
     private ParticulateGame game;    
+    public BufferedImage buffer;
 
     public Game()
     {
@@ -43,6 +45,9 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
         frame.addMouseMotionListener(this);
         frame.addMouseWheelListener(game);
 
+        gamePanel.setDoubleBuffered(false);
+        buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
         // Comment out when on cromebook, throws an error
         try {
             Image icon = ImageIO.read(getClass().getResourceAsStream("/icon.png")); // Assuming icon.png is in src/main/resources
@@ -61,7 +66,11 @@ public abstract class Game implements KeyListener, MouseListener, MouseMotionLis
     {
         private static final long serialVersionUID = 1L;
         @Override
-        public void paintComponent(Graphics g) { game.draw(g); }
+        public void paintComponent(Graphics g) 
+        { 
+            game.draw(g); 
+            g.drawImage(buffer, 0, 0, null);
+        }
     }
 
     private void run()
