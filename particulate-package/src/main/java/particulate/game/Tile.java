@@ -136,8 +136,14 @@ protected Tile(int x, int y, boolean isFlammable, boolean isDestructable, int to
             {
                 if(t != null)
                 {
-                    t.recieveHeat(1);
-                    
+                    if(heat < roomTemp)
+                    {
+                        t.recieveHeat(-1);
+                    }
+                    else if(heat > roomTemp)
+                    {
+                        t.recieveHeat(1);
+                    }
                 }
                 
                 if(heat < roomTemp)
