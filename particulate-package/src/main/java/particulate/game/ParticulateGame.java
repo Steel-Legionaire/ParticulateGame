@@ -224,7 +224,7 @@ public class ParticulateGame extends Game  {
         
         public void draw(Graphics pen)
         {    
-                Graphics2D g2 = buffer.createGraphics();
+                /*Graphics2D g2 = buffer.createGraphics();
 
                 g2.setColor(Color.BLACK);
                 g2.fillRect(0, 0, buffer.getWidth(), buffer.getHeight());
@@ -238,8 +238,9 @@ public class ParticulateGame extends Game  {
                             }
                         }
                     }
-                g2.dispose();
-                //matrix.drawAllTiles(pen, tileSize);
+                g2.dispose();*/
+
+                matrix.drawAllTiles(pen, tileSize);
 
                 // Draw in outline for the brush
                 pen.setColor(outlineColor);
